@@ -5,8 +5,8 @@ import test_parser
 
 orig_wd = os.getcwd()
 class TestTest_Obj(unittest.TestCase):
-    # os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
-    # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
+    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
+    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'

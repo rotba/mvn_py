@@ -7,3 +7,4 @@
 [submodule "static_files\\MavenProj"]
 	path = static_files\\MavenProj
 	url = https://github.com/rotba/MavenProj
+
