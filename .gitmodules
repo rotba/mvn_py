@@ -1,0 +1,9 @@
+[submodule "static_files/MavenProj"]
+	path = static_files/MavenProj
+	url = https://github.com/rotba/mvnpy
+[submodule "static_files/tika"]
+	path = static_files/tika
+	url = https://github.com/apache/tika
+[submodule "static_files/commons-math"]
+	path = static_files/commons-math
+	url = https://github.com/apache/commons-math
