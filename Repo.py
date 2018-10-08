@@ -119,17 +119,31 @@ class Repo(object):
             if len(plugins_tags) ==0:
                 continue
             for plugins_tag in plugins_tags:
+                if plugins_tag.parentNode.localName =='build' :
+                    artifacts_ids = list(map(lambda a: str(a.firstChild.data), plugins_tag.getElementsByTagName('artifactId')))
+                    if not any( a_id == 'maven-surefire-plugin' for a_id in artifacts_ids):
+                        new_plugin = plugins_tag.ownerDocument.createElement(tagName='plugin')
+                        new_group_id = new_plugin.ownerDocument.createElement(tagName='groupId')
+                        new_artifact_id = new_plugin.ownerDocument.createElement(tagName='artifactId')
+                        new_group_id_text = new_group_id.ownerDocument.createTextNode('org.apache.maven.plugins')
+                        new_artifact_id_text = new_artifact_id.ownerDocument.createTextNode('maven-surefire-plugin')
+                        new_group_id.appendChild(new_group_id_text)
+                        new_plugin.appendChild(new_group_id)
+                        new_artifact_id.appendChild(new_artifact_id_text)
+                        new_plugin.appendChild(new_artifact_id)
+                        plugins_tag.appendChild(new_plugin)
+            for plugins_tag in plugins_tags:
                 mvn.change_plugin_version_if_exists(plugins_tag,'maven-surefire-plugin', version)
             os.remove(pom)
             with open(pom, 'w+') as f:
-                str = xmlFile.toprettyxml()
-                copy_str = ''
-                for char in str[::]:
+                tmp_str = xmlFile.toprettyxml()
+                copy_tmp_str = ''
+                for char in tmp_str[::]:
                     if 125 < ord(char):
-                        copy_str += 'X'
+                        copy_tmp_str += 'X'
                     else:
-                        copy_str += char
-                f.write(copy_str)
+                        copy_tmp_str += char
+                f.write(copy_tmp_str)
 
     # Returns mvn command string that runns the given tests in the given module
     def generate_mvn_test_cmd(self, testcases, module = None):
