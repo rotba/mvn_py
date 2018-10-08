@@ -1,30 +1,31 @@
 import os
 import sys
 import unittest
-import test_parser
+import Repo
+import TestObjects
 
 orig_wd = os.getcwd()
 class TestTest_Obj(unittest.TestCase):
-    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
-    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
+    # os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
+    # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'
         test_doc_2 = os.getcwd() + r'\static_files\MavenProj\sub_mod_2\target\surefire-reports\TEST-p_1.AssafTest.xml'
-        self.test_report_1 = test_parser.TestClassReport(test_doc_1, '')
-        self.test_report_2 = test_parser.TestClassReport(test_doc_2,
-                                                         os.getcwd() + r'\static_files\MavenProj\sub_mod_2')
-        self.test_1 = test_parser.TestClass(
+        self.test_report_1 = TestObjects.TestClassReport(test_doc_1, '')
+        self.test_report_2 = TestObjects.TestClassReport(test_doc_2,
+                                                  os.getcwd() + r'\static_files\MavenProj\sub_mod_2')
+        self.test_1 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\MavenProj\sub_mod_2\src\test\java\NaimTest.java')
-        self.test_2 = test_parser.TestClass(
+        self.test_2 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\AmitTest.java')
-        self.test_2 = test_parser.TestClass(
+        self.test_2 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\AmitTest.java')
-        self.test_3 = test_parser.TestClass(
+        self.test_3 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\tika_1\src\test\java\org\apache\tika\parser\AutoDetectParserTest.java')
-        self.test_4 = test_parser.TestClass(
+        self.test_4 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\tika_1\src\test\java\org\apache\tika\sax\AppendableAdaptorTest.java')
-        self.test_5 = test_parser.TestClass(
+        self.test_5 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\tika_1\src\test\java\org\apache\tika\sax _1\AppendableAdaptorTest.java')
         self.testcase_1 = [t for t in self.test_3.testcases if t.id.endswith('None_testExcel()')][0]
         self.testcase_2 = [t for t in self.test_4.testcases if t.id.endswith('None_testAppendChar()')][0]
@@ -139,13 +140,14 @@ class TestTest_Obj(unittest.TestCase):
 
     def test_change_surefire_ver_1(self):
         module = os.path.join( os.getcwd(),r'static_files\tika')
+        repo = Repo.Repo(module)
         curr_wd = os.getcwd()
         os.chdir(module)
         os.system('git checkout HEAD -f')
         mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
         excpected_version = '2.22.0'
-        poms = test_parser.get_all_pom_paths(module)
-        test_parser.change_surefire_ver(module,excpected_version)
+        poms = repo .get_all_pom_paths(module)
+        repo.change_surefire_ver(excpected_version, module )
         self.assertTrue(len(poms)>0)
         for pom in poms:
             print('#### checking '+pom+' ######')
@@ -169,13 +171,14 @@ class TestTest_Obj(unittest.TestCase):
 
     def test_change_surefire_ver_2(self):
         module = os.path.join(os.getcwd(),r'static_files\commons-math')
+        repo  = Repo.Repo(module)
         curr_wd = os.getcwd()
         os.chdir(module)
         os.system('git checkout 35414bc4f4ef03ef12e99c027398e5dc84682a9e -f')
         mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
         excpected_version = '2.22.0'
-        poms = test_parser.get_all_pom_paths(module)
-        test_parser.change_surefire_ver(module,excpected_version)
+        poms = repo.get_all_pom_paths(module)
+        repo.change_surefire_ver(excpected_version, module)
         self.assertTrue(len(poms)>0)
         for pom in poms:
             print('#### checking '+pom+' ######')

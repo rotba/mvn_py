@@ -7,7 +7,7 @@ import csv
 
 
 class Bug(object):
-    def __init__(self, issue_key: str, commit_hexsha: str, parent_hexsha: str, fixed_testcase, bugged_testcase, type, valid, desc):
+    def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc):
         self._issue_key = issue_key
         self._commit_hexsha = commit_hexsha
         self._parent_hexsha = parent_hexsha
@@ -84,7 +84,7 @@ class Bug_data_handler(object):
             os.makedirs(path_to_bug_testclass)
         bug_path =self.get_bug_path(bug)
         with open(bug_path, 'wb') as bug_file:
-            pickle.dump(bug, bug_file)
+            pickle.dump(bug, bug_file , protocol=2)
 
 
     # Adds bugs to the csv file
@@ -149,9 +149,7 @@ class Bug_data_handler(object):
         commit_dir = os.path.join(issue_dir, commit_hexsha)
         if not os.path.isdir(commit_dir):
             return ans
-        directory = os.fsencode(commit_dir)
-        for file in os.listdir(directory):
-            filename = os.fsdecode(file)
+        for filename in os.listdir(commit_dir):
             full_file_path = os.path.join(commit_dir, filename)
             if os.path.isdir(full_file_path):
                 ans+= self.get_testclass_bugs(full_file_path)
@@ -160,9 +158,7 @@ class Bug_data_handler(object):
     # Returns all teh bugs in testcalss path
     def get_testclass_bugs(self, testclass_path):
         ans = []
-        directory = os.fsencode(testclass_path)
-        for file in os.listdir(directory):
-            filename = os.fsdecode(file)
+        for filename in os.listdir(testclass_path):
             if filename.endswith(".pickle"):
                 full_path = os.path.join(testclass_path, filename)
                 with open(full_path, 'rb') as bug_file:
@@ -172,9 +168,7 @@ class Bug_data_handler(object):
     # Gets the patch applying bug
     def get_patch(self, bug):
         testclass_path = self.get_testclass_path(bug.issue, bug.commit, bug.bugged_testcase.parent.id)
-        directory = os.fsencode(testclass_path)
-        for file in os.listdir(directory):
-            filename = os.fsdecode(file)
+        for filename in os.listdir(testclass_path):
             if filename.endswith(".patch"):
                 return os.path.join(testclass_path, filename)
 
@@ -210,19 +204,19 @@ class Bug_csv_report_handler(object):
         self._path = path
         self._fieldnames = ['valid','type','issue','module','commit','parent', 'testcase', 'has_test_annotation','description']
         if not os.path.exists(path):
-            with open(self._path, 'w+', newline='') as csv_output:
-                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames)
+            with open(self._path, 'w+') as csv_output:
+                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames,lineterminator='\n')
                 writer.writeheader()
      #Adds bug to the csv file
     def add_bug(self, bug):
-        with open(self._path, 'a', newline='') as csv_output:
-            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames)
+        with open(self._path, 'a') as csv_output:
+            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
             writer.writerow(self.generate_csv_tupple(bug))
 
     # Adds bugs to the csv file
     def add_bugs(self, bugs):
-        with open(self._path, 'a', newline='') as csv_output:
-            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames)
+        with open(self._path, 'a') as csv_output:
+            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
             for bug in bugs:
                 writer.writerow(self.generate_csv_tupple(bug))
 
@@ -248,13 +242,13 @@ class Time_csv_report_handler(object):
         self._path = path
         self._fieldnames = ['issue', 'commit','module', 'time', 'description']
         if not os.path.exists(path):
-            with open(self._path, 'w+', newline='') as csv_output:
-                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames)
+            with open(self._path, 'w+') as csv_output:
+                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
                 writer.writeheader()
      #Adds bug to the csv file
     def add_row(self, issue_key, commit_hexsha, module, time, description):
-        with open(self._path, 'a', newline='') as csv_output:
-            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames)
+        with open(self._path, 'a') as csv_output:
+            writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
             writer.writerow(self.generate_csv_tupple(issue_key, commit_hexsha, module, time, description))
 
 
@@ -292,7 +286,7 @@ class Bug_type(Enum):
         return self.value
 
 
-def create_bug(issue, commit, parent, testcase, parent_testcase, type) -> Bug:
+def create_bug(issue, commit, parent, testcase, parent_testcase, type):
     if testcase.passed and parent_testcase.failed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase,bugged_testcase=parent_testcase, type=type, valid=True,desc='')
