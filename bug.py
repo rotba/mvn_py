@@ -279,6 +279,8 @@ invalid_not_fixed__error_desc = 'testcase generated runtime error in commit'
 
 class Bug_type(Enum):
     DELTA = "Delta"
+    DELTA_2 = "Delta^2"
+    DELTA_3 = "Delta^3"
     REGRESSION = "Regression"
     def __str__(self):
         return self.value

@@ -201,6 +201,39 @@ class TestTest_Obj(unittest.TestCase):
 
 
 
+    def test_change_surefire_ver_3(self):
+        module = os.path.join( os.getcwd(),r'static_files\tika')
+        repo = Repo.Repo(module)
+        curr_wd = os.getcwd()
+        os.chdir(module)
+        os.system('git checkout d363b828bc6e714aa5f4ffedfbd1d09e1880f9ee -f')
+        mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
+        excpected_version = '2.22.0'
+        poms = repo .get_all_pom_paths(module)
+        repo.change_surefire_ver(excpected_version, module )
+        self.assertTrue(len(poms)>0)
+        for pom in poms:
+            print('#### checking '+pom+' ######')
+            if(os.path.normcase(os.path.join( os.getcwd(),r'tika-dotnet\pom.xml')) ==os.path.normcase(pom)):
+                print('#### passing ' + pom + ' ######')
+                continue
+            module_path = os.path.abspath(os.path.join(pom, os.pardir))
+            with os.popen(mvn_help_cmd+' -f '+module_path) as proc:
+                tmp_file_path = 'tmp_file.txt'
+                with open(tmp_file_path, "w+") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                with open(tmp_file_path, "r") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                    build_report = tmp_file.readlines()
+                version_line_sing = list(filter(lambda l: l.startswith('Version: '),build_report))
+                assert len(version_line_sing) == 1
+                version_line = version_line_sing[0]
+                self.assertEqual(version_line.lstrip('Version: ').rstrip('\n'),excpected_version)
+        os.system('git checkout HEAD -f')
+        os.chdir(curr_wd)
+
+
+
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):
         print('test_get_compilation_error_testcases')
