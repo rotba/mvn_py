@@ -103,7 +103,8 @@ class Bug_data_handler(object):
         for testclass in testclasses:
             testclass_path = self.get_testclass_path(issue.key,commit.hexsha, testclass.id)
             report_copy_path = os.path.join(testclass_path, os.path.basename(testclass.get_report_path()))
-            shutil.copyfile(testclass.get_report_path(), report_copy_path)
+            os.system(
+                'copy ' + testclass.get_report_path().replace('/', '\\') + ' ' + report_copy_path.replace('/', '\\'))
 
 
     # Gets the path to the bug's testclass directory
