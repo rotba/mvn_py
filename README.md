@@ -260,7 +260,7 @@ Applying maven commands:
       Description: Maven Surefire MOJO in maven-surefire-plugin.
       Group Id: org.apache.maven.plugins
       Artifact Id: maven-surefire-plugin
-      #Version: 2.21.0
+      Version: 2.21.0
       Goal Prefix: surefire
 
       This plugin has 2 goals:
