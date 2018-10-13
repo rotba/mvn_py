@@ -1,11 +1,13 @@
 import os
+import subprocess
+from threading import Timer
+from bug  import BugError
 import TestObjects
 import CompilationErrorObject
-
-# Returns the testcases generated compilation error in the maven build report
 import sys
 
 
+# Returns the testcases generated compilation error in the maven build report
 def get_compilation_error_testcases(compilation_error_report):
     ans = []
     for line in compilation_error_report:
@@ -200,14 +202,25 @@ def parse_tests(tests_dir):
         elif filename.endswith(".java"):
             ans.append(TestObjects.TestClass(abs_path))
     return ans
-def wrap_mvn_cmd(cmd):
-    with os.popen(cmd) as proc:
-        tmp_file_path = 'tmp_file.txt'
-        with open(tmp_file_path, "w+") as tmp_file:
-            duplicate_stdout(proc, tmp_file)
-        with open(tmp_file_path, "r") as tmp_file:
-            duplicate_stdout(proc, tmp_file)
-            build_report = tmp_file.read()
+
+def wrap_mvn_cmd(cmd, time_limit = sys.maxint):
+    output_tmp_files_dir = os.path.join('tmp_files','stdout_duplication')
+    if not os.path.isdir(output_tmp_files_dir):
+        os.makedirs(output_tmp_files_dir)
+    tmp_file_path = os.path.join(output_tmp_files_dir,'tmp_file.txt')
+    with open(tmp_file_path, 'w+') as tmp_f:
+        proc = subprocess.Popen(cmd, shell=True,stdout=tmp_f)
+        t = Timer(time_limit, kill, args=[proc])
+        t.start()
+        proc.wait()
+        t.cancel()
+    with open(tmp_file_path, "r") as tmp_f:
+        build_report = tmp_f.read()
+        print(build_report)
+    if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
+        raise MVNError('Build took too long', build_report)
+    # if not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
+    #     raise MVNError('Build took too long', build_report)
     return build_report
 
 def duplicate_stdout(proc, file):
@@ -217,3 +230,14 @@ def duplicate_stdout(proc, file):
             break
         sys.stdout.write(line)
         file.write(line)
+
+# Define to kill a maven process if it tatkes too long
+def kill(p):
+    p.kill()
+
+class MVNError(Exception):
+    def __init__(self, msg, report = ''):
+        self.msg = msg
+        self.report  = report
+    def __str__(self):
+        return repr(self.msg+'\n'+self.report)
