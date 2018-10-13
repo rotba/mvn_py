@@ -24,14 +24,14 @@ To run the the tests, simply run:
 
 ### API
 
-## Initiating repo:
+# Initiating repo:
 
     >>> from Repo import Repo
     >>> mvn_repo = Repo('C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
 
-## Applying maven commands:
+# Applying maven commands:
 
-# test
+## test
 
     C:\Users\user\Code\Python\mvnpy\mvnpy>python2
     Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 18:37:09) [MSC v.1500 64 bit (AMD64)] on win32
