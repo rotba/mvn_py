@@ -31,7 +31,7 @@ Initiating repo:
 
 Applying maven commands:
 
-#test
+# test
 
     C:\Users\user\Code\Python\mvnpy\mvnpy>python2
     Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 18:37:09) [MSC v.1500 64 bit (AMD64)] on win32
@@ -128,7 +128,7 @@ Applying maven commands:
     [INFO] Total time: 29.541 s
     [INFO] Finished at: 2018-10-13T14:18:37+03:00
     [INFO] ------------------------------------------------------------------------
-#clean
+# clean
 
     C:\Users\user\Code\Python\mvnpy\mvnpy>python2
     Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 18:37:09) [MSC v.1500 64 bit (AMD64)] on win32
@@ -237,7 +237,7 @@ Applying maven commands:
     [INFO] Finished at: 2018-10-13T14:27:12+03:00
     [INFO] ------------------------------------------------------------------------   
   
-  #chenge plugin version (currently implemented only for surefire plugin)
+  # change plugin version (currently implemented only for surefire plugin)
   
       >>> mvn_repo.change_surefire_ver('2.21.0')
       >>> os.system('mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin -f    C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
