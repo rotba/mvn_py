@@ -7,3 +7,6 @@
 [submodule "static_files/commons-math"]
 	path = static_files/commons-math
 	url = https://github.com/apache/commons-math
+[submodule "examples/MavenProj"]
+	path = examples/MavenProj
+	url = https://github.com/rotba/MavenProj

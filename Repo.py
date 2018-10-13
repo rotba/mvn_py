@@ -166,7 +166,7 @@ class Repo(object):
                 if not ans.endswith('='):
                     ans += ','
                 ans += testclass.mvn_name
-            ans += ' -f ' + self.repo_dir
+        ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that compiles the given the given module

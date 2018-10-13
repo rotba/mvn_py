@@ -5,7 +5,7 @@ import Repo
 import TestObjects
 
 orig_wd = os.getcwd()
-class TestTest_Obj(unittest.TestCase):
+class Test_mvnpy(unittest.TestCase):
     # os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
     # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
@@ -233,6 +233,9 @@ class TestTest_Obj(unittest.TestCase):
         os.chdir(curr_wd)
 
 
+    def test_nop(self):
+        mvn_repo = Repo.Repo(r'C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
+        mvn_repo.test()
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

@@ -216,12 +216,12 @@ def wrap_mvn_cmd(cmd, time_limit = sys.maxint):
         t.cancel()
     with open(tmp_file_path, "r") as tmp_f:
         build_report = tmp_f.read()
-        print(build_report)
+        print(build_report) 
     if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
         raise MVNError('Build took too long', build_report)
     # if not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
     #     raise MVNError('Build took too long', build_report)
-    return build_report
+    return build_report.replace('\\n','\n')
 
 def duplicate_stdout(proc, file):
     while (True):

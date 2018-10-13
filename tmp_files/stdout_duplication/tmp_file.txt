@@ -1,0 +1,56 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] GMT_P                                                              [pom]
+[INFO] sub_mod_1                                                          [jar]
+[INFO] 
+[INFO] ----------------------------< GMT_P:GMT_P >-----------------------------
+[INFO] Building GMT_P 1.0-SNAPSHOT                                        [1/2]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< GMT_P:sub_mod_1 >---------------------------
+[INFO] Building sub_mod_1 1.0-SNAPSHOT                                    [2/2]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_1 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_1 ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ sub_mod_1 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ sub_mod_1 ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.22.0:test (default-test) @ sub_mod_1 ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running MainTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.063 s - in MainTest
+[INFO] Running p_1.AmitTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in p_1.AmitTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.024 s]
+[INFO] sub_mod_1 1.0-SNAPSHOT ............................. SUCCESS [ 18.848 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 19.454 s
+[INFO] Finished at: 2018-10-13T14:27:12+03:00
+[INFO] ------------------------------------------------------------------------
