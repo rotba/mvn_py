@@ -24,12 +24,12 @@ To run the the tests, simply run:
 
 ### API
 
-Initiating repo:
+## Initiating repo:
 
->>> from Repo import Repo
->>> mvn_repo = Repo('C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
+    >>> from Repo import Repo
+    >>> mvn_repo = Repo('C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
 
-Applying maven commands:
+## Applying maven commands:
 
 # test
 
