@@ -128,7 +128,7 @@ To run the the tests, simply run:
     [INFO] Total time: 29.541 s
     [INFO] Finished at: 2018-10-13T14:18:37+03:00
     [INFO] ------------------------------------------------------------------------
-# clean
+## clean
 
     C:\Users\user\Code\Python\mvnpy\mvnpy>python2
     Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 18:37:09) [MSC v.1500 64 bit (AMD64)] on win32
@@ -175,7 +175,7 @@ To run the the tests, simply run:
     [INFO] Total time: 1.964 s
     [INFO] Finished at: 2018-10-13T14:21:52+03:00
     [INFO] ------------------------------------------------------------------------
-  # test-compile: mvn_repo.test_compile() ...
+  ## test-compile: mvn_repo.test_compile() ...
   
   If one desires to inspect specific submodule (which can decrease the build time significantly), one can specify the module he's interested in:
   
@@ -237,7 +237,7 @@ To run the the tests, simply run:
     [INFO] Finished at: 2018-10-13T14:27:12+03:00
     [INFO] ------------------------------------------------------------------------   
   
-  # change plugin version (currently implemented only for surefire plugin)
+  ## change plugin version (currently implemented only for surefire plugin)
   
       >>> mvn_repo.change_surefire_ver('2.21.0')
       >>> os.system('mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin -f    C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
