@@ -177,7 +177,7 @@ To run the the tests, simply run:
     [INFO] ------------------------------------------------------------------------
   ## test-compile: mvn_repo.test_compile() ...
   
-  If one desires to inspect specific submodule (which can decrease the build time significantly), one can specify the module he's interested in:
+  If one desires in inspecting a specific submodule (which can decrease the build time significantly), one can specify the module he's interested in:
   
     >>> build_log = mvn_repo.test('MavenProj\sub_mod_1')
     [INFO] Scanning for projects...
