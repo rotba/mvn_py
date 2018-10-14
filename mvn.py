@@ -1,6 +1,7 @@
 import os
 import subprocess
 from threading import Timer
+from cStringIO import StringIO
 from bug  import BugError
 import TestObjects
 import CompilationErrorObject
@@ -35,13 +36,17 @@ def get_compilation_error_report(build_report):
     report_lines = build_report.splitlines()
     i = 0
     while i < len(report_lines):
-        if '[ERROR] COMPILATION ERROR :' in report_lines[i]:
+        if is_start_of_compilation_error_report(report_lines[i]):
             ans.append(report_lines[i])
-            ans.append(report_lines[i + 1])
-            i += 2
+            if '[ERROR] COMPILATION ERROR :' in report_lines[i]:
+                ans.append(report_lines[i + 1])
+                i += 1
+            i += 1
             while not end_of_compilation_errors(report_lines[i]):
                 ans.append(report_lines[i])
                 i += 1
+                if i == len(report_lines)-1:
+                    break
         elif report_lines[i].endswith('Compilation failure'):
             while i < len(report_lines) and not end_of_compilation_errors(report_lines[i]):
                 if is_error_report_line(report_lines[i]):
@@ -50,6 +55,12 @@ def get_compilation_error_report(build_report):
         else:
             i += 1
     return ans
+
+# Returns true if the line is a start of a compilation error report
+def is_start_of_compilation_error_report(line):
+    return '[ERROR] COMPILATION ERROR :' in line or\
+          ('[ERROR] Failed to execute goal' in line and 'Compilation failure' in line)
+
 
 
 # Gets the test case associated with the compilation error
@@ -69,7 +80,9 @@ def get_error_test_case(line):
 
 # Returns true if the given line ends the complation error report
 def end_of_compilation_errors(line):
-    return '[INFO] -------------------------------------------------------------' in line
+    return '[INFO] -------------------------------------------------------------' in line or\
+           '[INFO] Build failures were ignored.' in line or '[ERROR] -> [Help 1]' in line
+
 
 
 # Returns true iff the given report line is a report of compilation error file
@@ -204,24 +217,61 @@ def parse_tests(tests_dir):
     return ans
 
 def wrap_mvn_cmd(cmd, time_limit = sys.maxint):
+    proc = subprocess.Popen(cmd, shell=True, stdout= subprocess.PIPE)
+    t = Timer(sys.maxint, kill, args=[proc])
+    t.start()
+    proc.wait()
+    t.cancel()
+    (out, err) = proc.communicate()
+    if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_log or '[INFO] BUILD FAILURE' in build_log):
+        raise MVNError('Build took too long', build_log)
+    return build_log
+
+def wrap_mvn_cmd_2(cmd, time_limit = sys.maxint):
     output_tmp_files_dir = os.path.join('tmp_files','stdout_duplication')
     if not os.path.isdir(output_tmp_files_dir):
         os.makedirs(output_tmp_files_dir)
     tmp_file_path = os.path.join(output_tmp_files_dir,'tmp_file.txt')
+    mystdout = StringIO()
     with open(tmp_file_path, 'w+') as tmp_f:
-        proc = subprocess.Popen(cmd, shell=True,stdout=tmp_f)
+        proc = subprocess.Popen(cmd, shell=True,stdout=mystdout)
         t = Timer(time_limit, kill, args=[proc])
         t.start()
         proc.wait()
         t.cancel()
     with open(tmp_file_path, "r") as tmp_f:
         build_report = tmp_f.read()
-        print(build_report) 
+        print(build_report)
     if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
         raise MVNError('Build took too long', build_report)
     # if not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
     #     raise MVNError('Build took too long', build_report)
     return build_report.replace('\\n','\n')
+
+def wrap_mvn_cmd_3(cmd, time_limit = sys.maxint):
+    sys.stderr.flush()
+    sys.stdout.flush()
+    olderr, oldout = sys.stderr, sys.stdout
+    try:
+        sys.stderr = StringIO()
+        sys.stdout = StringIO()
+        try:
+            proc = subprocess.Popen(cmd, shell=True)
+            t = Timer(time_limit, kill, args=[proc])
+            t.start()
+            proc.wait()
+            t.cancel()
+        finally:
+            sys.stderr.seek(0)
+            sys.stdout.seek(0)
+            err = sys.stderr.read()
+            build_log = sys.stdout.read()
+    finally:
+        sys.stderr = olderr
+        sys.stdout = oldout
+    if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_log or '[INFO] BUILD FAILURE' in build_log):
+        raise MVNError('Build took too long', build_log)
+    return build_log
 
 def duplicate_stdout(proc, file):
     while (True):
@@ -241,3 +291,8 @@ class MVNError(Exception):
         self.report  = report
     def __str__(self):
         return repr(self.msg+'\n'+self.report)
+
+
+def has_compilation_error(build_report):
+    compilation_error_report = get_compilation_error_report(build_report)
+    return len(compilation_error_report)>0
