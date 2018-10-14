@@ -233,9 +233,6 @@ class Test_mvnpy(unittest.TestCase):
         os.chdir(curr_wd)
 
 
-    def test_nop(self):
-        mvn_repo = Repo.Repo(r'C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
-        mvn_repo.test()
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

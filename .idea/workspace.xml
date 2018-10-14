@@ -2,36 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/examples/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/MavenProj" beforeDir="false" afterPath="$PROJECT_DIR$/examples/MavenProj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/examples/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/classes/Naim.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/test-classes/NaimTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/examples/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mvn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mvn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-batch/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-batch/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-bundle/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-bundle/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-dl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-dl/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-dotnet/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-dotnet/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-eval/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-eval/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-java7/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-java7/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-langdetect/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-langdetect/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-nlp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-nlp/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-parent/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-parsers/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-parsers/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-serialization/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-serialization/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-translate/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-translate/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/tika/tika-xmp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/tika/tika-xmp/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static_files/commons-math/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/commons-math/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +19,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/mvnpy$Test.coverage" NAME="Test Coverage Results" MODIFIED="1539429092963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mvnpy$Test.coverage" NAME="Test Coverage Results" MODIFIED="1539441490092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-460709060">
@@ -74,25 +53,25 @@
     <session id="971486847">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="12" />
           <entry key="project.open.time.0" value="5" />
-          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="17" />
-          <entry key="py" value="2274" />
+          <entry key="py" value="2467" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="17" />
-          <entry key="Python" value="2274" />
+          <entry key="Python" value="2467" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -109,10 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
+            <state relative-caret-position="1785">
               <caret line="105" column="27" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -124,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bug.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-255">
+            <state>
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -147,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="237" selection-start-line="237" selection-end-line="237" />
+            <state relative-caret-position="75">
+              <caret line="234" selection-start-line="234" selection-end-line="234" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -156,11 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mvn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="218" column="26" selection-start-line="218" selection-start-column="26" selection-end-line="218" selection-end-column="26" />
+            <state relative-caret-position="52">
+              <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -206,6 +185,8 @@
       <find>MAVEN_CMD_INTERUPPTED</find>
       <find>bug</find>
       <find>TestTest_Obj</find>
+      <find>is_s</find>
+      <find>end_of_compilation_errors</find>
     </findStrings>
     <replaceStrings>
       <replace>MavenProj</replace>
@@ -228,8 +209,8 @@
         <option value="$PROJECT_DIR$/bug.py" />
         <option value="$PROJECT_DIR$/ProcessKiller.py" />
         <option value="$PROJECT_DIR$/ProcessTimeLimitator.py" />
-        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/Repo.py" />
+        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/mvn.py" />
       </list>
     </option>
@@ -321,7 +302,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test.py" />
-      <option name="PARAMETERS" value="Test_mvnpy.test_nop" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -347,13 +328,13 @@
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18932039" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19255663" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.5536332" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3979239" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3979239" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -453,6 +434,25 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessTimeLimitator.py" />
+    <entry file="file://$PROJECT_DIR$/Repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="105" column="27" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bug.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TestObjects.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3179">
@@ -463,19 +463,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bug.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-255">
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="237" selection-start-line="237" selection-end-line="237" />
+        <state relative-caret-position="75">
+          <caret line="234" selection-start-line="234" selection-end-line="234" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -484,18 +475,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mvn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="218" column="26" selection-start-line="218" selection-start-column="26" selection-end-line="218" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="105" column="27" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="27" />
+        <state relative-caret-position="52">
+          <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
