@@ -1,4 +1,6 @@
 import os
+import sys
+
 import TestObjects
 from xml.dom.minidom import parse
 import mvn
@@ -13,12 +15,12 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    def test(self, module =None, testcases = []):
+    def test(self, module =None, testcases = [], time_limit = sys.maxint):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
         test_cmd = self.generate_mvn_test_cmd(module=inspected_module, testcases=testcases)
-        build_report = mvn.wrap_mvn_cmd(test_cmd)
+        build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
         return build_report
 
     # Executes mvn clean
@@ -152,9 +154,9 @@ class Repo(object):
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         if module ==None or module == self.repo_dir:
-            ans = 'mvn clean test -fn'
+            ans = 'mvn test -fn'
         else:
-            ans = 'mvn -pl :{} -am clean test -fn'.format(
+            ans = 'mvn -pl :{} -am test -fn'.format(
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
@@ -164,19 +166,30 @@ class Repo(object):
                 if not ans.endswith('='):
                     ans += ','
                 ans += testclass.mvn_name
-            ans += ' -f ' + self.repo_dir
+        ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that compiles the given the given module
     def generate_mvn_test_compile_cmd(self, module):
-        ans = 'mvn -pl :{} -am clean test-compile -fn'.format(
-            os.path.basename(module))
+        if module == self.repo_dir:
+            ans = 'mvn test-compile -fn '
+        else:
+            ans = 'mvn -pl :{} -am test-compile -fn'.format(
+                os.path.basename(module))
         ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that cleans the given the given module
     def generate_mvn_clean_cmd(self, module):
-        ans = 'mvn -pl :{} -am clean -fn'.format(
-            os.path.basename(module))
+        if module == self.repo_dir:
+            ans = 'mvn clean '
+        else:
+            ans = 'mvn -pl :{} -am clean -fn'.format(
+                os.path.basename(module))
         ans += ' -f ' + self.repo_dir
         return ans
+
+
+
+
+
