@@ -1,92 +1,51 @@
 [INFO] Scanning for projects...
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Build Order:
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.mycompany.app:tracer:jar:1.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-shade-plugin is missing. @ line 46, column 12
+[WARNING] The expression ${artifactId} is deprecated. Please use ${project.artifactId} instead.
+[WARNING] The expression ${version} is deprecated. Please use ${project.version} instead.
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
 [INFO] 
-[INFO] GMT_P                                                              [pom]
-[INFO] sub_mod_1                                                          [jar]
-[INFO] sub_mod_2                                                          [jar]
-[INFO] 
-[INFO] ----------------------------< GMT_P:GMT_P >-----------------------------
-[INFO] Building GMT_P 1.0-SNAPSHOT                                        [1/3]
-[INFO] --------------------------------[ pom ]---------------------------------
-[INFO] 
-[INFO] --------------------------< GMT_P:sub_mod_1 >---------------------------
-[INFO] Building sub_mod_1 1.0-SNAPSHOT                                    [2/3]
+[INFO] ----------------------< com.mycompany.app:tracer >----------------------
+[INFO] Building tracer 1.0.1-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_1 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\src\main\resources
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ tracer ---
+[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\main\resources
 [INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_1 ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\target\classes
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ sub_mod_1 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_1\src\test\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ sub_mod_1 ---
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ tracer ---
 [INFO] Nothing to compile - all classes are up to date
 [INFO] 
-[INFO] --- maven-surefire-plugin:2.22.0:test (default-test) @ sub_mod_1 ---
+[INFO] --- maven-jar-plugin:2.4:jar (default) @ tracer ---
 [INFO] 
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running MainTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s - in MainTest
-[INFO] Running p_1.AmitTest
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in p_1.AmitTest
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ tracer ---
+[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\test\resources
 [INFO] 
-[INFO] Results:
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ tracer ---
+[INFO] No sources to compile
 [INFO] 
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ tracer ---
+[INFO] No tests to run.
 [INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ tracer ---
 [INFO] 
-[INFO] --------------------------< GMT_P:sub_mod_2 >---------------------------
-[INFO] Building sub_mod_2 1.0-SNAPSHOT                                    [3/3]
-[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] --- maven-shade-plugin:3.2.0:shade (default) @ tracer ---
+[INFO] Including commons-lang:commons-lang:jar:2.1 in the shaded jar.
+[INFO] Including org.javassist:javassist:jar:3.20.0-GA in the shaded jar.
+[INFO] Replacing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\uber-tracer-1.0.1-SNAPSHOT.jar with C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT-shaded.jar
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_2 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_2\src\main\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_2 ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_2\target\classes
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ sub_mod_2 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_2\src\test\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ sub_mod_2 ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj\sub_mod_2\target\test-classes
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.22.0:test (default-test) @ sub_mod_2 ---
-[INFO] 
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running NaimTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.047 s - in NaimTest
-[INFO] Running p_1.AssafTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in p_1.AssafTest
-[INFO] 
-[INFO] Results:
-[INFO] 
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
-[INFO] 
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary:
-[INFO] 
-[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.015 s]
-[INFO] sub_mod_1 .......................................... SUCCESS [ 11.144 s]
-[INFO] sub_mod_2 1.0-SNAPSHOT ............................. SUCCESS [  2.946 s]
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ tracer ---
+[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT.jar to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\pom.xml to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.pom
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 14.526 s
-[INFO] Finished at: 2018-10-13T17:37:53+03:00
+[INFO] Total time: 2.038 s
+[INFO] Finished at: 2018-10-18T18:41:36+03:00
 [INFO] ------------------------------------------------------------------------

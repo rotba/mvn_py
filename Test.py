@@ -6,8 +6,8 @@ import TestObjects
 
 orig_wd = os.getcwd()
 class Test_mvnpy(unittest.TestCase):
-    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
-    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
+    # os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
+    # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'
@@ -233,6 +233,25 @@ class Test_mvnpy(unittest.TestCase):
         os.chdir(curr_wd)
 
 
+    def test_setup_surfire_agent(self):
+        module = os.path.join( os.getcwd(),r'static_files\MavenProj')
+        tracer_dir =os.path.join( os.getcwd(),r'static_files\java_tracer\tracer')
+        repo_mvn_tracer = Repo.Repo(tracer_dir)
+        repo = Repo.Repo(module)
+        expected_agent_path = os.path.join(repo.repo_dir, 'agent.jar')
+        expected_paths_path = os.path.join(repo.repo_dir, 'paths.jar')
+        repo_mvn_tracer.install()
+        agnet_path = os.path.join(tracer_dir, r'target\tracer-1.0.1-SNAPSHOT.jar')
+        repo.setup_surefire_agent(agnet_path)
+        self.assertTrue(os.path.isfile(expected_agent_path))
+        self.assertTrue(os.path.isfile(expected_paths_path))
+        with open(expected_paths_path,'rb') as paths:
+            lines = paths.readlines()
+            self.assertEqual(lines[0], os.join(os.environ['USERPROFILE'], r'.m2\repository'))
+            self.assertEqual(lines[1], repo.repo_dir)
+        with open(os.path.join(repo.repo_dir,'pom.xml'),'rb') as pom:
+            lines = pom.readlines()
+            self.assertTrue('<argLine>javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.join(os.environ['USERPROFILE'], r'.m2\repository'))
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

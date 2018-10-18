@@ -1,8 +1,8 @@
 import os
 import sys
-
-import TestObjects
+from shutil import copyfile
 from xml.dom.minidom import parse
+import TestObjects
 import mvn
 
 
@@ -13,6 +13,15 @@ class Repo(object):
     @property
     def repo_dir(self):
         return self._repo_dir
+
+    # Executes mvn test
+    def install(self, module=None, testcases=[], time_limit=sys.maxint):
+        inspected_module = self.repo_dir
+        if not module == None:
+            inspected_module = module
+        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases)
+        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit)
+        return build_report
 
     # Executes mvn test
     def test(self, module =None, testcases = [], time_limit = sys.maxint):
@@ -86,6 +95,16 @@ class Repo(object):
                 if not (filename == 'src' or filename == '.git'):
                     ans.extend(self.get_tests_reports(file_abs_path))
         return ans
+
+    # Gets all the reports in the given module if given, else in the given module
+    def setup_surefire_agent(self, agent_path_src):
+        agent_path_dst = os.path.join(self.repo_dir, 'agent.jar')
+        paths_path= os.path.join(self.repo_dir, 'paths.txt')
+        copyfile(agent_path_src, agent_path_dst)
+        with open(paths_path, 'w+') as paths:
+            paths.write(os.path.join(os.environ['USERPROFILE'],r'.m2\repository'))
+            paths.write(self.repo_dir)
+        self.
 
 
     # Changes all the pom files in a module recursively
@@ -162,6 +181,28 @@ class Repo(object):
         ans += ' -DfailIfNoTests=false'
         if len(testcases)>0:
             ans+=' -Dtest='
+            for testclass in testclasses:
+                if not ans.endswith('='):
+                    ans += ','
+                ans += testclass.mvn_name
+        ans += ' -f ' + self.repo_dir
+        return ans
+
+    # Returns mvn command string that runns the given tests in the given module
+    def generate_mvn_install_cmd(self, testcases, module=None):
+        testclasses = []
+        for testcase in testcases:
+            if not testcase.parent in testclasses:
+                testclasses.append(testcase.parent)
+        if module == None or module == self.repo_dir:
+            ans = 'mvn install -fn'
+        else:
+            ans = 'mvn -pl :{} -am install -fn'.format(
+                os.path.basename(module))
+        # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
+        ans += ' -DfailIfNoTests=false'
+        if len(testcases) > 0:
+            ans += ' -Dtest='
             for testclass in testclasses:
                 if not ans.endswith('='):
                     ans += ','

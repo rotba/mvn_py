@@ -10,3 +10,6 @@
 [submodule "examples/MavenProj"]
 	path = examples/MavenProj
 	url = https://github.com/rotba/MavenProj
+[submodule "static_files/java_tracer"]
+	path = static_files/java_tracer
+	url = https://github.com/amir9979/java_tracer
