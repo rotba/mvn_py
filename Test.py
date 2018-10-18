@@ -232,6 +232,34 @@ class Test_mvnpy(unittest.TestCase):
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 
+    def test_add_argline_to_surefire(self):
+        module = os.path.join( os.getcwd(),r'static_files\tika')
+        expected_content = '-javaagent:C:\\Users\\user\\Code\\JAVA\\MavenProj\\agent.jar=C:\\Users\\user\\Code\\JAVA\\MavenProj\\paths.txt'
+        expected_argline = '<argLine>-javaagent:{}\\agent.jar={}\\paths.txt</argLine>'.format(module,module)
+        repo = Repo.Repo(module)
+        curr_wd = os.getcwd()
+        os.chdir(module)
+        os.system('git checkout d363b828bc6e714aa5f4ffedfbd1d09e1880f9ee -f')
+        mvn_help_cmd = 'mvn help:effective - pom - DartifactId = org.apache.maven.plugins:maven - surefire - plugin'
+        poms = repo .get_all_pom_paths(module)
+        repo.add_argline_to_surefire(expected_content)
+        self.assertTrue(len(poms)>0)
+        for pom in poms:
+            print('#### checking '+pom+' ######')
+            if(os.path.normcase(os.path.join( os.getcwd(),r'tika-dotnet\pom.xml')) ==os.path.normcase(pom)):
+                print('#### passing ' + pom + ' ######')
+                continue
+            module_path = os.path.abspath(os.path.join(pom, os.pardir))
+            with os.popen(mvn_help_cmd+' -f '+module_path) as proc:
+                tmp_file_path = 'tmp_file.txt'
+                with open(tmp_file_path, "w+") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                with open(tmp_file_path, "r") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                    build_report = tmp_file.read()
+                self.assertTrue(expected_argline in build_report)
+        os.system('git checkout HEAD -f')
+        os.chdir(curr_wd)
 
 
     @unittest.skip("Important test but will require some time to validate")
