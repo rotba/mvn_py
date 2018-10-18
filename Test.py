@@ -267,7 +267,7 @@ class Test_mvnpy(unittest.TestCase):
         repo_mvn_tracer = Repo.Repo(tracer_dir)
         repo = Repo.Repo(module)
         expected_agent_path = os.path.join(repo.repo_dir, 'agent.jar')
-        expected_paths_path = os.path.join(repo.repo_dir, 'paths.jar')
+        expected_paths_path = os.path.join(repo.repo_dir, 'paths.txt')
         repo_mvn_tracer.install()
         agnet_path = os.path.join(tracer_dir, r'target\tracer-1.0.1-SNAPSHOT.jar')
         repo.setup_surefire_agent(agnet_path)
@@ -275,11 +275,11 @@ class Test_mvnpy(unittest.TestCase):
         self.assertTrue(os.path.isfile(expected_paths_path))
         with open(expected_paths_path,'rb') as paths:
             lines = paths.readlines()
-            self.assertEqual(lines[0], os.join(os.environ['USERPROFILE'], r'.m2\repository'))
+            self.assertEqual(lines[0].replace('\n','').replace('\r', ''), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
             self.assertEqual(lines[1], repo.repo_dir)
         with open(os.path.join(repo.repo_dir,'pom.xml'),'rb') as pom:
             lines = pom.readlines()
-            self.assertTrue('<argLine>javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.join(os.environ['USERPROFILE'], r'.m2\repository'))
+            self.assertTrue('<argLine>javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

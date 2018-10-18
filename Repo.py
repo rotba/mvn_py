@@ -102,9 +102,9 @@ class Repo(object):
         paths_path= os.path.join(self.repo_dir, 'paths.txt')
         copyfile(agent_path_src, agent_path_dst)
         with open(paths_path, 'w+') as paths:
-            paths.write(os.path.join(os.environ['USERPROFILE'],r'.m2\repository'))
+            paths.write(os.path.join(os.environ['USERPROFILE'],'.m2\\repository')+'\n')
             paths.write(self.repo_dir)
-        self.
+        self.add_argline_to_surefire('javaagent:{}={}'.format(agent_path_dst, paths_path))
 
 
     # Changes all the pom files in a module recursively
