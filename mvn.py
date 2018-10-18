@@ -205,6 +205,41 @@ def change_plugin_version_if_exists(plugins_tag, plugin_artifact_id, version):
     version_v = surefire_version_sing[0]
     version_v.firstChild.data = version
 
+
+# changes the plugin version of 'plugin_artifact_id' to 'version'. Does nothing if the 'plugin_artifact_id' is not in plugins_tag
+def add_plugin_configuration_argline(plugins_tag, plugin_artifact_id, content):
+    plugin_p = None
+    for plugin in plugins_tag.getElementsByTagName('plugin'):
+        arifact_id_sing = list(filter(lambda child: child.localName == 'artifactId', plugin.childNodes))
+        if len(arifact_id_sing) == 0:
+            return
+        assert len(arifact_id_sing) == 1
+        if arifact_id_sing[0].firstChild.data == plugin_artifact_id:
+            plugin_p = plugin
+            break
+    if plugin_p == None:
+        return
+    version_v = None
+    surefire_configuration_sing = list(
+        filter(lambda child: child.localName == 'configuration', plugin_p.childNodes))
+    if len(surefire_configuration_sing) == 0:
+        new_configuration = plugin_p.ownerDocument.createElement(tagName='configuration')
+        plugin_p.appendChild(new_configuration)
+        surefire_configuration_sing = [new_configuration]
+    assert len(surefire_configuration_sing) == 1
+    configuration_tag = surefire_configuration_sing[0]
+    surefire_argLine_sing = list(
+        filter(lambda child: child.localName == 'argLine', configuration_tag.childNodes))
+    if len(surefire_argLine_sing) == 0:
+        new_argLine = configuration_tag.ownerDocument.createElement(tagName='argLine')
+        new_argLine_text = new_argLine.ownerDocument.createTextNode('')
+        new_argLine.appendChild(new_argLine_text)
+        configuration_tag.appendChild(new_argLine)
+        surefire_argLine_sing = [new_argLine]
+    new_argLine = surefire_argLine_sing[0]
+    new_argLine.firstChild.data = content
+
+
 # Reutns tests object in the given tests directory
 def parse_tests(tests_dir):
     ans = []

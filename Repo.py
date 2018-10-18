@@ -122,7 +122,7 @@ class Repo(object):
         return ans
 
     # Changes surefire version in a pom
-    def change_surefire_ver(self ,version, module = None):
+    def change_surefire_ver(self ,version):
         ans = []
         inspected_module = self.repo_dir
         if not module == None:
@@ -155,6 +155,51 @@ class Repo(object):
                         plugins_tag.appendChild(new_plugin)
             for plugins_tag in plugins_tags:
                 mvn.change_plugin_version_if_exists(plugins_tag,'maven-surefire-plugin', version)
+            os.remove(pom)
+            with open(pom, 'w+') as f:
+                tmp_str = xmlFile.toprettyxml()
+                copy_tmp_str = ''
+                for char in tmp_str[::]:
+                    if 125 < ord(char):
+                        copy_tmp_str += 'X'
+                    else:
+                        copy_tmp_str += char
+                f.write(copy_tmp_str)
+
+    # Changes surefire version in a pom
+    def add_argline_to_surefire(self, content):
+        ans = []
+        inspected_module = self.repo_dir
+        poms = self.get_all_pom_paths(inspected_module)
+        new_file_lines = []
+        for pom in poms:
+            xmlFile = parse(pom)
+            tmp_build_list = xmlFile.getElementsByTagName('build')
+            build_list = list(
+                filter(lambda b: not b.parentNode == None and b.parentNode.localName == 'project', tmp_build_list))
+            if len(build_list) == 0:
+                continue
+            assert len(build_list) == 1
+            plugins_tags = build_list[0].getElementsByTagName('plugins')
+            if len(plugins_tags) == 0:
+                continue
+            for plugins_tag in plugins_tags:
+                if plugins_tag.parentNode.localName == 'build':
+                    artifacts_ids = list(
+                        map(lambda a: str(a.firstChild.data), plugins_tag.getElementsByTagName('artifactId')))
+                    if not any(a_id == 'maven-surefire-plugin' for a_id in artifacts_ids):
+                        new_plugin = plugins_tag.ownerDocument.createElement(tagName='plugin')
+                        new_group_id = new_plugin.ownerDocument.createElement(tagName='groupId')
+                        new_artifact_id = new_plugin.ownerDocument.createElement(tagName='artifactId')
+                        new_group_id_text = new_group_id.ownerDocument.createTextNode('org.apache.maven.plugins')
+                        new_artifact_id_text = new_artifact_id.ownerDocument.createTextNode('maven-surefire-plugin')
+                        new_group_id.appendChild(new_group_id_text)
+                        new_plugin.appendChild(new_group_id)
+                        new_artifact_id.appendChild(new_artifact_id_text)
+                        new_plugin.appendChild(new_artifact_id)
+                        plugins_tag.appendChild(new_plugin)
+            for plugins_tag in plugins_tags:
+                mvn.add_plugin_configuration_argline(plugins_tag, 'maven-surefire-plugin', content=content)
             os.remove(pom)
             with open(pom, 'w+') as f:
                 tmp_str = xmlFile.toprettyxml()
