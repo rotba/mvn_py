@@ -294,47 +294,48 @@ class Repo(object):
 
     # Recursively add element to tag
     def add_to_tag(self, tag, sub_tags, data ,create_parents_if_not_exist):
-        if len(sub_tags) == 0:
-            if tag.firstChild == None:
-                text_node = tag.ownerDocument.createTextNode('')
-                tag.appendChild(text_node)
-            tag.firstChild.data = data
-            return
-        #TODO find solution for the tags from the form plugins.plugin...
-        if '[' in tag.locaName and ']' in tag.locaName and tag.locaName in mvn.dict_super_sub_tags.keys():
-            child = mvn.find_child()
-            next_tag = None
-            sub_tags_local_name = mvn.dict_super_sub_tags[tag.locaName]
-            child_tags = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags_local_name)
-            for c_tag in child_tags:
-                artifactId = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='artifactID')
-                if artifactId ==None:
-                    break
-            if new_tag ==None:
-                for c_tag in child_tags:
-                    name = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='name')
-                    if name ==None:
-                        break
-            if new_tag ==None:
+		pass
+        # if len(sub_tags) == 0:
+            # if tag.firstChild == None:
+                # text_node = tag.ownerDocument.createTextNode('')
+                # tag.appendChild(text_node)
+            # tag.firstChild.data = data
+            # return
+        # TODO find solution for the tags from the form plugins.plugin...
+        # if '[' in tag.locaName and ']' in tag.locaName and tag.locaName in mvn.dict_super_sub_tags.keys():
+            # child = mvn.find_child()
+            # next_tag = None
+            # sub_tags_local_name = mvn.dict_super_sub_tags[tag.locaName]
+            # child_tags = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags_local_name)
+            # for c_tag in child_tags:
+                # artifactId = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='artifactID')
+                # if artifactId ==None:
+                    # break
+            # if new_tag ==None:
+                # for c_tag in child_tags:
+                    # name = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='name')
+                    # if name ==None:
+                        # break
+            # if new_tag ==None:
 
-        else:
-            sub_tag_list = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags[0])
-            if len(sub_tag_list) == 1:
-                self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
-                                create_parents_if_not_exist=create_parents_if_not_exist)
-            elif len(sub_tag_list) == 0:
-                if create_parents_if_not_exist:
-                    new_tag = tag.ownerDocument.createElement(tagName=sub_tags[0])
-                    tag.appendChild(new_tag)
-                    self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
-                                    create_parents_if_not_exist=create_parents_if_not_exist)
-                else:
-                    raise mvn.MVNError(msg='{} not exist in the tag a tag in {}'.format(sub_tags[0], tag.locaName))
-            else:
-                raise mvn.MVNError(
-                    msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
-                        sub_tags[0], str(len(sub_tag_list)))
-                )
+        # else:
+            # sub_tag_list = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags[0])
+            # if len(sub_tag_list) == 1:
+                # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
+                                # create_parents_if_not_exist=create_parents_if_not_exist)
+            # elif len(sub_tag_list) == 0:
+                # if create_parents_if_not_exist:
+                    # new_tag = tag.ownerDocument.createElement(tagName=sub_tags[0])
+                    # tag.appendChild(new_tag)
+                    # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
+                                    # create_parents_if_not_exist=create_parents_if_not_exist)
+                # else:
+                    # raise mvn.MVNError(msg='{} not exist in the tag a tag in {}'.format(sub_tags[0], tag.locaName))
+            # else:
+                # raise mvn.MVNError(
+                    # msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
+                        # sub_tags[0], str(len(sub_tag_list)))
+                # )
 
 
 
