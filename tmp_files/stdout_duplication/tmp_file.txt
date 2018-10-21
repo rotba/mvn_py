@@ -1,51 +1,61 @@
 [INFO] Scanning for projects...
-[WARNING] 
-[WARNING] Some problems were encountered while building the effective model for com.mycompany.app:tracer:jar:1.0.1-SNAPSHOT
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-shade-plugin is missing. @ line 46, column 12
-[WARNING] The expression ${artifactId} is deprecated. Please use ${project.artifactId} instead.
-[WARNING] The expression ${version} is deprecated. Please use ${project.version} instead.
-[WARNING] 
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING] 
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
-[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
 [INFO] 
-[INFO] ----------------------< com.mycompany.app:tracer >----------------------
-[INFO] Building tracer 1.0.1-SNAPSHOT
+[INFO] GMT_P                                                              [pom]
+[INFO] sub_mod_1                                                          [jar]
+[INFO] 
+[INFO] ----------------------------< GMT_P:GMT_P >-----------------------------
+[INFO] Building GMT_P 1.0-SNAPSHOT                                        [1/2]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< GMT_P:sub_mod_1 >---------------------------
+[INFO] Building sub_mod_1 1.0-SNAPSHOT                                    [2/2]
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ tracer ---
-[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\main\resources
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_1 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\main\resources
 [INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ tracer ---
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_1 ---
 [INFO] Nothing to compile - all classes are up to date
 [INFO] 
-[INFO] --- maven-jar-plugin:2.4:jar (default) @ tracer ---
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ sub_mod_1 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\test\resources
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ tracer ---
-[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\test\resources
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ sub_mod_1 ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\test-classes
 [INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ tracer ---
-[INFO] No sources to compile
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ sub_mod_1 ---
+[INFO] Surefire report directory: C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+C:\Users\user\.m2\repository
+C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj
+Injecting method to junit.framework.TestCase...
+Method injection done
+Hello!1540129039795
+Running MainTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 sec - in MainTest
+Running p_1.AmitTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 sec - in p_1.AmitTest
+
+Results :
+
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
 [INFO] 
-[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ tracer ---
-[INFO] No tests to run.
-[INFO] 
-[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ tracer ---
-[INFO] 
-[INFO] --- maven-shade-plugin:3.2.0:shade (default) @ tracer ---
-[INFO] Including commons-lang:commons-lang:jar:2.1 in the shaded jar.
-[INFO] Including org.javassist:javassist:jar:3.20.0-GA in the shaded jar.
-[INFO] Replacing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\uber-tracer-1.0.1-SNAPSHOT.jar with C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT-shaded.jar
-[INFO] 
-[INFO] --- maven-install-plugin:2.4:install (default-install) @ tracer ---
-[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT.jar to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.jar
-[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\pom.xml to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.pom
+[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.015 s]
+[INFO] sub_mod_1 1.0-SNAPSHOT ............................. SUCCESS [ 48.814 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 2.031 s
-[INFO] Finished at: 2018-10-19T11:42:41+03:00
+[INFO] Total time: 49.111 s
+[INFO] Finished at: 2018-10-21T16:37:29+03:00
 [INFO] ------------------------------------------------------------------------

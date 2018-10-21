@@ -261,16 +261,12 @@ class Test_mvnpy(unittest.TestCase):
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 
-    def test_setup_surfire_agent(self):
+    def test_setup_tracer(self):
         module = os.path.join( os.getcwd(),r'static_files\MavenProj')
-        tracer_dir =os.path.join( os.getcwd(),r'static_files\java_tracer\tracer')
-        repo_mvn_tracer = Repo.Repo(tracer_dir)
         repo = Repo.Repo(module)
         expected_agent_path = os.path.join(repo.repo_dir, 'agent.jar')
         expected_paths_path = os.path.join(repo.repo_dir, 'paths.txt')
-        repo_mvn_tracer.install()
-        agnet_path = os.path.join(tracer_dir, r'target\tracer-1.0.1-SNAPSHOT.jar')
-        repo.setup_surefire_agent(agnet_path)
+        repo.setup_tracer()
         self.assertTrue(os.path.isfile(expected_agent_path))
         self.assertTrue(os.path.isfile(expected_paths_path))
         with open(expected_paths_path,'rb') as paths:
