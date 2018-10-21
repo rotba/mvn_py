@@ -7,7 +7,11 @@ import TestObjects
 import CompilationErrorObject
 import sys
 
-
+dict_super_sub_tags = {'dependencies':'dependency',
+                       'mailingLists':'mailingList',
+                       'licenses':'license',
+                       'developers':'developer',
+                       'plugins': 'plugin'}
 # Returns the testcases generated compilation error in the maven build report
 def get_compilation_error_testcases(compilation_error_report):
     ans = []

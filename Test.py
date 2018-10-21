@@ -145,7 +145,7 @@ class Test_mvnpy(unittest.TestCase):
         os.chdir(module)
         os.system('git checkout HEAD -f')
         mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
-        excpected_version = '2.22.0'
+        excpected_version = '2.21.0'
         poms = repo .get_all_pom_paths(module)
         repo.change_surefire_ver(excpected_version, module )
         self.assertTrue(len(poms)>0)
@@ -279,7 +279,7 @@ class Test_mvnpy(unittest.TestCase):
             self.assertEqual(lines[1], repo.repo_dir)
         with open(os.path.join(repo.repo_dir,'pom.xml'),'rb') as pom:
             lines = pom.readlines()
-            self.assertTrue('<argLine>javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
+            self.assertTrue('<argLine>-javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):
