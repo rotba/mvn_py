@@ -95,8 +95,8 @@ class Repo(object):
                     ans.extend(self.get_tests_reports(file_abs_path))
         return ans
 
-    # Gets all the reports in the given module if given, else in the given module
-    def setup_tracer(self):
+    # Adds Tracer agent to surefire. Outpur of tracer goes to target
+    def setup_tracer(self, target = None):
         agent_path_src = os.path.join(mvn.tracer_dir,r'target\uber-tracer-1.0.1-SNAPSHOT.jar')
         if not os.path.isfile(agent_path_src):
 				os.system('mvn install -f {}'.format(mvn.tracer_dir))

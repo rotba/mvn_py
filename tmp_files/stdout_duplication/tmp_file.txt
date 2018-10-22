@@ -1,61 +1,14 @@
 [INFO] Scanning for projects...
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Build Order:
 [INFO] 
-[INFO] GMT_P                                                              [pom]
-[INFO] sub_mod_1                                                          [jar]
-[INFO] 
-[INFO] ----------------------------< GMT_P:GMT_P >-----------------------------
-[INFO] Building GMT_P 1.0-SNAPSHOT                                        [1/2]
-[INFO] --------------------------------[ pom ]---------------------------------
-[INFO] 
-[INFO] --------------------------< GMT_P:sub_mod_1 >---------------------------
-[INFO] Building sub_mod_1 1.0-SNAPSHOT                                    [2/2]
+[INFO] ------------------< org.apache.commons:commons-math4 >------------------
+[INFO] Building Apache Commons Math 4.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_1 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\main\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_1 ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ sub_mod_1 ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] skip non existing resourceDirectory C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\test\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ sub_mod_1 ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 2 source files to C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\test-classes
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ sub_mod_1 ---
-[INFO] Surefire report directory: C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\surefire-reports
-
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-C:\Users\user\.m2\repository
-C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\MavenProj
-Injecting method to junit.framework.TestCase...
-Method injection done
-Hello!1540129039795
-Running MainTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 sec - in MainTest
-Running p_1.AmitTest
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 sec - in p_1.AmitTest
-
-Results :
-
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
-
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary:
-[INFO] 
-[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.015 s]
-[INFO] sub_mod_1 1.0-SNAPSHOT ............................. SUCCESS [ 48.814 s]
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ commons-math4 ---
+[INFO] Deleting C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\commons-math\target
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 49.111 s
-[INFO] Finished at: 2018-10-21T16:37:29+03:00
+[INFO] Total time: 3.203 s
+[INFO] Finished at: 2018-10-22T13:21:06+03:00
 [INFO] ------------------------------------------------------------------------
