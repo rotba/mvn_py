@@ -339,9 +339,21 @@ class Repo(object):
                         # sub_tags[0], str(len(sub_tag_list)))
                 # )
 
-    # Returns the traces that came out of the tracer
-    def get_traces(self):
-        pass
+    # Returns the dictionary that map testcase string to its traces strings
+    def get_traces(self, test_name = ''):
+        ans = {}
+        debugger_tests_dir  = os.path.relpath(os.path.join(self.repo_dir,r'../../DebuggerTests'))
+        for filename in os.listdir(debugger_tests_dir ):
+            if (filename.startswith('Trace_') or filename.endswith(".txt")) and test_name in filename:
+                with open(os.path.join(debugger_tests_dir,filename),'r') as file:
+                    key = filename.replace('.txt','')
+                    ans[key] = []
+                    tmp = file.readlines()
+                    for trace in tmp:
+                        function_name = trace.replace('@', '#').replace('\n','').split(' ')[-1]
+                        ans[key].append(function_name)
+
+        return ans
 
 
 

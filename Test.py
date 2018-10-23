@@ -278,19 +278,34 @@ class Test_mvnpy(unittest.TestCase):
             lines = pom.readlines()
             self.assertTrue('<argLine>-javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
 
-    def test_get_traces(self):
+    def test_get_traces_1(self):
         excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testField_1533637414916'
         excpected_trace_1 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getFreeParameters'
         excpected_trace_2 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getPartialDerivativeIndex'
         debugger_tests_src = os.path.join(os.getcwd(), r'static_files\DebuggerTests_commons_math')
         debugger_tests_dst = os.path.join(os.getcwd(), r'DebuggerTests')
-        shutil.copytree(debugger_tests_src, debugger_tests_dst)
+        if not os.path.isdir(debugger_tests_dst):
+            shutil.copytree(debugger_tests_src, debugger_tests_dst)
         module = os.path.join( os.getcwd(),r'static_files\commons-math')
         repo = Repo.Repo(module)
         res = repo.get_traces()
         self.assertTrue(excpected_testcase_trace in res.keys())
         self.assertTrue(excpected_trace_1 in res[excpected_testcase_trace])
         self.assertTrue(excpected_trace_2 in res[excpected_testcase_trace])
+        shutil.rmtree(debugger_tests_dst)
+
+    def test_get_traces_2(self):
+        excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.function.LogitTest@testDerivativesHighOrder_1533637432535'
+        not_excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testField_1533637414916'
+        debugger_tests_src = os.path.join(os.getcwd(), r'static_files\DebuggerTests_commons_math')
+        debugger_tests_dst = os.path.join(os.getcwd(), r'DebuggerTests')
+        if not os.path.isdir(debugger_tests_dst):
+            shutil.copytree(debugger_tests_src, debugger_tests_dst)
+        module = os.path.join( os.getcwd(),r'static_files\commons-math')
+        repo = Repo.Repo(module)
+        res = repo.get_traces('LogitTest')
+        self.assertTrue(excpected_testcase_trace in res.keys())
+        self.assertFalse(not_excpected_testcase_trace in res.keys())
         shutil.rmtree(debugger_tests_dst)
 
 
