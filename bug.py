@@ -7,7 +7,7 @@ import csv
 
 
 class Bug(object):
-    def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc):
+    def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc, traces = [], bugged_components = []):
         self._issue_key = issue_key
         self._commit_hexsha = commit_hexsha
         self._parent_hexsha = parent_hexsha
@@ -17,6 +17,8 @@ class Bug(object):
         self._type = type
         self._desc = desc
         self._valid = valid
+        self._traces  = traces
+        self._bugged_components = bugged_components
         self._has_annotations = 'Test' in list(map(lambda a: a.name, self._bugged_testcase.method.annotations))
 
     @property
@@ -34,6 +36,12 @@ class Bug(object):
     @property
     def fixed_testcase(self):
         return self._bugged_testcase
+    @property
+    def traces(self):
+        return self._traces
+    @property
+    def bugged_components(self):
+        return self._bugged_components
     @property
     def desctiption(self):
         return self._desc
@@ -241,7 +249,7 @@ class Time_csv_report_handler(object):
     def __init__(self, path):
         self._writer = None
         self._path = path
-        self._fieldnames = ['issue', 'commit','module', 'time', 'description']
+        self._fieldnames = ['issue', 'commit','module', 'time', 'description', 'traces', 'bugged_components']
         if not os.path.exists(path):
             with open(self._path, 'w+') as csv_output:
                 writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
@@ -254,12 +262,16 @@ class Time_csv_report_handler(object):
 
 
     # Generated csv bug tupple
-    def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description):
-        return {'issue': issue_key,
-                'commit': commit_hexsha,
-                'module': module,
-                'time': time,
-                'description': description}
+    def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description, traces, bugged_components):
+        return {
+            'issue': issue_key,
+            'commit': commit_hexsha,
+            'module': module,
+            'time': time,
+            'description': description,
+            'traces': traces,
+            'bugged_components': bugged_components
+        }
 
     @property
     def path(self):
@@ -289,26 +301,28 @@ class Bug_type(Enum):
         return self.value
 
 
-def create_bug(issue, commit, parent, testcase, parent_testcase, type):
+def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components):
     if testcase.passed and parent_testcase.failed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
-                   fixed_testcase=testcase,bugged_testcase=parent_testcase, type=type, valid=True,desc='')
+                   fixed_testcase=testcase,bugged_testcase=parent_testcase, type=type, valid=True,desc='',
+                   traces=traces, bugged_components=bugged_components)
     elif testcase.passed and parent_testcase.has_error:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False,desc=invalid_rt_error_desc + ' ' + parent_testcase.get_error())
+                   type=type,valid=False,desc=invalid_rt_error_desc + ' ' + parent_testcase.get_error(),
+                   traces = traces, bugged_components = bugged_components)
     elif testcase.passed and parent_testcase.passed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False, desc=invalid_passed_desc)
+                   type=type,valid=False, desc=invalid_passed_desc,traces=traces, bugged_components=bugged_components)
     elif testcase.failed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False, desc=invalid_not_fixed_failed_desc)
+                   type=type,valid=False, desc=invalid_not_fixed_failed_desc,traces=traces, bugged_components=bugged_components)
     elif testcase.has_error:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False,desc=invalid_not_fixed__error_desc+' '+testcase.get_error())
+                   type=type,valid=False,desc=invalid_not_fixed__error_desc+' '+testcase.get_error(),traces=traces, bugged_components=bugged_components)
     else:
         assert 0==1
 
