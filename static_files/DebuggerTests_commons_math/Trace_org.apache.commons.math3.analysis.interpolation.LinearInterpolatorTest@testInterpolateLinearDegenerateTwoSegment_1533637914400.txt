@@ -1,0 +1,9 @@
+[inst2] + org.apache.commons.math3.analysis.interpolation.LinearInterpolatorTest@testInterpolateLinearDegenerateTwoSegment
+[inst2] + org.apache.commons.math3.analysis.interpolation.LinearInterpolator@interpolate
+[inst2] + org.apache.commons.math3.util.MathArrays@checkOrder
+[inst2] + org.apache.commons.math3.analysis.interpolation.LinearInterpolatorTest@verifyInterpolation
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@evaluate
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction@getPolynomials
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients

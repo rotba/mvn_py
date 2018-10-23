@@ -1,0 +1,6 @@
+[inst2] + org.apache.commons.math3.complex.ComplexFieldTest@testOne
+[inst2] + org.apache.commons.math3.complex.ComplexField@getInstance
+[inst2] + org.apache.commons.math3.complex.ComplexField$LazyHolder@access$000
+[inst2] + org.apache.commons.math3.complex.ComplexField@getOne
+[inst2] + org.apache.commons.math3.complex.Complex@equals
+[inst2] + org.apache.commons.math3.complex.ComplexFormatTest@getLocale

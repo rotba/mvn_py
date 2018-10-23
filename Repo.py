@@ -5,7 +5,6 @@ from xml.dom.minidom import parse
 import TestObjects
 import mvn
 
-
 class Repo(object):
     def __init__(self, repo_dir):
         self._repo_dir = repo_dir
@@ -96,8 +95,11 @@ class Repo(object):
                     ans.extend(self.get_tests_reports(file_abs_path))
         return ans
 
-    # Gets all the reports in the given module if given, else in the given module
-    def setup_surefire_agent(self, agent_path_src):
+    # Adds Tracer agent to surefire. Outpur of tracer goes to target
+    def setup_tracer(self, target = None):
+        agent_path_src = os.path.join(mvn.tracer_dir,r'target\uber-tracer-1.0.1-SNAPSHOT.jar')
+        if not os.path.isfile(agent_path_src):
+				os.system('mvn install -f {}'.format(mvn.tracer_dir))
         agent_path_dst = os.path.join(self.repo_dir, 'agent.jar')
         paths_path= os.path.join(self.repo_dir, 'paths.txt')
         copyfile(agent_path_src, agent_path_dst)
@@ -336,6 +338,10 @@ class Repo(object):
                     # msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
                         # sub_tags[0], str(len(sub_tag_list)))
                 # )
+
+    # Returns the traces that came out of the tracer
+    def get_traces(self):
+        pass
 
 
 

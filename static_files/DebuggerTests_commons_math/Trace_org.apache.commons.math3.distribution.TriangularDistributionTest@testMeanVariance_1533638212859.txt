@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@testMeanVariance
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.util.FastMath@ulp
+[inst2] + org.apache.commons.math3.distribution.TriangularDistribution@getNumericalMean
+[inst2] + org.apache.commons.math3.distribution.TriangularDistribution@getNumericalVariance
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.TriangularDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

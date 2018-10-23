@@ -1,0 +1,2 @@
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3DTest@testNormSq
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getNormSq

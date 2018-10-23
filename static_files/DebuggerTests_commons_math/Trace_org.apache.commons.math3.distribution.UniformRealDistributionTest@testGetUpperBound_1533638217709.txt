@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@testGetUpperBound
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistribution@getSupportUpperBound
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.UniformRealDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

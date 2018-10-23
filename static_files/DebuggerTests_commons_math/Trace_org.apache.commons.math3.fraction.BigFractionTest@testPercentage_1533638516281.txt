@@ -1,0 +1,5 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testPercentage
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.fraction.BigFraction@percentageValue
+[inst2] + org.apache.commons.math3.fraction.BigFraction@multiply
+[inst2] + org.apache.commons.math3.fraction.BigFraction@doubleValue

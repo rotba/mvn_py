@@ -1,0 +1,16 @@
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseSecantSolverAbstractTest@testRootEndpoints
+[inst2] + org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolverTest@getSolver
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@solve
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@setup
+[inst2] + org.apache.commons.math3.util.Incrementor@setMaximalCount
+[inst2] + org.apache.commons.math3.util.Incrementor@resetCount
+[inst2] + org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver@doSolve
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getMin
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getStartValue
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getMax
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@verifySequence
+[inst2] + org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils@verifySequence
+[inst2] + org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils@verifyInterval
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@computeObjectiveValue
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@incrementEvaluationCount
+[inst2] + org.apache.commons.math3.analysis.XMinus5Function@value

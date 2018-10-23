@@ -1,0 +1,10 @@
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunctionTest@testParaboloid
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunctionTest$2@value
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunctionTest$3@value
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunctionTest$4@value
+[inst2] + org.apache.commons.math3.util.MathArrays@checkOrder
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunction@computeSplineCoefficients
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunction@value
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineInterpolatingFunction@searchIndex
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineFunction@value
+[inst2] + org.apache.commons.math3.analysis.interpolation.BicubicSplineFunction@apply

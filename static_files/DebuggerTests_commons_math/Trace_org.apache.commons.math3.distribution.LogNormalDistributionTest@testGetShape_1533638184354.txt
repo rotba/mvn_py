@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@testGetShape
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@getDistribution
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistribution@getShape
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.LogNormalDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

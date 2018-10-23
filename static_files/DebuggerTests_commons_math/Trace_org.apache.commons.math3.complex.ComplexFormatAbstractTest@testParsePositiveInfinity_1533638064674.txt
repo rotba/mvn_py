@@ -1,0 +1,10 @@
+[inst2] + org.apache.commons.math3.complex.ComplexFormatAbstractTest@testParsePositiveInfinity
+[inst2] + org.apache.commons.math3.complex.ComplexFormat@parse
+[inst2] + org.apache.commons.math3.util.CompositeFormat@parseAndIgnoreWhitespace
+[inst2] + org.apache.commons.math3.util.CompositeFormat@parseNextCharacter
+[inst2] + org.apache.commons.math3.complex.ComplexFormat@getRealFormat
+[inst2] + org.apache.commons.math3.util.CompositeFormat@parseNumber
+[inst2] + org.apache.commons.math3.complex.ComplexFormat@getImaginaryCharacter
+[inst2] + org.apache.commons.math3.util.CompositeFormat@parseFixedstring
+[inst2] + org.apache.commons.math3.complex.Complex@equals
+[inst2] + org.apache.commons.math3.complex.FrenchComplexFormatTest@getLocale

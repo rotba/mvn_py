@@ -7,5 +7,6 @@
     <mapping directory="$PROJECT_DIR$/static_files/commons-math" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/static_files/java_tracer" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/static_files/tika" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tracer/java_tracer" vcs="Git" />
   </component>
 </project>

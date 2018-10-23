@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testCompositionOneVariableY
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@checkCompatibility
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@divide
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@compose
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@multiply
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@sqrt
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@rootN
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@rootN
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getValue
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getOrder
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getOrder
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getPartialDerivative
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getPartialDerivativeIndex
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getFreeParameters

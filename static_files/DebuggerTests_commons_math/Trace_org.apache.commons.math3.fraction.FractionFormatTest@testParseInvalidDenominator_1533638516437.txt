@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.fraction.FractionFormatTest@testParseInvalidDenominator
+[inst2] + org.apache.commons.math3.fraction.FractionFormat@parse
+[inst2] + org.apache.commons.math3.fraction.ProperFractionFormat@parse
+[inst2] + org.apache.commons.math3.fraction.AbstractFormat@parseAndIgnoreWhitespace
+[inst2] + org.apache.commons.math3.fraction.AbstractFormat@parseNextCharacter
+[inst2] + org.apache.commons.math3.fraction.AbstractFormat@getNumeratorFormat
+[inst2] + org.apache.commons.math3.fraction.AbstractFormat@getDenominatorFormat
+[inst2] + org.apache.commons.math3.fraction.ProperFractionFormat@getWholeFormat
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
+[inst2] + org.apache.commons.math3.exception.MathIllegalStateException@getContext
+[inst2] + org.apache.commons.math3.fraction.FractionFormatTest@setUp
+[inst2] + org.apache.commons.math3.fraction.FractionFormatTest@getLocale
+[inst2] + org.apache.commons.math3.fraction.ProperFractionFormat@setWholeFormat

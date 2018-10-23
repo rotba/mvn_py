@@ -1,0 +1,9 @@
+[inst2] + org.apache.commons.math3.analysis.function.GaussianTest@testParametricGradient
+[inst2] + org.apache.commons.math3.analysis.function.Gaussian$Parametric@gradient
+[inst2] + org.apache.commons.math3.analysis.function.Gaussian$Parametric@validateParameters
+[inst2] + org.apache.commons.math3.analysis.function.Gaussian@access$000
+[inst2] + org.apache.commons.math3.util.FastMath@exp
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$000
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$100
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$200
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$300

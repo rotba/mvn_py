@@ -1,0 +1,11 @@
+[inst2] + org.apache.commons.math3.genetics.NPointCrossoverTest@testCrossover
+[inst2] + org.apache.commons.math3.genetics.BinaryChromosome@checkValidity
+[inst2] + org.apache.commons.math3.genetics.NPointCrossover@crossover
+[inst2] + org.apache.commons.math3.genetics.NPointCrossover@mate
+[inst2] + org.apache.commons.math3.genetics.AbstractListChromosome@getLength
+[inst2] + org.apache.commons.math3.genetics.AbstractListChromosome@getRepresentation
+[inst2] + org.apache.commons.math3.genetics.GeneticAlgorithm@getRandomGenerator
+[inst2] + org.apache.commons.math3.genetics.DummyBinaryChromosome@newFixedLengthChromosome
+[inst2] + org.apache.commons.math3.genetics.ChromosomePair@getFirst
+[inst2] + org.apache.commons.math3.genetics.ChromosomePair@getSecond
+[inst2] + org.apache.commons.math3.genetics.NPointCrossoverTest@detectCrossoverPoints

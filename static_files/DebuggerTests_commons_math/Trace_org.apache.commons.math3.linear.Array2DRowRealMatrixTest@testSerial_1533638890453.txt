@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrixTest@testSerial
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@copyIn
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@setSubMatrix
+[inst2] + org.apache.commons.math3.TestUtils@serializeAndRecover

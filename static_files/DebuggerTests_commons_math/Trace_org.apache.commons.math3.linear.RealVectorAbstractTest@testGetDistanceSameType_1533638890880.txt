@@ -1,0 +1,6 @@
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testGetDistanceSameType
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@doTestGetDistance
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue
+[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@create
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getDistance
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt

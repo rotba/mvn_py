@@ -6,7 +6,7 @@ from bug  import BugError
 import TestObjects
 import CompilationErrorObject
 import sys
-
+tracer_dir  = path = os.path.join(os.path.dirname(__file__),r'tracer\java_tracer\tracer')
 dict_super_sub_tags = {'dependencies':'dependency',
                        'mailingLists':'mailingList',
                        'licenses':'license',

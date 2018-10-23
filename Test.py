@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 import unittest
 import Repo
@@ -261,16 +262,12 @@ class Test_mvnpy(unittest.TestCase):
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 
-    def test_setup_surfire_agent(self):
+    def test_setup_tracer(self):
         module = os.path.join( os.getcwd(),r'static_files\MavenProj')
-        tracer_dir =os.path.join( os.getcwd(),r'static_files\java_tracer\tracer')
-        repo_mvn_tracer = Repo.Repo(tracer_dir)
         repo = Repo.Repo(module)
         expected_agent_path = os.path.join(repo.repo_dir, 'agent.jar')
         expected_paths_path = os.path.join(repo.repo_dir, 'paths.txt')
-        repo_mvn_tracer.install()
-        agnet_path = os.path.join(tracer_dir, r'target\tracer-1.0.1-SNAPSHOT.jar')
-        repo.setup_surefire_agent(agnet_path)
+        repo.setup_tracer()
         self.assertTrue(os.path.isfile(expected_agent_path))
         self.assertTrue(os.path.isfile(expected_paths_path))
         with open(expected_paths_path,'rb') as paths:
@@ -280,6 +277,22 @@ class Test_mvnpy(unittest.TestCase):
         with open(os.path.join(repo.repo_dir,'pom.xml'),'rb') as pom:
             lines = pom.readlines()
             self.assertTrue('<argLine>-javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
+
+    def test_get_traces(self):
+        excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testField_1533637414916'
+        excpected_trace_1 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getFreeParameters'
+        excpected_trace_2 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getPartialDerivativeIndex'
+        debugger_tests_src = os.path.join(os.getcwd(), r'static_files\DebuggerTests_commons_math')
+        debugger_tests_dst = os.path.join(os.getcwd(), r'DebuggerTests')
+        shutil.copytree(debugger_tests_src, debugger_tests_dst)
+        module = os.path.join( os.getcwd(),r'static_files\commons-math')
+        repo = Repo.Repo(module)
+        res = repo.get_traces()
+        self.assertTrue(excpected_testcase_trace in res.keys())
+        self.assertTrue(excpected_trace_1 in res[excpected_testcase_trace])
+        self.assertTrue(excpected_trace_2 in res[excpected_testcase_trace])
+        shutil.rmtree(debugger_tests_dst)
+
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

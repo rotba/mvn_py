@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@testIllegalArguments
+[inst2] + org.apache.commons.math3.distribution.AbstractRealDistribution@cumulativeProbability
+[inst2] + org.apache.commons.math3.distribution.AbstractRealDistribution@probability
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
+[inst2] + org.apache.commons.math3.distribution.CauchyDistribution@inverseCumulativeProbability
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.CauchyDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.CauchyDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.distribution.CauchyDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.CauchyDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.CauchyDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

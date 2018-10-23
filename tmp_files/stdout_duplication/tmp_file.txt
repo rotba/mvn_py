@@ -1,51 +1,14 @@
 [INFO] Scanning for projects...
-[WARNING] 
-[WARNING] Some problems were encountered while building the effective model for com.mycompany.app:tracer:jar:1.0.1-SNAPSHOT
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-shade-plugin is missing. @ line 46, column 12
-[WARNING] The expression ${artifactId} is deprecated. Please use ${project.artifactId} instead.
-[WARNING] The expression ${version} is deprecated. Please use ${project.version} instead.
-[WARNING] 
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING] 
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
-[WARNING] 
 [INFO] 
-[INFO] ----------------------< com.mycompany.app:tracer >----------------------
-[INFO] Building tracer 1.0.1-SNAPSHOT
+[INFO] ------------------< org.apache.commons:commons-math4 >------------------
+[INFO] Building Apache Commons Math 4.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ tracer ---
-[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\main\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ tracer ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- maven-jar-plugin:2.4:jar (default) @ tracer ---
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ tracer ---
-[WARNING] Using platform encoding (Cp1255 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] skip non existing resourceDirectory C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\src\test\resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ tracer ---
-[INFO] No sources to compile
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ tracer ---
-[INFO] No tests to run.
-[INFO] 
-[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ tracer ---
-[INFO] 
-[INFO] --- maven-shade-plugin:3.2.0:shade (default) @ tracer ---
-[INFO] Including commons-lang:commons-lang:jar:2.1 in the shaded jar.
-[INFO] Including org.javassist:javassist:jar:3.20.0-GA in the shaded jar.
-[INFO] Replacing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\uber-tracer-1.0.1-SNAPSHOT.jar with C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT-shaded.jar
-[INFO] 
-[INFO] --- maven-install-plugin:2.4:install (default-install) @ tracer ---
-[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\target\tracer-1.0.1-SNAPSHOT.jar to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.jar
-[INFO] Installing C:\Users\TEMP\mvnpy\mvnpy\static_files\java_tracer\tracer\pom.xml to C:\Users\amirelm\.m2\repository\com\mycompany\app\tracer\1.0.1-SNAPSHOT\tracer-1.0.1-SNAPSHOT.pom
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ commons-math4 ---
+[INFO] Deleting C:\Users\user\Code\Python\mvnpy\mvnpy\static_files\commons-math\target
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 2.031 s
-[INFO] Finished at: 2018-10-19T11:42:41+03:00
+[INFO] Total time: 3.203 s
+[INFO] Finished at: 2018-10-22T13:21:06+03:00
 [INFO] ------------------------------------------------------------------------

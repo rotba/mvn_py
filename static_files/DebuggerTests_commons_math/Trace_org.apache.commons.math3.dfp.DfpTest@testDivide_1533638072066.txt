@@ -1,0 +1,9 @@
+[inst2] + org.apache.commons.math3.dfp.DfpTest@testDivide
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@round
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRoundingMode
+[inst2] + org.apache.commons.math3.dfp.Dfp@divide
+[inst2] + org.apache.commons.math3.dfp.Dfp@getZero
+[inst2] + org.apache.commons.math3.dfp.DfpField@getZero
+[inst2] + org.apache.commons.math3.dfp.Dfp@isNaN

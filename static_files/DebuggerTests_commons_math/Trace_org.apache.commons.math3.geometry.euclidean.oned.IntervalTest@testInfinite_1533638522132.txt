@@ -1,0 +1,11 @@
+[inst2] + org.apache.commons.math3.geometry.euclidean.oned.IntervalTest@testInfinite
+[inst2] + org.apache.commons.math3.geometry.euclidean.oned.Interval@checkPoint
+[inst2] + org.apache.commons.math3.util.FastMath@pow
+[inst2] + org.apache.commons.math3.util.FastMath$lnMant@access$400
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$000
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$100
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$200
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$300
+[inst2] + org.apache.commons.math3.geometry.euclidean.oned.Interval@getSize
+[inst2] + org.apache.commons.math3.geometry.euclidean.oned.Interval@getInf
+[inst2] + org.apache.commons.math3.geometry.euclidean.oned.Interval@getSup

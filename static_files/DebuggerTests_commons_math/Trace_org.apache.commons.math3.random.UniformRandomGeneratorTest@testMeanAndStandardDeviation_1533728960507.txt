@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.random.UniformRandomGeneratorTest@testMeanAndStandardDeviation
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.random.UniformRandomGenerator@nextNormalizedDouble
+[inst2] + org.apache.commons.math3.stat.StatUtils@mean
+[inst2] + org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic@evaluate
+[inst2] + org.apache.commons.math3.stat.descriptive.moment.Mean@evaluate
+[inst2] + org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic@test
+[inst2] + org.apache.commons.math3.stat.descriptive.summary.Sum@evaluate
+[inst2] + org.apache.commons.math3.stat.StatUtils@variance
+[inst2] + org.apache.commons.math3.stat.descriptive.moment.Variance@evaluate
+[inst2] + org.apache.commons.math3.stat.descriptive.moment.Variance@clear
+[inst2] + org.apache.commons.math3.stat.descriptive.moment.SecondMoment@clear
+[inst2] + org.apache.commons.math3.stat.descriptive.moment.FirstMoment@clear

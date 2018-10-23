@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.complex.ComplexTest@testTanhInf
+[inst2] + org.apache.commons.math3.complex.Complex@tanh
+[inst2] + org.apache.commons.math3.complex.Complex@getReal
+[inst2] + org.apache.commons.math3.TestUtils@assertSame
+[inst2] + org.apache.commons.math3.complex.Complex@getImaginary
+[inst2] + org.apache.commons.math3.complex.Complex@valueOf
+[inst2] + org.apache.commons.math3.complex.Complex@createComplex

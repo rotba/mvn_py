@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.complex.RootsOfUnityTest@testMathIllegalState3
+[inst2] + org.apache.commons.math3.complex.RootsOfUnity@isCounterClockWise
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

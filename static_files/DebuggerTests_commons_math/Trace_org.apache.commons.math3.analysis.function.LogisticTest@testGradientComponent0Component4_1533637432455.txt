@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.analysis.function.LogisticTest@testGradientComponent0Component4
+[inst2] + org.apache.commons.math3.analysis.function.Logistic$Parametric@gradient
+[inst2] + org.apache.commons.math3.analysis.function.Logistic$Parametric@validateParameters
+[inst2] + org.apache.commons.math3.util.FastMath@exp
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$000
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$100
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$200
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$300
+[inst2] + org.apache.commons.math3.util.FastMath@pow
+[inst2] + org.apache.commons.math3.util.FastMath$lnMant@access$400
+[inst2] + org.apache.commons.math3.analysis.function.Logistic@access$000
+[inst2] + org.apache.commons.math3.analysis.function.Sigmoid$Parametric@gradient
+[inst2] + org.apache.commons.math3.analysis.function.Sigmoid$Parametric@validateParameters

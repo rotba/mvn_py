@@ -1,0 +1,9 @@
+[inst2] + org.apache.commons.math3.dfp.DfpTest@testPower10K
+[inst2] + org.apache.commons.math3.dfp.DfpField@newDfp
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@power10K
+[inst2] + org.apache.commons.math3.dfp.Dfp@getOne
+[inst2] + org.apache.commons.math3.dfp.DfpField@getOne
+[inst2] + org.apache.commons.math3.dfp.Dfp@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@round
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRoundingMode

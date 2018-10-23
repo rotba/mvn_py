@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.distribution.EnumeratedRealDistributionTest@testGetSupportUpperBound
+[inst2] + org.apache.commons.math3.distribution.EnumeratedRealDistribution@getSupportUpperBound
+[inst2] + org.apache.commons.math3.distribution.EnumeratedDistribution@getPmf
+[inst2] + org.apache.commons.math3.util.Pair@getKey
+[inst2] + org.apache.commons.math3.util.Pair@getValue
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.util.MathArrays@normalizeArray

@@ -1,0 +1,8 @@
+[inst2] + org.apache.commons.math3.genetics.ChromosomeTest@testFindSameChromosome
+[inst2] + org.apache.commons.math3.genetics.Chromosome@findSameChromosome
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@iterator
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@getChromosomes
+[inst2] + org.apache.commons.math3.genetics.ChromosomeTest$DummyChromosome@isSame
+[inst2] + org.apache.commons.math3.genetics.Chromosome@searchForFitnessUpdate
+[inst2] + org.apache.commons.math3.genetics.Chromosome@getFitness
+[inst2] + org.apache.commons.math3.genetics.ChromosomeTest$4@fitness

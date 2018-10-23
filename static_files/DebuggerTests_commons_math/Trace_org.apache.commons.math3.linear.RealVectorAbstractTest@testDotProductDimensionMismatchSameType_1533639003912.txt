@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testDotProductDimensionMismatchSameType
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@doTestDotProductDimensionMismatch
+[inst2] + org.apache.commons.math3.linear.SparseRealVectorTest@create
+[inst2] + org.apache.commons.math3.util.OpenIntToDoubleHashMap@computeCapacity
+[inst2] + org.apache.commons.math3.util.FastMath@ceil
+[inst2] + org.apache.commons.math3.util.FastMath@floor
+[inst2] + org.apache.commons.math3.linear.OpenMapRealVector@isDefaultValue
+[inst2] + org.apache.commons.math3.linear.RealVector@dotProduct
+[inst2] + org.apache.commons.math3.linear.RealVector@checkVectorDimensions
+[inst2] + org.apache.commons.math3.linear.OpenMapRealVector@getDimension
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue

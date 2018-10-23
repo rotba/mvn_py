@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testDoubleValueForLargeNumeratorAndDenominator
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.fraction.BigFraction@doubleValue
+[inst2] + org.apache.commons.math3.util.FastMath@getExponent

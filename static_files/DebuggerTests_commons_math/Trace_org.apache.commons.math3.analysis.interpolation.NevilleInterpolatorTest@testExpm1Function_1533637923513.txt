@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.analysis.interpolation.NevilleInterpolatorTest@testExpm1Function
+[inst2] + org.apache.commons.math3.analysis.function.Expm1@value
+[inst2] + org.apache.commons.math3.util.FastMath@expm1
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$000
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$100
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$200
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$300
+[inst2] + org.apache.commons.math3.analysis.interpolation.NevilleInterpolator@interpolate
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionLagrangeForm@verifyInterpolationArray
+[inst2] + org.apache.commons.math3.util.MathArrays@checkOrder
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionLagrangeForm@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionLagrangeForm@evaluateInternal
+[inst2] + org.apache.commons.math3.analysis.interpolation.NevilleInterpolatorTest@partialerror

@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtilsTest@testChebyshevDifferentials
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@createChebyshevPolynomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@buildPolynomial
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.util.FastMath@floor
+[inst2] + org.apache.commons.math3.fraction.BigFraction@doubleValue
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@polynomialDerivative
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@differentiate
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@multiply
+[inst2] + org.apache.commons.math3.util.FastMath@max
+[inst2] + org.apache.commons.math3.util.FastMath@min
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@add
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtilsTest@checkNullPolynomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients

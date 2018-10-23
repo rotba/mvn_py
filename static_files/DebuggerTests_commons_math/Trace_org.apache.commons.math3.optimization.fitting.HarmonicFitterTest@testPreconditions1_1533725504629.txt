@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.optimization.fitting.HarmonicFitterTest@testPreconditions1
+[inst2] + org.apache.commons.math3.optimization.fitting.CurveFitter@getObservations
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
