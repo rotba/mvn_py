@@ -1,0 +1,10 @@
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinatesTest@testCoordinatesCtoS
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getNorm
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getAlpha
+[inst2] + org.apache.commons.math3.util.FastMath@atan2
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getZ
+[inst2] + org.apache.commons.math3.util.FastMath@acos
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinates@getR
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinates@getTheta
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinates@getPhi

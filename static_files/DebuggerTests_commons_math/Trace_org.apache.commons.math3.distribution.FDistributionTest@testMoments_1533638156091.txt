@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@testMoments
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.distribution.FDistribution@getNumericalMean
+[inst2] + org.apache.commons.math3.distribution.FDistribution@getDenominatorDegreesOfFreedom
+[inst2] + org.apache.commons.math3.distribution.FDistribution@getNumericalVariance
+[inst2] + org.apache.commons.math3.distribution.FDistribution@calculateNumericalVariance
+[inst2] + org.apache.commons.math3.distribution.FDistribution@getNumeratorDegreesOfFreedom
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.FDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

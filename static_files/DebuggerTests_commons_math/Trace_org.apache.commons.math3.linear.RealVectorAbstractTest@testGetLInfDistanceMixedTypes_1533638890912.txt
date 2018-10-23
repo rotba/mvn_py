@@ -1,0 +1,10 @@
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testGetLInfDistanceMixedTypes
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@doTestGetLInfDistance
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue
+[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@create
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@createAlien
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getLInfDistance
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@checkVectorDimensions
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest$RealVectorTestImpl@getDimension
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest$RealVectorTestImpl@getEntry
+[inst2] + org.apache.commons.math3.linear.RealVector@checkIndex

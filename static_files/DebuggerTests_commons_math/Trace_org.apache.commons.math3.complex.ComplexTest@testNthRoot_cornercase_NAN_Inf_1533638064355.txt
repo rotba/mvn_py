@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.complex.ComplexTest@testNthRoot_cornercase_NAN_Inf
+[inst2] + org.apache.commons.math3.complex.Complex@nthRoot
+[inst2] + org.apache.commons.math3.complex.Complex@equals
+[inst2] + org.apache.commons.math3.complex.Complex@isInfinite

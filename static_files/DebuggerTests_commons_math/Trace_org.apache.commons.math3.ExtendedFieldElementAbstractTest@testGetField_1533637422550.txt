@@ -1,0 +1,12 @@
+[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@testGetField
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@build
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getField
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure$1@getOne
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@access$000
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getFreeParameters
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getOrder
+[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@checkRelative
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getReal
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure$1@getZero

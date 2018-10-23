@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.analysis.FunctionUtilsTest@testFixingArguments
+[inst2] + org.apache.commons.math3.analysis.FunctionUtils@fix1stArgument
+[inst2] + org.apache.commons.math3.analysis.FunctionUtils$12@value
+[inst2] + org.apache.commons.math3.analysis.function.Multiply@value
+[inst2] + org.apache.commons.math3.analysis.FunctionUtils@fix2ndArgument
+[inst2] + org.apache.commons.math3.analysis.function.Power@value
+[inst2] + org.apache.commons.math3.util.FastMath@pow
+[inst2] + org.apache.commons.math3.util.FastMath$lnMant@access$400
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$000
+[inst2] + org.apache.commons.math3.util.FastMath$ExpIntTable@access$100
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$200
+[inst2] + org.apache.commons.math3.util.FastMath$ExpFracTable@access$300
+[inst2] + org.apache.commons.math3.analysis.FunctionUtils$13@value
+[inst2] + org.apache.commons.math3.analysis.function.Pow@value

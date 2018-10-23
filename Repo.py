@@ -339,6 +339,10 @@ class Repo(object):
                         # sub_tags[0], str(len(sub_tag_list)))
                 # )
 
+    # Returns the traces that came out of the tracer
+    def get_traces(self):
+        pass
+
 
 
 

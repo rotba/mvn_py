@@ -1,0 +1,11 @@
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testProjectionSameType
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@doTestProjection
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue
+[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@create
+[inst2] + org.apache.commons.math3.linear.RealVector@projection
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@dotProduct
+[inst2] + org.apache.commons.math3.linear.RealVector@mapMultiply
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@copy
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@mapMultiplyToSelf
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getDimension
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getEntry

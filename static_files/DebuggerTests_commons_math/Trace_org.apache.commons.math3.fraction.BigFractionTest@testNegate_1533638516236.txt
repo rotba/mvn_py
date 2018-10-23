@@ -1,0 +1,5 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testNegate
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.fraction.BigFraction@negate
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getNumeratorAsInt
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getDenominatorAsInt

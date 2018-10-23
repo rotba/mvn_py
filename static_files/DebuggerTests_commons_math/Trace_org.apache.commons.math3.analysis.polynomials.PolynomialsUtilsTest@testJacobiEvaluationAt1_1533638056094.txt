@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtilsTest@testJacobiEvaluationAt1
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@createJacobiPolynomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils$JacobiKey@hashCode
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils$JacobiKey@equals
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@buildPolynomial
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.util.FastMath@floor
+[inst2] + org.apache.commons.math3.fraction.BigFraction@doubleValue
+[inst2] + org.apache.commons.math3.util.ArithmeticUtils@binomialCoefficient
+[inst2] + org.apache.commons.math3.util.ArithmeticUtils@checkBinomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@evaluate
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@computeUpToDegree
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils$5@generate
+[inst2] + org.apache.commons.math3.fraction.BigFraction@equals
+[inst2] + org.apache.commons.math3.fraction.BigFraction@reduce

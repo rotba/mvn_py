@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonFormTest@testParameters
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@verifyInputArray
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

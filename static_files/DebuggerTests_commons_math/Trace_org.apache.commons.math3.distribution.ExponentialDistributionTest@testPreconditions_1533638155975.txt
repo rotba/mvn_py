@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@testPreconditions
+[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@tearDown
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@setUp
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setUp
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@makeDistribution
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@makeCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@makeCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestPoints
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@makeInverseCumulativeTestValues
+[inst2] + org.apache.commons.math3.distribution.ExponentialDistributionTest@makeDensityTestValues
+[inst2] + org.apache.commons.math3.distribution.RealDistributionAbstractTest@setTolerance

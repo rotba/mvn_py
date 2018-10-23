@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.exception.util.LocalizedFormatsTest@testVariablePartsConsistency
+[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@values
+[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@getSourceString
+[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@getLocalizedString

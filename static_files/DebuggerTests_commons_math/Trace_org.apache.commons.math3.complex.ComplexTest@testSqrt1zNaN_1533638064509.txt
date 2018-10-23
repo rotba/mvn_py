@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.complex.ComplexTest@testSqrt1zNaN
+[inst2] + org.apache.commons.math3.complex.Complex@sqrt1z
+[inst2] + org.apache.commons.math3.complex.Complex@createComplex
+[inst2] + org.apache.commons.math3.complex.Complex@multiply
+[inst2] + org.apache.commons.math3.complex.Complex@subtract
+[inst2] + org.apache.commons.math3.complex.Complex@sqrt
+[inst2] + org.apache.commons.math3.complex.Complex@isNaN

@@ -1,0 +1,13 @@
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testOuterProductSameType
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@doTestOuterProduct
+[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@create
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@outerProduct
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@createRealMatrix
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@setEntry
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkMatrixIndex
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkRowIndex
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getRowDimension
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkColumnIndex
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getColumnDimension
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getEntry
+[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue

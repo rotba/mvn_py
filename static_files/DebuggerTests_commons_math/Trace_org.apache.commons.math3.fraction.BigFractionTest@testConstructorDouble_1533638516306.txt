@@ -1,0 +1,8 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testConstructorDouble
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@assertFraction
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getNumeratorAsInt
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getDenominatorAsInt
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getNumeratorAsLong
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getDenominatorAsLong
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

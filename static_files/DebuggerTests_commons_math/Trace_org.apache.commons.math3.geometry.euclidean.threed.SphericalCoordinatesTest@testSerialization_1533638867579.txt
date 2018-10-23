@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinatesTest@testSerialization
+[inst2] + org.apache.commons.math3.util.FastMath@cos
+[inst2] + org.apache.commons.math3.util.FastMath$CodyWaite@getK
+[inst2] + org.apache.commons.math3.util.FastMath$CodyWaite@getRemA
+[inst2] + org.apache.commons.math3.util.FastMath$CodyWaite@getRemB
+[inst2] + org.apache.commons.math3.util.FastMath@sinQ
+[inst2] + org.apache.commons.math3.util.FastMath@polySine
+[inst2] + org.apache.commons.math3.util.FastMath@polyCosine
+[inst2] + org.apache.commons.math3.util.FastMath@sin
+[inst2] + org.apache.commons.math3.util.FastMath@cosQ
+[inst2] + org.apache.commons.math3.TestUtils@serializeAndRecover
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.SphericalCoordinates@writeReplace
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getX
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getY
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getZ

@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonFormTest@testLinearFunction
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@verifyInputArray
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@evaluate
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@degree
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@getCoefficients
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm@computeCoefficients

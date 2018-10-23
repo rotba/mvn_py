@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.genetics.RandomKeyTest@testEqualRepr
+[inst2] + org.apache.commons.math3.genetics.RandomKey@checkValidity
+[inst2] + org.apache.commons.math3.genetics.AbstractListChromosome@getRepresentation
+[inst2] + org.apache.commons.math3.genetics.AbstractListChromosome@getLength
+[inst2] + org.apache.commons.math3.genetics.RandomKey@baseSequence
+[inst2] + org.apache.commons.math3.genetics.RandomKey@decodeGeneric
+[inst2] + org.apache.commons.math3.genetics.RandomKey@decode

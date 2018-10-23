@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testAtan2SpecialCases
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@atan2
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@checkCompatibility
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@atan2
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@multiply
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@add
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@rootN
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@compose
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@divide
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@atan
+[inst2] + org.apache.commons.math3.util.FastMath@atan
+[inst2] + org.apache.commons.math3.util.FastMath@atan2
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getValue
+[inst2] + org.apache.commons.math3.util.FastMath@copySign

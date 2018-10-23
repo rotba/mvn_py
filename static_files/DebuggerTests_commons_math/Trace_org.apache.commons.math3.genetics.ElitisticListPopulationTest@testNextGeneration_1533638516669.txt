@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulationTest@testNextGeneration
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulation@setElitismRate
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@getPopulationLimit
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulationTest@access$000
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulationTest@access$008
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@addChromosome
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulation@nextGeneration
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulation@getElitismRate
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@getChromosomeList
+[inst2] + org.apache.commons.math3.genetics.Chromosome@compareTo
+[inst2] + org.apache.commons.math3.genetics.Chromosome@getFitness
+[inst2] + org.apache.commons.math3.genetics.ElitisticListPopulationTest$DummyChromosome@fitness
+[inst2] + org.apache.commons.math3.util.FastMath@ceil
+[inst2] + org.apache.commons.math3.util.FastMath@floor
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@getPopulationSize

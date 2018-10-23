@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.RotationTest@testIssue639
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@crossProduct
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@normalize
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getNorm
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@scalarMultiply
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getX
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getY
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getZ
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Rotation@mat2quat
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Rotation@getQ0
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Rotation@getQ1
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Rotation@getQ2
+[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Rotation@getQ3

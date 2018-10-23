@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.analysis.solvers.BisectionSolverTest@testQuinticZero
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@solve
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@setup
+[inst2] + org.apache.commons.math3.util.Incrementor@setMaximalCount
+[inst2] + org.apache.commons.math3.util.Incrementor@resetCount
+[inst2] + org.apache.commons.math3.analysis.solvers.BisectionSolver@doSolve
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getMin
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getMax
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@verifyInterval
+[inst2] + org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils@verifyInterval
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getAbsoluteAccuracy
+[inst2] + org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils@midpoint
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@computeObjectiveValue
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@incrementEvaluationCount
+[inst2] + org.apache.commons.math3.analysis.QuinticFunction@value
+[inst2] + org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver@getEvaluations
+[inst2] + org.apache.commons.math3.util.Incrementor@getCount
