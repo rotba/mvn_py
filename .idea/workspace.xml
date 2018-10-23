@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mvn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/MavenProj/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/commons-math/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/commons-math/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/java_tracer" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/java_tracer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_files/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static_files/MavenProj" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,10 +80,11 @@
     <session id="-916226634">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -123,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="235">
-              <caret line="302" column="72" selection-start-line="302" selection-start-column="72" selection-end-line="302" selection-end-column="72" />
+              <caret line="302" column="20" selection-start-line="302" selection-start-column="20" selection-end-line="302" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -134,7 +126,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TestObjects.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
+            <state relative-caret-position="3128">
               <caret line="187" column="20" selection-start-line="187" selection-start-column="8" selection-end-line="187" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -146,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="979">
+            <state relative-caret-position="4335">
               <caret line="259" selection-start-line="259" selection-end-line="259" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -158,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mvn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1295">
+            <state relative-caret-position="3332">
               <caret line="203" column="59" selection-start-line="203" selection-start-column="45" selection-end-line="203" selection-end-column="59" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -254,6 +246,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -265,12 +258,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BugMiner" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -327,7 +319,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1988273" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20095949" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -443,10 +435,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
+    <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="979">
-          <caret line="259" selection-start-line="259" selection-end-line="259" />
+        <state relative-caret-position="235">
+          <caret line="302" column="20" selection-start-line="302" selection-start-column="20" selection-end-line="302" selection-end-column="20" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -455,8 +447,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TestObjects.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
+        <state relative-caret-position="3128">
           <caret line="187" column="20" selection-start-line="187" selection-start-column="8" selection-end-line="187" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4335">
+          <caret line="259" selection-start-line="259" selection-end-line="259" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -465,18 +467,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mvn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1295">
+        <state relative-caret-position="3332">
           <caret line="203" column="59" selection-start-line="203" selection-start-column="45" selection-end-line="203" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="302" column="72" selection-start-line="302" selection-start-column="72" selection-end-line="302" selection-end-column="72" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
