@@ -209,6 +209,16 @@ def change_plugin_version_if_exists(plugins_tag, plugin_artifact_id, version):
     version_v = surefire_version_sing[0]
     version_v.firstChild.data = version
 
+# Genrated maven class name
+def generate_mvn_class_names(src_path, module):
+    if 'src\\test' in src_path or 'src/test' in src_path or r'src\test' in src_path:
+        relpath = os.path.relpath(src_path, module + '\\src\\test\\java').replace('.java', '')
+    else:
+        relpath = os.path.relpath(src_path, module + '\\src\\main\\java').replace('.java', '')
+    if relpath.startswith('..\\'):
+        relpath = relpath[3:]
+    return relpath.replace('\\', '.')
+
 
 # changes the plugin version of 'plugin_artifact_id' to 'version'. Does nothing if the 'plugin_artifact_id' is not in plugins_tag
 def add_plugin_configuration_argline(plugins_tag, plugin_artifact_id, content):

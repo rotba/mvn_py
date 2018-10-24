@@ -352,7 +352,6 @@ class Repo(object):
                     for trace in tmp:
                         function_name = trace.replace('@', '#').replace('\n','').split(' ')[-1]
                         ans[key].append(function_name)
-
         return ans
 
 

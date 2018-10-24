@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SFL-diagnoser.iml" filepath="$PROJECT_DIR$/.idea/SFL-diagnoser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SFL-diagnoser-master.iml" filepath="$PROJECT_DIR$/.idea/SFL-diagnoser-master.iml" />
     </modules>
   </component>
 </project>
