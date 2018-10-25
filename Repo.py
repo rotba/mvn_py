@@ -346,14 +346,15 @@ class Repo(object):
         if not os.path.isdir(debugger_tests_dir ):
             return ans
         for filename in os.listdir(debugger_tests_dir ):
-            if (filename.startswith('Trace_') or filename.endswith(".txt")) and testcase_name in filename:
+            if (filename.startswith('Trace_') or filename.endswith(".txt")) and testcase_name.replace('#', '@') in filename:
                 with open(os.path.join(debugger_tests_dir,filename),'r') as file:
                     key = filename.replace('.txt','')
                     ans[key] = []
                     tmp = file.readlines()
                     for trace in tmp:
                         function_name = trace.replace('@', '#').replace('\n','').split(' ')[-1]
-                        ans[key].append(function_name)
+                        if not function_name in ans[key]:
+                            ans[key].append(function_name)
         return ans
 
     # Returns the dictionary that map testcase string to its traces strings
