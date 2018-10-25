@@ -4,6 +4,7 @@ import pickle
 import shutil
 from enum import Enum
 import csv
+from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
 class Bug(object):
@@ -91,6 +92,13 @@ class Bug_data_handler(object):
         if not os.path.exists(path_to_bug_testclass):
             os.makedirs(path_to_bug_testclass)
         bug_path =self.get_bug_path(bug)
+        if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
+            matrix_path = os.path.join(path_to_bug_testclass, 'Matrix_'+bug.bugged_testcase.name+'.txt')
+            diagnoserUtils.write_planning_file(
+                out_path = matrix_path,
+                bugs = bug.bugged_components,
+                tests_details = (bug.bugged_testcase.name, bug.traces, int(bug.bugged_testcase.passed))
+            )
         with open(bug_path, 'wb') as bug_file:
             pickle.dump(bug, bug_file , protocol=2)
 
@@ -211,7 +219,7 @@ class Bug_csv_report_handler(object):
     def __init__(self, path):
         self._writer = None
         self._path = path
-        self._fieldnames = ['valid','type','issue','module','commit','parent', 'testcase', 'has_test_annotation','description']
+        self._fieldnames = ['valid','type','issue','module','commit','parent', 'testcase', 'has_test_annotation','description', 'traces', 'bugged_components']
         if not os.path.exists(path):
             with open(self._path, 'w+') as csv_output:
                 writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames,lineterminator='\n')
@@ -239,7 +247,10 @@ class Bug_csv_report_handler(object):
                 'parent': bug.parent,
                 'testcase': bug.bugged_testcase.mvn_name,
                 'has_test_annotation': bug.has_test_annotation,
-                'description': bug.desctiption}
+                'description': bug.desctiption,
+                'traces': bug.traces,
+                'bugged_components': bug.bugged_components
+                }
 
     @property
     def path(self):
@@ -249,7 +260,7 @@ class Time_csv_report_handler(object):
     def __init__(self, path):
         self._writer = None
         self._path = path
-        self._fieldnames = ['issue', 'commit','module', 'time', 'description', 'traces', 'bugged_components']
+        self._fieldnames = ['issue', 'commit','module', 'time', 'description']
         if not os.path.exists(path):
             with open(self._path, 'w+') as csv_output:
                 writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
@@ -262,15 +273,13 @@ class Time_csv_report_handler(object):
 
 
     # Generated csv bug tupple
-    def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description, traces, bugged_components):
+    def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description):
         return {
             'issue': issue_key,
             'commit': commit_hexsha,
             'module': module,
             'time': time,
-            'description': description,
-            'traces': traces,
-            'bugged_components': bugged_components
+            'description': description
         }
 
     @property

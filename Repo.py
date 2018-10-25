@@ -340,11 +340,13 @@ class Repo(object):
                 # )
 
     # Returns the dictionary that map testcase string to its traces strings
-    def get_traces(self, test_name = ''):
+    def get_traces(self, testcase_name = ''):
         ans = {}
         debugger_tests_dir  = os.path.relpath(os.path.join(self.repo_dir,r'../../DebuggerTests'))
+        if not os.path.isdir(debugger_tests_dir ):
+            return ans
         for filename in os.listdir(debugger_tests_dir ):
-            if (filename.startswith('Trace_') or filename.endswith(".txt")) and test_name in filename:
+            if (filename.startswith('Trace_') or filename.endswith(".txt")) and testcase_name in filename:
                 with open(os.path.join(debugger_tests_dir,filename),'r') as file:
                     key = filename.replace('.txt','')
                     ans[key] = []
@@ -352,6 +354,15 @@ class Repo(object):
                     for trace in tmp:
                         function_name = trace.replace('@', '#').replace('\n','').split(' ')[-1]
                         ans[key].append(function_name)
+        return ans
+
+    # Returns the dictionary that map testcase string to its traces strings
+    def get_trace(self, testcase_name):
+        ans = []
+        dict = self.get_traces(testcase_name = testcase_name)
+        if not len(dict) == 1:
+            return ans
+        ans = dict[testcase_name]
         return ans
 
 
