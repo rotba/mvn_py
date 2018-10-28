@@ -338,7 +338,7 @@ class Repo(object):
                         # sub_tags[0], str(len(sub_tag_list)))
                 # )
 
-
+<<<<<<< HEAD
     # Returns the dictionary that map testcase string to its traces strings
     def get_traces(self, testcase_name = ''):
         ans = {}
@@ -365,6 +365,12 @@ class Repo(object):
             return ans
         ans = dict[dict.keys()[0]]
         return ans
+=======
+
+    # Returns the traces that came out of the tracer
+    def get_traces(self):
+        pass
+>>>>>>> 178681ebdfdf812bea8437943baef7bbcec56345
 
 
 
