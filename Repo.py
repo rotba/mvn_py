@@ -343,6 +343,15 @@ class Repo(object):
     def get_traces(self):
         pass
 
+    # Returns the pom path associated with the given module
+    def get_pom(self, module):
+        pom_singelton = list(
+            filter(lambda f: f =='pom.xml', os.listdir(module))
+        )
+        if not len(pom_singelton) == 1:
+            return ''
+        else:
+            return pom_singelton[0]
 
 
 
