@@ -285,14 +285,8 @@ class Repo(object):
 
     # Add tags to the pom. The oo stands for 'object oriented', and it stands for
     # the form of the string 'oo_element_str' which is from the form 'project.build.plugins.'
-    def oo_add_to_pom(self, oo_element_str, pom ,create_parents_if_not_exist):
-        tags = oo_element_str.split('.')
-        xmlFile = parse(pom)
-        tag_singelton = xmlFile.getElementsByTagName(tags[0])
-        if not len(tag_singelton) == 1:
-            raise mvn.MVNError(
-                msg='Couldn\'t determine what tag is related to the root tag \'{}\'. There are {} options for these tag'.format(tags[0], str(len(tag_singelton)))
-            )
+    def change_pom(self, xquery, value ,create_if_not_exist = False, module = ''):
+        pass
 
     # Recursively add element to tag
     def add_to_tag(self, tag, sub_tags, data ,create_parents_if_not_exist):
