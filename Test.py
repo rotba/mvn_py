@@ -3,6 +3,8 @@ import shutil
 import sys
 import unittest
 import Repo
+import mvn
+import xml.etree.ElementTree as ET
 import TestObjects
 
 orig_wd = os.getcwd()
@@ -309,7 +311,8 @@ class Test_mvnpy(unittest.TestCase):
         shutil.rmtree(debugger_tests_dst)
 
     def test_set_pom_tag(self):
-        module = os.path.join( os.getcwd(),r'static_files\tika')
+        module = os.path.join( os.getcwd(),r'static_files\tika\tika-parent')
+        pom = os.path.join(module, 'pom.xml')
         repo = Repo.Repo(module)
         curr_wd = os.getcwd()
         os.chdir(module)
@@ -319,25 +322,12 @@ class Test_mvnpy(unittest.TestCase):
         poms = repo .get_all_pom_paths(module)
         # repo.change_pom(xquery=r"project\build\plugins[artifactId = 'maven-surefire-plugin']\version",
         #                 value=expected_version)
-        repo.set_pom_tag(xquery = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']/version",module=r'C:\Users\TEMP\mvnpy\mvnpy\static_files\tika\tika-parent', value = expected_version)
-        self.assertTrue(len(poms)>0)
-        for pom in poms:
-            print('#### checking '+pom+' ######')
-            if(os.path.normcase(os.path.join( os.getcwd(),r'tika-dotnet\pom.xml')) ==os.path.normcase(pom)):
-                print('#### passing ' + pom + ' ######')
-                continue
-            module_path = os.path.abspath(os.path.join(pom, os.pardir))
-            with os.popen(mvn_help_cmd+' -f '+module_path) as proc:
-                tmp_file_path = 'tmp_file.txt'
-                with open(tmp_file_path, "w+") as tmp_file:
-                    duplicate_stdout(proc, tmp_file)
-                with open(tmp_file_path, "r") as tmp_file:
-                    duplicate_stdout(proc, tmp_file)
-                    build_report = tmp_file.readlines()
-                version_line_sing = list(filter(lambda l: l.startswith('Version: '),build_report))
-                assert len(version_line_sing) == 1
-                version_line = version_line_sing[0]
-                self.assertEqual(version_line.lstrip('Version: ').rstrip('\n'),expected_version)
+        repo.set_pom_tag(xquery = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']/version",module=module, create_if_not_exist=True, value = expected_version)
+        root = ET.parse(pom).getroot()
+        xmlns, _ = mvn.tag_uri_and_name(root)
+        surfire_tag_singelton = root.findall(r"{}build/{}plugins/{}plugin[{}artifactId='maven-surefire-plugin']/{}version".format(xmlns,xmlns,xmlns,xmlns,xmlns))
+        self.assertEqual(len(surfire_tag_singelton) , 1)
+        self.assertEqual(surfire_tag_singelton[0].text, expected_version)
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 
