@@ -2,6 +2,7 @@ import os
 import sys
 from shutil import copyfile
 from xml.dom.minidom import parse
+import xml.etree.ElementTree as ET
 import TestObjects
 import mvn
 
@@ -286,7 +287,11 @@ class Repo(object):
     # Add tags to the pom. The oo stands for 'object oriented', and it stands for
     # the form of the string 'oo_element_str' which is from the form 'project.build.plugins.'
     def change_pom(self, xquery, value ,create_if_not_exist = False, module = ''):
-        pass
+        pom = mvn.get_pom(module)
+        root = ET.parse(pom).getroot()
+        for c in root.findall(xquery):
+            x=1
+
 
     # Recursively add element to tag
     def add_to_tag(self, tag, sub_tags, data ,create_parents_if_not_exist):
@@ -332,6 +337,7 @@ class Repo(object):
                     # msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
                         # sub_tags[0], str(len(sub_tag_list)))
                 # )
+
 
     # Returns the traces that came out of the tracer
     def get_traces(self):
