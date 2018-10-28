@@ -2,7 +2,9 @@ import os
 import sys
 from shutil import copyfile
 from xml.dom.minidom import parse
+from xml.dom.minidom import parseString
 import xml.etree.ElementTree as ET
+import xml.etree
 import TestObjects
 import mvn
 
@@ -286,58 +288,95 @@ class Repo(object):
 
     # Add tags to the pom. The oo stands for 'object oriented', and it stands for
     # the form of the string 'oo_element_str' which is from the form 'project.build.plugins.'
-    def change_pom(self, xquery, value ,create_if_not_exist = False, module = ''):
-        pom = mvn.get_pom(module)
+    def set_pom_tag(self, xquery, value ,create_if_not_exist = False, module = ''):
+        pom = self.get_pom(module)
         root = ET.parse(pom).getroot()
-        for c in root.findall(xquery):
-            x=1
+        xmlns, _ = mvn.tag_uri_and_name(root)
+        if not xmlns == '':
+            tmp_tags = xquery.split('/')
+            tags = list(map(lambda t: self.add_xmlns_prefix(xmlns, t), tmp_tags))
+            xquery = '/'.join(tags)
+        valid_xquery = self.clean_query_string(xquery)
+        x = root.findall(valid_xquery)
+        valid_xquery_array =valid_xquery.split('/')
+        tag = self.get_tag(root, valid_xquery_array[:1], create_if_not_exist = create_if_not_exist)
+        tag.data = value
+        self.rewrite_pom(root=root, module=module)
 
+
+
+    def get_pom_tag(self, xquery, module = ''):
+        pom = self.get_pom(module)
+        root = ET.parse(pom).getroot()
+        xmlns, _ = mvn.tag_uri_and_name(root)
+        if not xmlns == '':
+            tmp_tags = xquery.split('/')
+            tags = list(map(lambda t: self.add_xmlns_prefix(xmlns, t), tmp_tags))
+            xquery = '/'.join(tags)
+        xquery  = self.clean_query_string(xquery)
+        x = root.findall(xquery)
+        x=1
 
     # Recursively add element to tag
-    def add_to_tag(self, tag, sub_tags, data ,create_parents_if_not_exist):
-		pass
+    def get_tag(self, root_tag ,subtags_path_array, create_parents_if_not_exist = False):
+        if len(subtags_path_array) ==0:
+            return root_tag
+        next_tag_list = root_tag.findall(subtags_path_array[0])
+        if len(next_tag_list) == 0:
+            if create_parents_if_not_exist:
+            else:
+                return None
+        if len(next_tag_list) >1:
+            return None
+        next_tag = next_tag_list[0]
+        return self.get_tag(root_tag=next_tag, subtags_path_array=subtags_path_array[:1],
+                            create_parents_if_not_exist=create_parents_if_not_exist)
         # if len(sub_tags) == 0:
-            # if tag.firstChild == None:
-                # text_node = tag.ownerDocument.createTextNode('')
-                # tag.appendChild(text_node)
-            # tag.firstChild.data = data
-            # return
+        # if tag.firstChild == None:
+        # text_node = tag.ownerDocument.createTextNode('')
+        # tag.appendChild(text_node)
+        # tag.firstChild.data = data
+        # return
         # TODO find solution for the tags from the form plugins.plugin...
         # if '[' in tag.locaName and ']' in tag.locaName and tag.locaName in mvn.dict_super_sub_tags.keys():
-            # child = mvn.find_child()
-            # next_tag = None
-            # sub_tags_local_name = mvn.dict_super_sub_tags[tag.locaName]
-            # child_tags = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags_local_name)
-            # for c_tag in child_tags:
-                # artifactId = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='artifactID')
-                # if artifactId ==None:
-                    # break
-            # if new_tag ==None:
-                # for c_tag in child_tags:
-                    # name = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='name')
-                    # if name ==None:
-                        # break
-            # if new_tag ==None:
+        # child = mvn.find_child()
+        # next_tag = None
+        # sub_tags_local_name = mvn.dict_super_sub_tags[tag.locaName]
+        # child_tags = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags_local_name)
+        # for c_tag in child_tags:
+        # artifactId = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='artifactID')
+        # if artifactId ==None:
+        # break
+        # if new_tag ==None:
+        # for c_tag in child_tags:
+        # name = mvn.get_first_degree_child_elements_by_name(tag=c_tag, name='name')
+        # if name ==None:
+        # break
+        # if new_tag ==None:
 
         # else:
-            # sub_tag_list = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags[0])
-            # if len(sub_tag_list) == 1:
-                # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
-                                # create_parents_if_not_exist=create_parents_if_not_exist)
-            # elif len(sub_tag_list) == 0:
-                # if create_parents_if_not_exist:
-                    # new_tag = tag.ownerDocument.createElement(tagName=sub_tags[0])
-                    # tag.appendChild(new_tag)
-                    # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
-                                    # create_parents_if_not_exist=create_parents_if_not_exist)
-                # else:
-                    # raise mvn.MVNError(msg='{} not exist in the tag a tag in {}'.format(sub_tags[0], tag.locaName))
-            # else:
-                # raise mvn.MVNError(
-                    # msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
-                        # sub_tags[0], str(len(sub_tag_list)))
-                # )
+        # sub_tag_list = mvn.get_first_degree_child_elements_by_name(tag=tag, name=sub_tags[0])
+        # if len(sub_tag_list) == 1:
+        # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
+        # create_parents_if_not_exist=create_parents_if_not_exist)
+        # elif len(sub_tag_list) == 0:
+        # if create_parents_if_not_exist:
+        # new_tag = tag.ownerDocument.createElement(tagName=sub_tags[0])
+        # tag.appendChild(new_tag)
+        # self.add_to_tag(tag=sub_tag_list[0], sub_tags=sub_tags[1:], data=data,
+        # create_parents_if_not_exist=create_parents_if_not_exist)
+        # else:
+        # raise mvn.MVNError(msg='{} not exist in the tag a tag in {}'.format(sub_tags[0], tag.locaName))
+        # else:
+        # raise mvn.MVNError(
+        # msg='Couldn\'t determine what tag is related to the tag \'{}\'. There are {} options for these tag'.format(
+        # sub_tags[0], str(len(sub_tag_list)))
+        # )
 
+    def rewrite_pom(self, root, module =''):
+        rough_string = ET.tostring(root, 'utf-8')
+        reparsed = parseString(rough_string)
+        print(reparsed.toprettyxml(indent="\t").replace('ns0:', ''))
 
     # Returns the dictionary that map testcase string to its traces strings
     def get_traces(self, testcase_name = ''):
@@ -364,6 +403,45 @@ class Repo(object):
         if not len(dict) == 1:
             return ans
         ans = dict[dict.keys()[0]]
+        return ans
+
+    # Returns the pom path associated with the given module
+    def get_pom(self, module):
+        if module == '':
+            module = self.repo_dir
+        pom_singelton = list(
+            filter(lambda f: f =='pom.xml', os.listdir(module))
+        )
+        if not len(pom_singelton) == 1:
+            return ''
+        else:
+            return os.path.join(module,pom_singelton[0])
+
+    #Adds the xmlns prefix to the tag
+    def add_xmlns_prefix(self, xmlns, tag):
+        prefix = '{'+xmlns+'}'
+        with_prefix = ''
+        if tag =='.':
+            return tag
+        if tag.startswith(prefix):
+            with_prefix =  tag
+        else:
+            with_prefix = prefix + tag
+        if with_prefix.find('[') < with_prefix.find(']'):
+            [tag_name,condition] = with_prefix.split('[')
+            condition = condition.replace(']','')
+            [elem_name, val] = condition.split('=')
+            elem_with_prefix = self.add_xmlns_prefix(xmlns, elem_name)
+            with_prefix = tag_name+'['+elem_with_prefix+'='+val+']'
+        return with_prefix
+
+    # Removes redundant chars from the given query to validate it
+    def clean_query_string(self, xquery):
+        ans = xquery
+        while ' = ' in ans or ' =' in ans or '= ' in ans:
+            ans = ans.replace(' = ', '=')
+            ans = ans.replace(' =', '=')
+            ans = ans.replace('= ', '=')
         return ans
 
 

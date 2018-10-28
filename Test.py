@@ -308,7 +308,7 @@ class Test_mvnpy(unittest.TestCase):
         self.assertFalse(not_excpected_testcase_trace in res.keys())
         shutil.rmtree(debugger_tests_dst)
 
-    def test_change_pom(self):
+    def test_set_pom_tag(self):
         module = os.path.join( os.getcwd(),r'static_files\tika')
         repo = Repo.Repo(module)
         curr_wd = os.getcwd()
@@ -317,7 +317,9 @@ class Test_mvnpy(unittest.TestCase):
         mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
         expected_version = '2.21.0'
         poms = repo .get_all_pom_paths(module)
-        repo.change_pom(xquery = r'project\build\plugins[artifactId = maven-surefire-plugin]\version', value = expected_version)
+        # repo.change_pom(xquery=r"project\build\plugins[artifactId = 'maven-surefire-plugin']\version",
+        #                 value=expected_version)
+        repo.set_pom_tag(xquery = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']/version",module=r'C:\Users\TEMP\mvnpy\mvnpy\static_files\tika\tika-parent', value = expected_version)
         self.assertTrue(len(poms)>0)
         for pom in poms:
             print('#### checking '+pom+' ######')

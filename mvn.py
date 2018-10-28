@@ -345,3 +345,11 @@ class MVNError(Exception):
 def has_compilation_error(build_report):
     compilation_error_report = get_compilation_error_report(build_report)
     return len(compilation_error_report)>0
+
+def tag_uri_and_name(elem):
+    if elem.tag[0] == "{":
+        uri, ignore, tag = elem.tag[1:].partition("}")
+    else:
+        uri = None
+        tag = elem.tag
+    return uri, tag
