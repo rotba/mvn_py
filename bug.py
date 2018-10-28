@@ -4,6 +4,7 @@ import pickle
 import shutil
 from enum import Enum
 import csv
+import traceback
 from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
@@ -92,15 +93,19 @@ class Bug_data_handler(object):
         if not os.path.exists(path_to_bug_testclass):
             os.makedirs(path_to_bug_testclass)
         bug_path =self.get_bug_path(bug)
-        if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
-            matrix_path = os.path.join(path_to_bug_testclass, 'Matrix_'+bug.bugged_testcase.name+'.txt')
-            diagnoserUtils.write_planning_file(
-                out_path = matrix_path,
-                bugs = bug.bugged_components,
-                tests_details = (bug.bugged_testcase.name, bug.traces, int(bug.bugged_testcase.passed))
-            )
         with open(bug_path, 'wb') as bug_file:
             pickle.dump(bug, bug_file , protocol=2)
+        if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
+            try:
+                matrix_path = os.path.join(path_to_bug_testclass, 'Matrix_'+bug.bugged_testcase.method.name+'.txt')
+                diagnoserUtils.write_planning_file(
+                    out_path = matrix_path,
+                    bugs = bug.bugged_components,
+                    tests_details = [(bug.bugged_testcase.mvn_name, bug.traces, int(bug.bugged_testcase.passed))]
+                )
+            except Exception as e:
+                raise BugError(msg='Failed to create the matrix. Error:\n'+e.msg+'\n'+traceback.format_exc())
+
 
 
     # Adds bugs to the csv file
@@ -108,7 +113,10 @@ class Bug_data_handler(object):
         self._valid_bugs_csv_handler.add_bugs(list(filter(lambda b: b.valid, bugs)))
         self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
         for bug in bugs:
-            self._store_bug(bug)
+            try:
+                self._store_bug(bug)
+            except BugError as e:
+                raise e
 
     # Attach reports to the testclasses directories
     def attach_reports(self, issue, commit, testcases):

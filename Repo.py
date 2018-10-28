@@ -354,7 +354,7 @@ class Repo(object):
                     for trace in tmp:
                         function_name = trace.replace('@', '#').replace('\n','').split(' ')[-1]
                         if not function_name in ans[key]:
-                            ans[key].append(function_name)
+                            ans[key].append(str(function_name))
         return ans
 
     # Returns the dictionary that map testcase string to its traces strings
@@ -363,7 +363,7 @@ class Repo(object):
         dict = self.get_traces(testcase_name = testcase_name)
         if not len(dict) == 1:
             return ans
-        ans = dict[testcase_name]
+        ans = dict[dict.keys()[0]]
         return ans
 
 

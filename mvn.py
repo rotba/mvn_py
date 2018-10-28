@@ -215,7 +215,7 @@ def generate_mvn_class_names(src_path, module):
         relpath = os.path.relpath(src_path, module + '\\src\\test\\java').replace('.java', '')
     else:
         relpath = os.path.relpath(src_path, module + '\\src\\main\\java').replace('.java', '')
-    if relpath.startswith('..\\'):
+    while relpath.startswith('..\\'):
         relpath = relpath[3:]
     return relpath.replace('\\', '.')
 
