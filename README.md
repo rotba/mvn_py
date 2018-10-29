@@ -283,8 +283,8 @@ To run the the tests, simply run:
     >>> repo.set_pom_tag(xquery = xquery, value = value ,create_if_not_exist=True)
 
 
-AFTER
-tika/pom.xml :
+ AFTER    
+ tika/pom.xml :
 
 
   .
