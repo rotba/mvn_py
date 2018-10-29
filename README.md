@@ -237,54 +237,79 @@ To run the the tests, simply run:
     [INFO] Finished at: 2018-10-13T14:27:12+03:00
     [INFO] ------------------------------------------------------------------------   
   
-  ## change plugin version (currently implemented only for surefire plugin)
+  # Change pom tags:
   
-      >>> mvn_repo.change_surefire_ver('2.21.0')
-      >>> os.system('mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin -f    C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
-      [INFO] Scanning for projects...
-      [INFO] ------------------------------------------------------------------------
-      [INFO] Reactor Build Order:
-      [INFO]
-      [INFO] GMT_P                                                              [pom]
-      [INFO] sub_mod_1                                                          [jar]
-      [INFO] sub_mod_2                                                          [jar]
-      [INFO]
-      [INFO] ----------------------------< GMT_P:GMT_P >-----------------------------
-      [INFO] Building GMT_P 1.0-SNAPSHOT                                        [1/3]
-      [INFO] --------------------------------[ pom ]---------------------------------
-      [INFO]
-      [INFO] --- maven-help-plugin:3.1.0:describe (default-cli) @ GMT_P ---
-      [INFO] org.apache.maven.plugins:maven-surefire-plugin:2.21.0
+  ## set_pom_tag(xquery, value , module = '', create_if_not_exist = False)
+  
+  @module - the path to the module associated with the pom that will be modified
+  @xquery - xquey AKA xpath string that describes the tag, that it's text will be change to value
+  @create_if_not_exist - setting to true will add tags missing in the pom if they're missing
+  
+  Example:
+  
+  BEFORE    
+  tika/pom.xml :
+ 
+  .
+  .
+  .
+          
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+      <build>
+            <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                  <excludes>
+                    <exclude>**/ForkParser*Test.java</exclude>
+                  </excludes>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+    <project>
+  .
+  .
+  .
+  
+  
+    Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 18:37:09) [MSC v.1500 64 bit (AMD64)] on win32
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import Repo
+    >>> xquery = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']/version"
+    >>> value = '2.21.0'
+    >>> repo = Repo.Repo(r'C:\Users\TEMP\mvnpy\mvnpy\static_files\tika')
+    >>> repo.set_pom_tag(xquery = xquery, value = value ,create_if_not_exist=True)
 
-      Name: Maven Surefire Plugin
-      Description: Maven Surefire MOJO in maven-surefire-plugin.
-      Group Id: org.apache.maven.plugins
-      Artifact Id: maven-surefire-plugin
-      Version: 2.21.0
-      Goal Prefix: surefire
 
-      This plugin has 2 goals:
+AFTER
+tika/pom.xml :
 
-      surefire:help
-        Description: Display help information on maven-surefire-plugin.
-          Call mvn surefire:help -Ddetail=true -Dgoal=<goal-name> to display
-          parameter details.
 
-      surefire:test
-        Description: Run tests using Surefire.
-
-      For more information, run 'mvn help:describe [...] -Ddetail'
-
-      [INFO] ------------------------------------------------------------------------
-      [INFO] Reactor Summary:
-      [INFO]
-      [INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [ 13.172 s]
-      [INFO] sub_mod_1 .......................................... SKIPPED
-      [INFO] sub_mod_2 1.0-SNAPSHOT ............................. SKIPPED
-      [INFO] ------------------------------------------------------------------------
-      [INFO] BUILD SUCCESS
-      [INFO] ------------------------------------------------------------------------
-      [INFO] Total time: 19.291 s
-      [INFO] Finished at: 2018-10-13T14:33:20+03:00
-      [INFO] ------------------------------------------------------------------------
-      0
+  .
+  .
+  .
+          
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>CHANGES.txt</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>'maven-surefire-plugin'</artifactId>
+                <version>2.21.0</version>
+            </plugin>
+        </plugins>
+    </build>
+    <project>
+  .
+  .
+  .
