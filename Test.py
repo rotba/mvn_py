@@ -310,7 +310,7 @@ class Test_mvnpy(unittest.TestCase):
         self.assertFalse(not_excpected_testcase_trace in res.keys())
         shutil.rmtree(debugger_tests_dst)
 
-    def test_set_pom_tag(self):
+    def test_set_pom_tag_1(self):
         module = os.path.join( os.getcwd(),r'static_files\tika\tika-parent')
         pom = os.path.join(module, 'pom.xml')
         repo = Repo.Repo(module)
@@ -328,6 +328,28 @@ class Test_mvnpy(unittest.TestCase):
         surfire_tag_singelton = root.findall(r"{}build/{}plugins/{}plugin[{}artifactId='maven-surefire-plugin']/{}version".format(xmlns,xmlns,xmlns,xmlns,xmlns))
         self.assertEqual(len(surfire_tag_singelton) , 1)
         self.assertEqual(surfire_tag_singelton[0].text, expected_version)
+        os.system('git checkout HEAD -f')
+        os.chdir(curr_wd)
+
+    def test_set_pom_tag_2(self):
+        module = os.path.join( os.getcwd(),r'static_files\tika\tika-parent')
+        xquery = r"./dependencyManagement/dependencies/dependency[artifactId = 'junit']/version"
+        pom = os.path.join(module, 'pom.xml')
+        repo = Repo.Repo(module)
+        curr_wd = os.getcwd()
+        os.chdir(module)
+        os.system('git checkout HEAD -f')
+        mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
+        expected_version = '4.13.0'
+        poms = repo .get_all_pom_paths(module)
+        # repo.change_pom(xquery=r"project\build\plugins[artifactId = 'maven-surefire-plugin']\version",
+        #                 value=expected_version)
+        repo.set_pom_tag(xquery = xquery,module=module, create_if_not_exist=True, value = expected_version)
+        root = ET.parse(pom).getroot()
+        xmlns, _ = mvn.tag_uri_and_name(root)
+        junit_tag_singelton = root.findall(r"{}dependencyManagement/{}dependencies/{}dependency[{}artifactId='junit']/{}version".format(xmlns,xmlns,xmlns,xmlns,xmlns))
+        self.assertEqual(len(junit_tag_singelton) , 1)
+        self.assertEqual(junit_tag_singelton[0].text, expected_version)
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 

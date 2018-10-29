@@ -350,6 +350,6 @@ def tag_uri_and_name(elem):
     if elem.tag[0] == "{":
         uri, ignore, tag = elem.tag[1:].partition("}")
     else:
-        uri = None
+        uri = ''
         tag = elem.tag
     return uri, tag

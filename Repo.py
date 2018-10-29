@@ -285,9 +285,9 @@ class Repo(object):
         ans += ' -f ' + self.repo_dir
         return ans
 
-    # Add tags to the pom. The oo stands for 'object oriented', and it stands for
-    # the form of the string 'oo_element_str' which is from the form 'project.build.plugins.'
-    def set_pom_tag(self, xquery, value ,create_if_not_exist = False, module = ''):
+    # Add tags to the pom. xquey is a string written in xpath aka xquery convention
+    # Behaviour is unknown if the xquery doesn't refer to a single tag
+    def set_pom_tag(self, xquery, value , module = '', create_if_not_exist = False):
         pom = self.get_pom(module)
         root = ET.parse(pom).getroot()
         xmlns, _ = mvn.tag_uri_and_name(root)
@@ -299,19 +299,16 @@ class Repo(object):
         tag.text = value
         self.rewrite_pom(root=root, module=module)
 
-
-
+    # Gets the tag specified in the xquery
     def get_pom_tag(self, xquery, module = ''):
         pom = self.get_pom(module)
         root = ET.parse(pom).getroot()
         xmlns, _ = mvn.tag_uri_and_name(root)
         if not xmlns == '':
-            tmp_tags = xquery.split('/')
-            tags = list(map(lambda t: self.add_xmlns_prefix(xmlns, t), tmp_tags))
-            xquery = '/'.join(tags)
-        xquery  = self.clean_query_string(xquery)
-        x = root.findall(xquery)
-        x=1
+            tmp_tags_1 = xquery.split('/')
+            tmp_tags_2 = list(map(lambda t: self.add_xmlns_prefix(xmlns, t), tmp_tags_1))
+            tags = list(map(lambda t: self.clean_query_string(t), tmp_tags_2))
+        return self.get_tag(root, tags[1:])
 
     # Recursively add element to tag
     def get_tag(self, root_tag ,subtags_path_array, create_if_not_exist = False):
