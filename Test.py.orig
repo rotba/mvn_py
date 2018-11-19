@@ -1,19 +1,14 @@
 import os
+import shutil
 import sys
 import unittest
 import Repo
 import TestObjects
 
 orig_wd = os.getcwd()
-<<<<<<< HEAD
-class TestTest_Obj(unittest.TestCase):
-    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
-    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
-=======
 class Test_mvnpy(unittest.TestCase):
     # os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
     # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
->>>>>>> a46582d643dff1bbf87d6f1273098c4cdf2416bd
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'
@@ -151,7 +146,7 @@ class Test_mvnpy(unittest.TestCase):
         os.chdir(module)
         os.system('git checkout HEAD -f')
         mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
-        excpected_version = '2.22.0'
+        excpected_version = '2.21.0'
         poms = repo .get_all_pom_paths(module)
         repo.change_surefire_ver(excpected_version, module )
         self.assertTrue(len(poms)>0)
@@ -238,10 +233,114 @@ class Test_mvnpy(unittest.TestCase):
         os.system('git checkout HEAD -f')
         os.chdir(curr_wd)
 
+    def test_add_argline_to_surefire(self):
+        module = os.path.join( os.getcwd(),r'static_files\tika')
+        expected_content = '-javaagent:C:\\Users\\user\\Code\\JAVA\\MavenProj\\agent.jar=C:\\Users\\user\\Code\\JAVA\\MavenProj\\paths.txt'
+        expected_argline = '<argLine>-javaagent:{}\\agent.jar={}\\paths.txt</argLine>'.format(module,module)
+        repo = Repo.Repo(module)
+        curr_wd = os.getcwd()
+        os.chdir(module)
+        os.system('git checkout d363b828bc6e714aa5f4ffedfbd1d09e1880f9ee -f')
+        mvn_help_cmd = 'mvn help:effective - pom - DartifactId = org.apache.maven.plugins:maven - surefire - plugin'
+        poms = repo .get_all_pom_paths(module)
+        repo.add_argline_to_surefire(expected_content)
+        self.assertTrue(len(poms)>0)
+        for pom in poms:
+            print('#### checking '+pom+' ######')
+            if(os.path.normcase(os.path.join( os.getcwd(),r'tika-dotnet\pom.xml')) ==os.path.normcase(pom)):
+                print('#### passing ' + pom + ' ######')
+                continue
+            module_path = os.path.abspath(os.path.join(pom, os.pardir))
+            with os.popen(mvn_help_cmd+' -f '+module_path) as proc:
+                tmp_file_path = 'tmp_file.txt'
+                with open(tmp_file_path, "w+") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                with open(tmp_file_path, "r") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                    build_report = tmp_file.read()
+                self.assertTrue(expected_argline in build_report)
+        os.system('git checkout HEAD -f')
+        os.chdir(curr_wd)
 
-    def test_nop(self):
-        mvn_repo = Repo.Repo(r'C:\Users\user\Code\Python\mvnpy\mvnpy\examples\MavenProj')
-        mvn_repo.test()
+    def test_setup_tracer(self):
+        module = os.path.join( os.getcwd(),r'static_files\MavenProj')
+        repo = Repo.Repo(module)
+        expected_agent_path = os.path.join(repo.repo_dir, 'agent.jar')
+        expected_paths_path = os.path.join(repo.repo_dir, 'paths.txt')
+        repo.setup_tracer()
+        self.assertTrue(os.path.isfile(expected_agent_path))
+        self.assertTrue(os.path.isfile(expected_paths_path))
+        with open(expected_paths_path,'rb') as paths:
+            lines = paths.readlines()
+            self.assertEqual(lines[0].replace('\n','').replace('\r', ''), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
+            self.assertEqual(lines[1], repo.repo_dir)
+        with open(os.path.join(repo.repo_dir,'pom.xml'),'rb') as pom:
+            lines = pom.readlines()
+            self.assertTrue('<argLine>-javaagent:{}={}</argLine>'.format(expected_agent_path,expected_paths_path), os.path.join(os.environ['USERPROFILE'], r'.m2\repository'))
+
+    def test_get_traces_1(self):
+        excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testField_1533637414916'
+        excpected_trace_1 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getFreeParameters'
+        excpected_trace_2 = 'org.apache.commons.math3.analysis.differentiation.DSCompiler#getPartialDerivativeIndex'
+        debugger_tests_src = os.path.join(os.getcwd(), r'static_files\DebuggerTests_commons_math')
+        debugger_tests_dst = os.path.join(os.getcwd(), r'DebuggerTests')
+        if not os.path.isdir(debugger_tests_dst):
+            shutil.copytree(debugger_tests_src, debugger_tests_dst)
+        module = os.path.join( os.getcwd(),r'static_files\commons-math')
+        repo = Repo.Repo(module)
+        res = repo.get_traces()
+        self.assertTrue(excpected_testcase_trace in res.keys())
+        self.assertTrue(excpected_trace_1 in res[excpected_testcase_trace])
+        self.assertTrue(excpected_trace_2 in res[excpected_testcase_trace])
+        shutil.rmtree(debugger_tests_dst)
+
+<<<<<<< HEAD
+    def test_change_pom(self):
+        module = os.path.join( os.getcwd(),r'static_files\tika')
+        repo = Repo.Repo(module)
+        curr_wd = os.getcwd()
+        os.chdir(module)
+        os.system('git checkout HEAD -f')
+        mvn_help_cmd = 'mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-surefire-plugin'
+        expected_version = '2.21.0'
+        poms = repo .get_all_pom_paths(module)
+        repo.change_pom(xquery = r'project\build\plugins[artifactId = maven-surefire-plugin]\version', value = expected_version)
+        self.assertTrue(len(poms)>0)
+        for pom in poms:
+            print('#### checking '+pom+' ######')
+            if(os.path.normcase(os.path.join( os.getcwd(),r'tika-dotnet\pom.xml')) ==os.path.normcase(pom)):
+                print('#### passing ' + pom + ' ######')
+                continue
+            module_path = os.path.abspath(os.path.join(pom, os.pardir))
+            with os.popen(mvn_help_cmd+' -f '+module_path) as proc:
+                tmp_file_path = 'tmp_file.txt'
+                with open(tmp_file_path, "w+") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                with open(tmp_file_path, "r") as tmp_file:
+                    duplicate_stdout(proc, tmp_file)
+                    build_report = tmp_file.readlines()
+                version_line_sing = list(filter(lambda l: l.startswith('Version: '),build_report))
+                assert len(version_line_sing) == 1
+                version_line = version_line_sing[0]
+                self.assertEqual(version_line.lstrip('Version: ').rstrip('\n'),expected_version)
+        os.system('git checkout HEAD -f')
+        os.chdir(curr_wd)
+=======
+    def test_get_traces_2(self):
+        excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.function.LogitTest@testDerivativesHighOrder_1533637432535'
+        not_excpected_testcase_trace = 'Trace_org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testField_1533637414916'
+        debugger_tests_src = os.path.join(os.getcwd(), r'static_files\DebuggerTests_commons_math')
+        debugger_tests_dst = os.path.join(os.getcwd(), r'DebuggerTests')
+        if not os.path.isdir(debugger_tests_dst):
+            shutil.copytree(debugger_tests_src, debugger_tests_dst)
+        module = os.path.join( os.getcwd(),r'static_files\commons-math')
+        repo = Repo.Repo(module)
+        res = repo.get_traces('LogitTest')
+        self.assertTrue(excpected_testcase_trace in res.keys())
+        self.assertFalse(not_excpected_testcase_trace in res.keys())
+        shutil.rmtree(debugger_tests_dst)
+>>>>>>> master
+
 
     @unittest.skip("Important test but will require some time to validate")
     def test_get_compilation_error_testcases(self):

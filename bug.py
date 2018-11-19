@@ -4,10 +4,12 @@ import pickle
 import shutil
 from enum import Enum
 import csv
+import traceback
+from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
 class Bug(object):
-    def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc):
+    def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc, traces = [], bugged_components = []):
         self._issue_key = issue_key
         self._commit_hexsha = commit_hexsha
         self._parent_hexsha = parent_hexsha
@@ -17,6 +19,8 @@ class Bug(object):
         self._type = type
         self._desc = desc
         self._valid = valid
+        self._traces  = traces
+        self._bugged_components = bugged_components
         self._has_annotations = 'Test' in list(map(lambda a: a.name, self._bugged_testcase.method.annotations))
 
     @property
@@ -34,6 +38,12 @@ class Bug(object):
     @property
     def fixed_testcase(self):
         return self._bugged_testcase
+    @property
+    def traces(self):
+        return self._traces
+    @property
+    def bugged_components(self):
+        return self._bugged_components
     @property
     def desctiption(self):
         return self._desc
@@ -85,6 +95,17 @@ class Bug_data_handler(object):
         bug_path =self.get_bug_path(bug)
         with open(bug_path, 'wb') as bug_file:
             pickle.dump(bug, bug_file , protocol=2)
+        if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
+            try:
+                matrix_path = os.path.join(path_to_bug_testclass, 'Matrix_'+bug.bugged_testcase.method.name+'.txt')
+                diagnoserUtils.write_planning_file(
+                    out_path = matrix_path,
+                    bugs = bug.bugged_components,
+                    tests_details = [(bug.bugged_testcase.mvn_name, bug.traces, int(bug.bugged_testcase.passed))]
+                )
+            except Exception as e:
+                raise BugError(msg='Failed to create the matrix. Error:\n'+e.msg+'\n'+traceback.format_exc())
+
 
 
     # Adds bugs to the csv file
@@ -92,7 +113,10 @@ class Bug_data_handler(object):
         self._valid_bugs_csv_handler.add_bugs(list(filter(lambda b: b.valid, bugs)))
         self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
         for bug in bugs:
-            self._store_bug(bug)
+            try:
+                self._store_bug(bug)
+            except BugError as e:
+                raise e
 
     # Attach reports to the testclasses directories
     def attach_reports(self, issue, commit, testcases):
@@ -203,7 +227,7 @@ class Bug_csv_report_handler(object):
     def __init__(self, path):
         self._writer = None
         self._path = path
-        self._fieldnames = ['valid','type','issue','module','commit','parent', 'testcase', 'has_test_annotation','description']
+        self._fieldnames = ['valid','type','issue','module','commit','parent', 'testcase', 'has_test_annotation','description', 'traces', 'bugged_components']
         if not os.path.exists(path):
             with open(self._path, 'w+') as csv_output:
                 writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames,lineterminator='\n')
@@ -231,7 +255,10 @@ class Bug_csv_report_handler(object):
                 'parent': bug.parent,
                 'testcase': bug.bugged_testcase.mvn_name,
                 'has_test_annotation': bug.has_test_annotation,
-                'description': bug.desctiption}
+                'description': bug.desctiption,
+                'traces': bug.traces,
+                'bugged_components': bug.bugged_components
+                }
 
     @property
     def path(self):
@@ -255,11 +282,13 @@ class Time_csv_report_handler(object):
 
     # Generated csv bug tupple
     def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description):
-        return {'issue': issue_key,
-                'commit': commit_hexsha,
-                'module': module,
-                'time': time,
-                'description': description}
+        return {
+            'issue': issue_key,
+            'commit': commit_hexsha,
+            'module': module,
+            'time': time,
+            'description': description
+        }
 
     @property
     def path(self):
@@ -289,26 +318,28 @@ class Bug_type(Enum):
         return self.value
 
 
-def create_bug(issue, commit, parent, testcase, parent_testcase, type):
+def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components):
     if testcase.passed and parent_testcase.failed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
-                   fixed_testcase=testcase,bugged_testcase=parent_testcase, type=type, valid=True,desc='')
+                   fixed_testcase=testcase,bugged_testcase=parent_testcase, type=type, valid=True,desc='',
+                   traces=traces, bugged_components=bugged_components)
     elif testcase.passed and parent_testcase.has_error:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False,desc=invalid_rt_error_desc + ' ' + parent_testcase.get_error())
+                   type=type,valid=False,desc=invalid_rt_error_desc + ' ' + parent_testcase.get_error(),
+                   traces = traces, bugged_components = bugged_components)
     elif testcase.passed and parent_testcase.passed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False, desc=invalid_passed_desc)
+                   type=type,valid=False, desc=invalid_passed_desc,traces=traces, bugged_components=bugged_components)
     elif testcase.failed:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False, desc=invalid_not_fixed_failed_desc)
+                   type=type,valid=False, desc=invalid_not_fixed_failed_desc,traces=traces, bugged_components=bugged_components)
     elif testcase.has_error:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type,valid=False,desc=invalid_not_fixed__error_desc+' '+testcase.get_error())
+                   type=type,valid=False,desc=invalid_not_fixed__error_desc+' '+testcase.get_error(),traces=traces, bugged_components=bugged_components)
     else:
         assert 0==1
 
