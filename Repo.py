@@ -25,11 +25,11 @@ class Repo(object):
         return build_report
 
     # Executes mvn test
-    def test(self, module =None, testcases = [], time_limit = sys.maxint):
+    def test(self, module =None, testcases = [], testclasses = [], time_limit = sys.maxint):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
-        test_cmd = self.generate_mvn_test_cmd(module=inspected_module, testcases=testcases)
+        test_cmd = self.generate_mvn_test_cmd(module=inspected_module, testcases=testcases, testclasses_param =testclasses)
         build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
         return build_report
 
@@ -222,7 +222,7 @@ class Repo(object):
                         f.write(line + '\n')
 
     # Returns mvn command string that runns the given tests in the given module
-    def generate_mvn_test_cmd(self, testcases, module = None):
+    def generate_mvn_test_cmd(self, testcases , testclasses_param=[], module = None):
         testclasses = []
         for testcase in testcases:
             if not testcase.parent in testclasses:
@@ -234,7 +234,9 @@ class Repo(object):
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
-        if len(testcases)>0:
+        if len(testclasses_param) >0:
+            testclasses = testclasses_param
+        if len(testclasses)>0:
             ans+=' -Dtest='
             for testclass in testclasses:
                 if not ans.endswith('='):
