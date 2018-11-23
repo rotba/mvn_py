@@ -25,11 +25,11 @@ class Repo(object):
         return build_report
 
     # Executes mvn test
-    def test(self, module =None, testcases = [], time_limit = sys.maxint):
+    def test(self, module =None, tests = [], time_limit = sys.maxint):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
-        test_cmd = self.generate_mvn_test_cmd(module=inspected_module, testcases=testcases)
+        test_cmd = self.generate_mvn_test_cmd(module=inspected_module, tests=tests)
         build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
         return build_report
 
@@ -59,7 +59,7 @@ class Repo(object):
         ans = []
         for filename in os.listdir(path_to_reports):
             if filename.endswith(".xml"):
-                ans.append(TestObjects.TestClass(os.path.join(path_to_reports, filename), inspected_module))
+                ans.append(TestObjects.TestClassReport(os.path.join(path_to_reports, filename), inspected_module))
         return ans
 
     # Gets path to tests object in repo, or in a cpsecifc module if specified
@@ -222,11 +222,8 @@ class Repo(object):
                         f.write(line + '\n')
 
     # Returns mvn command string that runns the given tests in the given module
-    def generate_mvn_test_cmd(self, testcases, module = None):
-        testclasses = []
-        for testcase in testcases:
-            if not testcase.parent in testclasses:
-                testclasses.append(testcase.parent)
+    def generate_mvn_test_cmd(self, tests, module = None):
+        mvn_names = list(map(lambda t: t.mvn_name,tests))
         if module ==None or module == self.repo_dir:
             ans = 'mvn test -fn'
         else:
@@ -234,12 +231,12 @@ class Repo(object):
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
-        if len(testcases)>0:
+        if len(mvn_names)>0:
             ans+=' -Dtest='
-            for testclass in testclasses:
+            for mvn_name in mvn_names:
                 if not ans.endswith('='):
                     ans += ','
-                ans += testclass.mvn_name
+                ans += mvn_name
         ans += ' -f ' + self.repo_dir
         return ans
 
