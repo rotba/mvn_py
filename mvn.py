@@ -209,6 +209,16 @@ def change_plugin_version_if_exists(plugins_tag, plugin_artifact_id, version):
     version_v = surefire_version_sing[0]
     version_v.firstChild.data = version
 
+# Genrated maven class name
+def generate_mvn_class_names(src_path, module):
+    if 'src\\test' in src_path or 'src/test' in src_path or r'src\test' in src_path:
+        relpath = os.path.relpath(src_path, module + '\\src\\test\\java').replace('.java', '')
+    else:
+        relpath = os.path.relpath(src_path, module + '\\src\\main\\java').replace('.java', '')
+    while relpath.startswith('..\\'):
+        relpath = relpath[3:]
+    return relpath.replace('\\', '.')
+
 
 # changes the plugin version of 'plugin_artifact_id' to 'version'. Does nothing if the 'plugin_artifact_id' is not in plugins_tag
 def add_plugin_configuration_argline(plugins_tag, plugin_artifact_id, content):
@@ -254,6 +264,7 @@ def parse_tests(tests_dir):
         elif filename.endswith(".java"):
             ans.append(TestObjects.TestClass(abs_path))
     return ans
+
 
 def wrap_mvn_cmd(cmd, time_limit = sys.maxint):
     output_tmp_files_dir = os.path.join('tmp_files','stdout_duplication')
@@ -334,3 +345,11 @@ class MVNError(Exception):
 def has_compilation_error(build_report):
     compilation_error_report = get_compilation_error_report(build_report)
     return len(compilation_error_report)>0
+
+def tag_uri_and_name(elem):
+    if elem.tag[0] == "{":
+        uri, ignore, tag = elem.tag[1:].partition("}")
+    else:
+        uri = ''
+        tag = elem.tag
+    return uri, tag
