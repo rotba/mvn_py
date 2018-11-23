@@ -36,7 +36,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running MainTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s - in MainTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 s - in MainTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -67,12 +67,12 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
 [INFO] 
-[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.013 s]
-[INFO] sub_mod_1 .......................................... SUCCESS [  9.287 s]
-[INFO] sub_mod_2 1.0-SNAPSHOT ............................. SUCCESS [  0.442 s]
+[INFO] GMT_P 1.0-SNAPSHOT ................................. SUCCESS [  0.016 s]
+[INFO] sub_mod_1 .......................................... SUCCESS [  9.677 s]
+[INFO] sub_mod_2 1.0-SNAPSHOT ............................. SUCCESS [  0.310 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 10.153 s
-[INFO] Finished at: 2018-11-23T09:57:09+02:00
+[INFO] Total time: 10.436 s
+[INFO] Finished at: 2018-11-23T10:30:34+02:00
 [INFO] ------------------------------------------------------------------------

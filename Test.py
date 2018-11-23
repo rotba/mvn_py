@@ -9,7 +9,7 @@ import TestObjects
 
 orig_wd = os.getcwd()
 class Test_mvnpy(unittest.TestCase):
-    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
+    os.system('mvn clean install  -fn -f '+os.getcwd() + r'\static_files\MavenProj')
     # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
