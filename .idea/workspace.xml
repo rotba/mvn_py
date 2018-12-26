@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/externals/jcov.jar" afterPath="$PROJECT_DIR$/externals/jcov.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/externals/listener.jar" afterPath="$PROJECT_DIR$/externals/listener.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Repo.py" afterPath="$PROJECT_DIR$/Repo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jcov_tracer.py" afterPath="$PROJECT_DIR$/jcov_tracer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" afterPath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" />
-    </list>
+    <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,8 +121,8 @@
       <file leaf-file-name="Repo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="485" column="42" selection-start-line="485" selection-start-column="26" selection-end-line="485" selection-end-column="42" />
+            <state relative-caret-position="444">
+              <caret line="484" column="18" selection-start-line="484" selection-start-column="18" selection-end-line="484" selection-end-column="34" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -1084,8 +1077,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="485" column="42" selection-start-line="485" selection-start-column="26" selection-end-line="485" selection-end-column="42" />
+        <state relative-caret-position="444">
+          <caret line="484" column="18" selection-start-line="484" selection-start-column="18" selection-end-line="484" selection-end-column="34" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
