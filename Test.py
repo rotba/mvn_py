@@ -9,8 +9,8 @@ import TestObjects
 
 orig_wd = os.getcwd()
 class Test_mvnpy(unittest.TestCase):
-    os.system('mvn clean install -f '+os.getcwd() + r'\static_files\MavenProj')
-    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
+    os.system('mvn clean install  -fn -f '+os.getcwd() + r'\static_files\MavenProj')
+    # os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'
@@ -372,6 +372,24 @@ class Test_mvnpy(unittest.TestCase):
         compolation_error_testcases = Main.get_compilation_error_testcases(report, commit_new_testcases)
         self.assertTrue(expected_not_compiling_testcase in compolation_error_testcases,
                         "'MainTest#gooTest should have been picked as for compilation error")
+
+
+    def test_exclusive_testing(self):
+        module = os.path.join(os.getcwd(), r'static_files\MavenProj')
+        repo = Repo.Repo(module)
+        tests = repo.get_tests()
+        white_list  = tests[3:4]
+        mvn_names = list( map( lambda t: t.mvn_name, white_list ) )
+        repo.clean()
+        repo.test(tests = white_list)
+        reports = repo.get_tests_reports()
+        report_names = list(map(lambda r: os.path.basename(r.xml_path), reports))
+        self.assertEquals(len(reports) , len(white_list))
+        for mvn_name in mvn_names:
+            self.assertTrue( ('TEST-'+mvn_name+'.xml') in report_names )
+
+
+
 
 
 def duplicate_stdout(proc, file):
