@@ -19,11 +19,11 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    def install(self, module=None, testcases=[], time_limit=sys.maxint):
+    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
-        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases)
+        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug)
         build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit)
         return build_report
 
@@ -128,13 +128,13 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir):
+    def run_under_jcov(self, target_dir, debug):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         jcov = self.setup_jcov_tracer(path_to_classes_file, target_dir=target_dir, class_path=Repo.get_mvn_repo())
         jcov.execute_jcov_process()
-        self.install()
+        self.install(debug=debug)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
 
@@ -302,7 +302,7 @@ class Repo(object):
         return ans
 
     # Returns mvn command string that runns the given tests in the given module
-    def generate_mvn_install_cmd(self, testcases, module=None):
+    def generate_mvn_install_cmd(self, testcases, module=None, debug=False):
         testclasses = []
         for testcase in testcases:
             if not testcase.parent in testclasses:
@@ -314,6 +314,8 @@ class Repo(object):
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
+        if debug:
+            ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if len(testcases) > 0:
             ans += ' -Dtest='
             for testclass in testclasses:
@@ -481,4 +483,4 @@ class Repo(object):
 
 if __name__ == "__main__":
     repo = Repo(r"C:\Temp\tik\tika")
-    repo.run_under_jcov(r"c:\temp\tik\out")
+    repo.run_under_jcov(r"c:\temp\tik\out3", True)

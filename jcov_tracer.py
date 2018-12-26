@@ -40,7 +40,7 @@ class Jcov(object):
     def template_creator_cmd_line(self):
         cmd_line = ['java', '-jar', Jcov.JCOV_JAR_PATH, 'tmplgen', '-verbose']
         if self.class_path :
-            cmd_line.extend(['-cp', self.class_path ])
+            cmd_line.extend(['-cp', self.class_path])
         if self.path_to_out_template:
             cmd_line.extend(['-t', self.path_to_out_template])
         if self.path_to_classes_file:
