@@ -6,6 +6,9 @@ from xml.dom.minidom import parseString
 import xml.etree.ElementTree as ET
 import TestObjects
 import mvn
+from pom_file import Pom
+from jcov_tracer import Jcov
+import tempfile
 
 class Repo(object):
     def __init__(self, repo_dir):
@@ -16,11 +19,11 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    def install(self, module=None, testcases=[], time_limit=sys.maxint):
+    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
-        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases)
+        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug)
         build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit)
         return build_report
 
@@ -106,10 +109,34 @@ class Repo(object):
         paths_path= os.path.join(self.repo_dir, 'paths.txt')
         copyfile(agent_path_src, agent_path_dst)
         with open(paths_path, 'w+') as paths:
-            paths.write(os.path.join(os.environ['USERPROFILE'],'.m2\\repository')+'\n')
+            paths.write(Repo.get_mvn_repo() + '\n')
             paths.write(self.repo_dir)
         self.add_argline_to_surefire('-javaagent:{}={}'.format(agent_path_dst, paths_path))
 
+    @staticmethod
+    def get_mvn_repo():
+        return os.path.join(os.environ['USERPROFILE'], '.m2\\repository')
+
+    def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None):
+        result_file = "result.xml"
+        if target_dir:
+            result_file = os.path.join(target_dir, result_file)
+        jcov = Jcov(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path)
+        for pom_file in self.get_all_pom_paths(self._repo_dir):
+            pom = Pom(pom_file)
+            for value in jcov.get_values_to_add():
+                pom.add_pom_value(value)
+        return jcov
+
+    def run_under_jcov(self, target_dir, debug):
+        self.test_compile()
+        f, path_to_classes_file = tempfile.mkstemp()
+        os.close(f)
+        jcov = self.setup_jcov_tracer(path_to_classes_file, target_dir=target_dir, class_path=Repo.get_mvn_repo())
+        jcov.execute_jcov_process()
+        self.install(debug=debug)
+        jcov.stop_grabber()
+        os.remove(path_to_classes_file)
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module = None):
@@ -175,10 +202,8 @@ class Repo(object):
 
     # Changes surefire version in a pom
     def add_argline_to_surefire(self, content):
-        ans = []
         inspected_module = self.repo_dir
         poms = self.get_all_pom_paths(inspected_module)
-        new_file_lines = []
         for pom in poms:
             xmlFile = parse(pom)
             tmp_build_list = xmlFile.getElementsByTagName('build')
@@ -221,6 +246,42 @@ class Repo(object):
                     if not (all(c == ' ' for c in line) or all(c == '\t' for c in line)):
                         f.write(line + '\n')
 
+    def add_element_to_pom(self, pom_path, path, path_filter, element_name, element_value, add_new_element=True):
+        """
+        add element to pom file, used to modify the surefire plugin
+        :param pom_path: the path to the pom.xml to modify
+        :param path: the path to the element in the pom.xml (list of strings)
+        :param element_name: name of the element to add
+        :param element_value: the value to add
+        :param add_new_element: if True add new element, else append to existing element
+        """
+        xml.etree.ElementTree.register_namespace('', "http://maven.apache.org/POM/4.0.0")
+        xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
+
+        def get_children_by_name(element, name):
+            return filter(lambda e: e.tag.endswith(name), element.getchildren())
+
+        def get_or_create_child(element, name):
+            child = get_children_by_name(element, name)
+            if len(child) == 0:
+                return xml.etree.ElementTree.SubElement(element, name)
+            else:
+                return child[0]
+
+        et = xml.etree.ElementTree.parse(pom_path)
+        path = ['build', 'plugins', 'plugin']
+        elements = et.getroot()
+        for name in path:
+            elements = reduce(list.__add__, map(lambda elem: get_children_by_name(elem, name), elements), [])
+        surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
+                                                       get_children_by_name(plugin, "artifactId")),
+                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
+
+        pass
+
+    def run_function_on_poms_by_filter(self, pom_filter, function, *args, **kwargs):
+        map(lambda pom: function(pom, *args, **kwargs), filter(pom_filter, self.get_all_pom_paths(self._repo_dir)))
+
     # Returns mvn command string that runns the given tests in the given module
     def generate_mvn_test_cmd(self, tests, module = None):
         mvn_names = list(map(lambda t: t.mvn_name,tests))
@@ -241,18 +302,20 @@ class Repo(object):
         return ans
 
     # Returns mvn command string that runns the given tests in the given module
-    def generate_mvn_install_cmd(self, testcases, module=None):
+    def generate_mvn_install_cmd(self, testcases, module=None, debug=False):
         testclasses = []
         for testcase in testcases:
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         if module == None or module == self.repo_dir:
-            ans = 'mvn install -fn'
+            ans = 'mvn install -fn  -X -Djacoco.skip=true'
         else:
-            ans = 'mvn -pl :{} -am install -fn'.format(
+            ans = 'mvn -pl :{} -am install -X -Djacoco.skip=true -fn'.format(
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
+        if debug:
+            ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if len(testcases) > 0:
             ans += ' -Dtest='
             for testclass in testclasses:
@@ -418,4 +481,6 @@ class Repo(object):
 
 
 
-
+if __name__ == "__main__":
+    repo = Repo(r"C:\Temp\tik\tika")
+    repo.run_under_jcov(r"c:\temp\tik\out3", True)
