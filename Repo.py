@@ -132,11 +132,15 @@ class Repo(object):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, target_dir=target_dir, class_path=Repo.get_mvn_repo())
+        f, path_to_template = tempfile.mkstemp()
+        os.close(f)
+        os.remove(path_to_template)
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo())
         jcov.execute_jcov_process()
         self.install(debug=debug)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
+        os.remove(path_to_template)
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module = None):
@@ -308,7 +312,7 @@ class Repo(object):
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         if module == None or module == self.repo_dir:
-            ans = 'mvn install -fn  -X -Djacoco.skip=true'
+            ans = 'mvn install -fn  -X -Djacoco.skip=true  -DfailIfNoTests=false'
         else:
             ans = 'mvn -pl :{} -am install -X -Djacoco.skip=true -fn'.format(
                 os.path.basename(module))
@@ -483,4 +487,4 @@ class Repo(object):
 
 if __name__ == "__main__":
     repo = Repo(r"C:\Temp\tik\tika")
-    repo.run_under_jcov(r"c:\temp\tik\out3", True)
+    repo.run_under_jcov(r"c:\temp\tik\out", False)
