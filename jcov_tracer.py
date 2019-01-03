@@ -60,6 +60,8 @@ class Jcov(object):
         arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber'.format(JCOV_JAR_PATH=Jcov.JCOV_JAR_PATH)
         if self.path_to_classes_file:
             arg_line += r',include_list={CLASSES_FILE}'.format(CLASSES_FILE=self.path_to_classes_file)
+        if self.path_to_out_template:
+            arg_line += r',template={0}'.format(self.path_to_out_template)
         return PomValue("maven-surefire-plugin", ["configuration", "argLine"], '"{0}"'.format(arg_line))
 
 
