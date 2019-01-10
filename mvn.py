@@ -281,7 +281,7 @@ def wrap_mvn_cmd(cmd, time_limit = sys.maxint):
         build_report = tmp_f.read()
         print(build_report)
     if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
-        raise MVNError('Build took too long', build_report)
+        raise MVNTimeoutError('Build took too long', build_report)
     # if not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
     #     raise MVNError('Build took too long', build_report)
     return build_report.replace('\\n','\n')
@@ -340,6 +340,9 @@ class MVNError(Exception):
         self.report  = report
     def __str__(self):
         return repr(self.msg+'\n'+self.report)
+
+class MVNTimeoutError(MVNError):
+    pass
 
 
 def has_compilation_error(build_report):
