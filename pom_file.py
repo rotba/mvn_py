@@ -1,18 +1,13 @@
-import xml.etree.ElementTree
-xml.etree.ElementTree.register_namespace('', "http://maven.apache.org/POM/4.0.0")
-xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
-
-
-class PomPath(object):
-    def __init__(self, path):
-        self.path = path
+import xml.etree.cElementTree as et
+et.register_namespace('', "http://maven.apache.org/POM/4.0.0")
+et.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
 
 def is_surefire_plugin(plugin):
     return filter(lambda x: x.text == PomPlugin.SUREFIRE_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
 
 class PomPlugin(object):
-    PLUGINS_PATH = PomPath(['build', 'plugins', 'plugin'])
+    PLUGINS_PATH = ['build', 'plugins', 'plugin']
     SUREFIRE_ARTIFACT_ID = "maven-surefire-plugin"
     ARTIFACT_ID_NAME = "artifactId"
     PLUGINS = {"maven-surefire-plugin": is_surefire_plugin}
@@ -38,7 +33,7 @@ class PomValue(object):
 class Pom(object):
     def __init__(self, pom_path):
         self.pom_path = pom_path
-        self.element_tree = xml.etree.ElementTree.parse(self.pom_path)
+        self.element_tree = et.parse(self.pom_path)
 
     @staticmethod
     def get_children_by_name(element, name):
@@ -48,7 +43,7 @@ class Pom(object):
     def get_or_create_child(element, name):
         child = Pom.get_children_by_name(element, name)
         if len(child) == 0:
-            return xml.etree.ElementTree.SubElement(element, name)
+            return et.SubElement(element, name)
         else:
             return child[0]
 
@@ -58,9 +53,9 @@ class Pom(object):
             element = Pom.get_or_create_child(element, name)
         return element
 
-    def get_elements_by_path(self, pom_path):
+    def get_elements_by_path(self, path):
         elements = [self.element_tree.getroot()]
-        for name in pom_path.path:
+        for name in path:
             elements = reduce(list.__add__, map(lambda elem: Pom.get_children_by_name(elem, name), elements), [])
         return elements
 

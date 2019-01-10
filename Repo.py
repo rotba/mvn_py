@@ -7,7 +7,8 @@ import xml.etree.ElementTree as ET
 import TestObjects
 import mvn
 from pom_file import Pom
-from jcov_tracer import Jcov
+from jcov_tracer import JcovTracer
+from jcov_parser import JcovParser
 import tempfile
 
 class Repo(object):
@@ -121,14 +122,14 @@ class Repo(object):
         result_file = "result.xml"
         if target_dir:
             result_file = os.path.join(target_dir, result_file)
-        jcov = Jcov(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path)
+        jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path)
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             for value in jcov.get_values_to_add():
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug):
+    def run_under_jcov(self, target_dir, debug=False, parsed_dir=None):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
@@ -141,6 +142,10 @@ class Repo(object):
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
+        if parsed_dir:
+            if not os.path.exists(parsed_dir):
+                os.mkdir(parsed_dir)
+            JcovParser(target_dir).parse(parsed_dir)
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module = None):

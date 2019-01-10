@@ -2,7 +2,7 @@ import os
 from pom_file import PomValue
 from subprocess import Popen
 
-class Jcov(object):
+class JcovTracer(object):
     """
                <artifactId>maven-surefire-plugin</artifactId>
            <version>2.18.1</version>
@@ -38,7 +38,7 @@ class Jcov(object):
         self.class_path = class_path
 
     def template_creator_cmd_line(self):
-        cmd_line = ['java', '-jar', Jcov.JCOV_JAR_PATH, 'tmplgen', '-verbose']
+        cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
         if self.class_path :
             cmd_line.extend(['-cp', self.class_path])
         if self.path_to_out_template:
@@ -49,7 +49,7 @@ class Jcov(object):
         return cmd_line
 
     def grabber_cmd_line(self):
-            cmd_line = ['java', '-jar', Jcov.JCOV_JAR_PATH, 'grabber', '-vv']
+            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv']
             if self.path_to_out_template:
                 cmd_line.extend(['-t', self.path_to_out_template])
             if self.path_to_result_file:
@@ -57,7 +57,7 @@ class Jcov(object):
             return cmd_line
 
     def get_agent_arg_line(self):
-        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber'.format(JCOV_JAR_PATH=Jcov.JCOV_JAR_PATH)
+        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber'.format(JCOV_JAR_PATH=JcovTracer.JCOV_JAR_PATH)
         if self.path_to_classes_file:
             arg_line += r',include_list={CLASSES_FILE}'.format(CLASSES_FILE=self.path_to_classes_file)
         if self.path_to_out_template:
@@ -77,15 +77,15 @@ class Jcov(object):
     @staticmethod
     def static_values_to_add_to_pom():
         return [PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "name"], "listener"),
-               PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], Jcov.LISTENER_CLASS),
-               PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], Jcov.LISTENER_JAR_PATH)]
+                PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
+                PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH)]
 
     def get_values_to_add(self):
-        return Jcov.static_values_to_add_to_pom() + [self.get_agent_arg_line()]
+        return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()]
 
     def stop_grabber(self):
-        Popen(["java", "-jar", Jcov.JCOV_JAR_PATH, "grabberManager", "-save"]).communicate()
-        Popen(["java", "-jar", Jcov.JCOV_JAR_PATH, "grabberManager", "-stop"]).communicate()
+        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save"]).communicate()
+        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-stop"]).communicate()
 
     def execute_jcov_process(self):
         Popen(self.template_creator_cmd_line()).communicate()
