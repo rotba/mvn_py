@@ -36,6 +36,16 @@ class JcovTracer(object):
         self.path_to_classes_file = path_to_classes_file
         self.path_to_result_file = path_to_result_file
         self.class_path = class_path
+        self.port = str(self.get_open_port())
+
+    def get_open_port(self):
+            import socket
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.bind(("", 0))
+            s.listen(1)
+            port = s.getsockname()[1]
+            s.close()
+            return port
 
     def template_creator_cmd_line(self):
         cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
@@ -49,7 +59,7 @@ class JcovTracer(object):
         return cmd_line
 
     def grabber_cmd_line(self):
-            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv']
+            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.port]
             if self.path_to_out_template:
                 cmd_line.extend(['-t', self.path_to_out_template])
             if self.path_to_result_file:
@@ -57,7 +67,7 @@ class JcovTracer(object):
             return cmd_line
 
     def get_agent_arg_line(self):
-        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber'.format(JCOV_JAR_PATH=JcovTracer.JCOV_JAR_PATH)
+        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber,port={PORT}'.format(JCOV_JAR_PATH=JcovTracer.JCOV_JAR_PATH, PORT=self.port)
         if self.path_to_classes_file:
             arg_line += r',include_list={CLASSES_FILE}'.format(CLASSES_FILE=self.path_to_classes_file)
         if self.path_to_out_template:
