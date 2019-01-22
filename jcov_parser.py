@@ -104,7 +104,7 @@ class JcovParser(object):
     def parse(self):
         traces = {}
         for jcov_file in self.jcov_files:
-            test_name = os.path.splitext(os.path.basename(jcov_file))[0]
+            test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             traces[test_name] = self._parse_jcov_file(jcov_file, test_name)
         return traces
 
