@@ -36,7 +36,8 @@ class JcovTracer(object):
         self.path_to_classes_file = path_to_classes_file
         self.path_to_result_file = path_to_result_file
         self.class_path = class_path
-        self.port = str(self.get_open_port())
+        self.agent_port = str(self.get_open_port())
+        self.command_port = str(self.get_open_port())
 
     def get_open_port(self):
             import socket
@@ -59,7 +60,7 @@ class JcovTracer(object):
         return cmd_line
 
     def grabber_cmd_line(self):
-            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.port]
+            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.agent_port, '-command_port', self.command_port]
             if self.path_to_out_template:
                 cmd_line.extend(['-t', self.path_to_out_template])
             if self.path_to_result_file:
@@ -67,7 +68,7 @@ class JcovTracer(object):
             return cmd_line
 
     def get_agent_arg_line(self):
-        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber,port={PORT}'.format(JCOV_JAR_PATH=JcovTracer.JCOV_JAR_PATH, PORT=self.port)
+        arg_line = r'-javaagent:{JCOV_JAR_PATH}=grabber,port={PORT}'.format(JCOV_JAR_PATH=JcovTracer.JCOV_JAR_PATH, PORT=self.agent_port)
         if self.path_to_classes_file:
             arg_line += r',include_list={CLASSES_FILE}'.format(CLASSES_FILE=self.path_to_classes_file)
         if self.path_to_out_template:
@@ -94,8 +95,8 @@ class JcovTracer(object):
         return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()]
 
     def stop_grabber(self):
-        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save"]).communicate()
-        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-stop"]).communicate()
+        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save",'-command_port', self.command_port]).communicate()
+        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-stop", '-command_port', self.command_port]).communicate()
 
     def execute_jcov_process(self):
         Popen(self.template_creator_cmd_line()).communicate()
