@@ -11,6 +11,34 @@ from jcov_tracer import JcovTracer
 from jcov_parser import JcovParser
 import tempfile
 
+
+class TestResult(object):
+    def __init__(self, junit_test):
+        self.junit_test = junit_test
+        self.classname = junit_test.classname
+        self.name = junit_test.name
+        self.full_name = "{classname}@{name}".format(classname=self.classname, name=self.name).lower()
+        result = 'pass'
+        if type(junit_test.result) is Error:
+            result = 'error'
+        if type(junit_test.result) is Failure:
+            result = 'failure'
+        self.outcome = result
+
+    def __repr__(self):
+        return "{full_name}: {outcome}".format(full_name=self.full_name, outcome=self.outcome)
+
+    def is_passed(self):
+        return self.outcome == 'pass'
+
+    def get_observation(self):
+        return 0 if self.is_passed() else 1
+
+    def as_dict(self):
+        return {'_tast_name': self.full_name, '_outcome': self.outcome}
+
+
+
 class Repo(object):
     def __init__(self, repo_dir):
         self._repo_dir = repo_dir
@@ -129,7 +157,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False, parsed_dir=None):
+    def run_under_jcov(self, target_dir, debug=False):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
@@ -142,10 +170,7 @@ class Repo(object):
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        if parsed_dir:
-            if not os.path.exists(parsed_dir):
-                os.mkdir(parsed_dir)
-            JcovParser(target_dir).parse(parsed_dir)
+        return JcovParser(target_dir).parse()
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module = None):
@@ -421,6 +446,26 @@ class Repo(object):
                 if not (all(c == ' ' for c in line) or all(c == '\t' for c in line)):
                     f.write(line + '\n')
 
+    def observe_tests(self):
+        outcomes = {}
+        for report in self.get_surefire_files():
+            try:
+                for case in JUnitXml.fromfile(report):
+                    test = TestResult(case)
+                    outcomes[test.full_name] = test
+            except:
+                pass
+        return outcomes
+
+    def get_surefire_files(self):
+        SURFIRE_DIR_NAME = 'surefire-reports'
+        surefire_files = []
+        for root, _, files in os.walk(self.repo_dir):
+            for name in files:
+                if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
+                    surefire_files.append(os.path.join(root, name))
+        return surefire_files
+
     # Returns the dictionary that map testcase string to its traces strings
     def get_traces(self, testcase_name = ''):
         ans = {}
@@ -492,4 +537,6 @@ class Repo(object):
 
 if __name__ == "__main__":
     repo = Repo(r"C:\Temp\tik\tika")
+    repo.install()
+    tests = repo.observe_tests()
     repo.run_under_jcov(r"c:\temp\tik\out", False)
