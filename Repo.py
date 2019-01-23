@@ -342,9 +342,9 @@ class Repo(object):
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         if module == None or module == self.repo_dir:
-            ans = 'mvn install -fn  -X -Drat.skip=true -Djacoco.skip=true  -DfailIfNoTests=false'
+            ans = 'mvn install -fn -Drat.skip=true -Djacoco.skip=true  -DfailIfNoTests=false'
         else:
-            ans = 'mvn -pl :{} -am install -X -Drat.skip=true -Djacoco.skip=true -fn'.format(
+            ans = 'mvn -pl :{} -am install -Drat.skip=true -Djacoco.skip=true -fn'.format(
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
