@@ -91,8 +91,12 @@ class JcovTracer(object):
                 PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
                 PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH)]
 
+    def get_enviroment_variables_values(self):
+        return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always"),
+                PomValue("maven-surefire-plugin", ["configuration", "environmentVariables", "JcovGrabberCommandPort"], self.command_port)]
+
     def get_values_to_add(self):
-        return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()]
+        return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()] + self.get_enviroment_variables_values()
 
     def stop_grabber(self):
         Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save",'-command_port', self.command_port]).communicate()

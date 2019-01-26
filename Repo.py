@@ -53,7 +53,7 @@ class Repo(object):
         if not module == None:
             inspected_module = module
         install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug)
-        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit)
+        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir)
         return build_report
 
     # Executes mvn test
@@ -356,7 +356,7 @@ class Repo(object):
                 if not ans.endswith('='):
                     ans += ','
                 ans += testclass.mvn_name
-        ans += ' -f ' + self.repo_dir
+        # ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that compiles the given the given module
@@ -536,7 +536,6 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"C:\Temp\tik\tika")
-    repo.install()
-    tests = repo.observe_tests()
-    repo.run_under_jcov(r"c:\temp\tik\out", False)
+    repo = Repo(r"C:\amirelm\projects_minors\TAJO\version_to_test_trace\repo")
+    repo = Repo(r"C:\Temp\tika")
+    repo.run_under_jcov(r"C:\amirelm\projects_minors\TAJO\traces", False)
