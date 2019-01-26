@@ -93,7 +93,7 @@ class JcovTracer(object):
 
     def get_enviroment_variables_values(self):
         return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always"),
-                PomValue("maven-surefire-plugin", ["configuration", "environmentVariables", "JcovGrabberCommandPort"], self.command_port)]
+                PomValue("maven-surefire-plugin", ["configuration", "environmentVariables", "JcovGrabberCommandPort"], self.agent_port)]
 
     def get_values_to_add(self):
         return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()] + self.get_enviroment_variables_values()
