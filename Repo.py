@@ -9,6 +9,7 @@ import mvn
 from pom_file import Pom
 from jcov_tracer import JcovTracer
 from jcov_parser import JcovParser
+from junitparser.junitparser import Error, Failure
 import tempfile
 
 
@@ -17,7 +18,7 @@ class TestResult(object):
         self.junit_test = junit_test
         self.classname = junit_test.classname
         self.name = junit_test.name
-        self.full_name = "{classname}@{name}".format(classname=self.classname, name=self.name).lower()
+        self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name).lower()
         result = 'pass'
         if type(junit_test.result) is Error:
             result = 'error'
@@ -447,13 +448,14 @@ class Repo(object):
                     f.write(line + '\n')
 
     def observe_tests(self):
+        from junitparser import JUnitXml, junitparser
         outcomes = {}
         for report in self.get_surefire_files():
             try:
                 for case in JUnitXml.fromfile(report):
                     test = TestResult(case)
                     outcomes[test.full_name] = test
-            except:
+            except Exception as e:
                 pass
         return outcomes
 
@@ -536,6 +538,8 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"C:\amirelm\projects_minors\OPENNLP\version_to_test\repo")
+    repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
+    obs = repo.observe_tests()
+    pass
     # repo = Repo(r"C:\Temp\tika")
     repo.run_under_jcov(r"C:\amirelm\projects_minors\TAJO\traces", False)
