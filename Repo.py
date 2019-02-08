@@ -147,25 +147,25 @@ class Repo(object):
     def get_mvn_repo():
         return os.path.join(os.environ['USERPROFILE'], '.m2\\repository')
 
-    def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None):
+    def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None, instrument_only_methods=True):
         result_file = "result.xml"
         if target_dir:
             result_file = os.path.join(target_dir, result_file)
-        jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path)
+        jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path, instrument_only_methods=instrument_only_methods)
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             for value in jcov.get_values_to_add():
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         f, path_to_template = tempfile.mkstemp()
         os.close(f)
         os.remove(path_to_template)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo())
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process()
         self.install(debug=debug)
         jcov.stop_grabber()
@@ -538,8 +538,14 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
-    obs = repo.observe_tests()
-    pass
-    # repo = Repo(r"C:\Temp\tika")
-    repo.run_under_jcov(r"C:\amirelm\projects_minors\TAJO\traces", False)
+    # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
+    # obs = repo.observe_tests()
+    # pass
+    # traces = JcovParser(r"C:\temp\traces").parse()
+    import time
+    start = time.time()
+    print "start time:", start
+    repo = Repo(r"C:\Temp\tika")
+    repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+    print "end time:", time.time() - start
+

@@ -92,12 +92,14 @@ class Trace(object):
 
 class JcovParser(object):
     CLOSER = "/>"
-    METHENTER = "<methenter"
+    METH = "<meth"
+    METHENTER = "<meth"
     CSV_HEADER = ["component", "hit_count"]
 
-    def __init__(self, xml_folder_dir):
+    def __init__(self, xml_folder_dir, instrument_only_methods=True):
         self.jcov_files = map(lambda name: os.path.join(xml_folder_dir, name),
                               filter(lambda name: name.endswith('.xml'), os.listdir(xml_folder_dir)))
+        self.instrument_only_methods = instrument_only_methods
         self.ids = self._get_method_ids()
         self.lines_to_read = self._get_methods_lines()
 
@@ -131,9 +133,12 @@ class JcovParser(object):
                 yield next(f).strip()
 
     def _get_methods_lines(self):
+        method_prefix =  JcovParser.METH
+        if not self.instrument_only_methods:
+            method_prefix = JcovParser.METHENTER
         with open(self.jcov_files[0]) as f:
             return map(lambda line: line[0],
-                       filter(lambda line: JcovParser.METHENTER in line[1] and JcovParser.CLOSER in line[1],
+                       filter(lambda line: method_prefix in line[1] and JcovParser.CLOSER in line[1],
                               enumerate(f.readlines())))
 
     @staticmethod
@@ -157,7 +162,11 @@ class JcovParser(object):
             if method_name == '<init>':
                 method_name = class_name
             method_name = ".".join([package_name, class_name, method_name]) + "({0})".format(Signature(method.attrib['vmsig']).args)
-            id = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['id']
+            id = 0
+            if self.instrument_only_methods:
+                id = method.attrib['id']
+            else:
+                id = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['id']
             method_ids[id] = method_name
         return method_ids
 
