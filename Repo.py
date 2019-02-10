@@ -9,7 +9,36 @@ import mvn
 from pom_file import Pom
 from jcov_tracer import JcovTracer
 from jcov_parser import JcovParser
+from junitparser.junitparser import Error, Failure
 import tempfile
+
+
+class TestResult(object):
+    def __init__(self, junit_test):
+        self.junit_test = junit_test
+        self.classname = junit_test.classname
+        self.name = junit_test.name
+        self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name).lower()
+        result = 'pass'
+        if type(junit_test.result) is Error:
+            result = 'error'
+        if type(junit_test.result) is Failure:
+            result = 'failure'
+        self.outcome = result
+
+    def __repr__(self):
+        return "{full_name}: {outcome}".format(full_name=self.full_name, outcome=self.outcome)
+
+    def is_passed(self):
+        return self.outcome == 'pass'
+
+    def get_observation(self):
+        return 0 if self.is_passed() else 1
+
+    def as_dict(self):
+        return {'_tast_name': self.full_name, '_outcome': self.outcome}
+
+
 
 class Repo(object):
     def __init__(self, repo_dir):
@@ -25,7 +54,7 @@ class Repo(object):
         if not module == None:
             inspected_module = module
         install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug)
-        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit)
+        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir)
         return build_report
 
     # Executes mvn test
@@ -166,34 +195,31 @@ class Repo(object):
     def get_mvn_repo():
         return os.path.join(os.environ['USERPROFILE'], '.m2\\repository')
 
-    def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None):
+    def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None, instrument_only_methods=True):
         result_file = "result.xml"
         if target_dir:
             result_file = os.path.join(target_dir, result_file)
-        jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path)
+        jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path, instrument_only_methods=instrument_only_methods)
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             for value in jcov.get_values_to_add():
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, parsed_dir=None, debug=False):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         f, path_to_template = tempfile.mkstemp()
         os.close(f)
         os.remove(path_to_template)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo())
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process()
         self.install(debug=debug)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        if parsed_dir:
-            if not os.path.exists(parsed_dir):
-                os.mkdir(parsed_dir)
-            JcovParser(target_dir).parse(parsed_dir)
+        return JcovParser(target_dir).parse()
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module = None):
@@ -365,9 +391,9 @@ class Repo(object):
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         if module == None or module == self.repo_dir:
-            ans = 'mvn install -fn  -X -Djacoco.skip=true  -DfailIfNoTests=false'
+            ans = 'mvn install -fn -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true  -DfailIfNoTests=false'
         else:
-            ans = 'mvn -pl :{} -am install -X -Djacoco.skip=true -fn'.format(
+            ans = 'mvn -pl :{} -am install -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true -fn'.format(
                 os.path.basename(module))
         # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
@@ -379,15 +405,15 @@ class Repo(object):
                 if not ans.endswith('='):
                     ans += ','
                 ans += testclass.mvn_name
-        ans += ' -f ' + self.repo_dir
+        # ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that compiles the given the given module
     def generate_mvn_test_compile_cmd(self, module):
         if module == self.repo_dir:
-            ans = 'mvn test-compile -fn '
+            ans = 'mvn test-compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
         else:
-            ans = 'mvn -pl :{} -am test-compile -fn'.format(
+            ans = 'mvn -pl :{} -am test-compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
                 os.path.basename(module))
         ans += ' -f ' + self.repo_dir
         return ans
@@ -469,6 +495,27 @@ class Repo(object):
                 if not (all(c == ' ' for c in line) or all(c == '\t' for c in line)):
                     f.write(line + '\n')
 
+    def observe_tests(self):
+        from junitparser import JUnitXml, junitparser
+        outcomes = {}
+        for report in self.get_surefire_files():
+            try:
+                for case in JUnitXml.fromfile(report):
+                    test = TestResult(case)
+                    outcomes[test.full_name] = test
+            except Exception as e:
+                pass
+        return outcomes
+
+    def get_surefire_files(self):
+        SURFIRE_DIR_NAME = 'surefire-reports'
+        surefire_files = []
+        for root, _, files in os.walk(self.repo_dir):
+            for name in files:
+                if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
+                    surefire_files.append(os.path.join(root, name))
+        return surefire_files
+
     # Returns the dictionary that map testcase string to its traces strings
     def get_traces(self, testcase_name = ''):
         ans = {}
@@ -539,5 +586,14 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"C:\Temp\tik\tika")
-    repo.run_under_jcov(r"c:\temp\tik\out", False)
+    # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
+    # obs = repo.observe_tests()
+    # pass
+    # traces = JcovParser(r"C:\temp\traces").parse()
+    import time
+    start = time.time()
+    print "start time:", start
+    repo = Repo(r"C:\Temp\tika")
+    repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+    print "end time:", time.time() - start
+
