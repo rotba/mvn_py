@@ -55,6 +55,54 @@ class Repo(object):
         build_report = mvn.wrap_mvn_cmd(test_cmd)
         return build_report
 
+    def get_test_results(self):
+        from junitparser import JUnitXml
+        from junitparser.junitparser import Error, Failure
+        SURFIRE_DIR_NAME = 'surefire-reports'
+
+        def get_surefire_files():
+            surefire_files = []
+            for root, _, files in os.walk(self._repo_dir):
+                for name in files:
+                    if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
+                        surefire_files.append(os.path.join(root, name))
+            return surefire_files
+
+        class Test(object):
+            def __init__(self, junit_test):
+                self.junit_test = junit_test
+                self.classname = junit_test.classname
+                self.name = junit_test.name
+                self.full_name = "{classname}@{name}".format(classname=self.classname, name=self.name).lower()
+                result = 'pass'
+                if type(junit_test.result) is Error:
+                    result = 'error'
+                if type(junit_test.result) is Failure:
+                    result = 'failure'
+                self.outcome = result
+
+            def __repr__(self):
+                return "{full_name}: {outcome}".format(full_name=self.full_name, outcome=self.outcome)
+
+            def is_passed(self):
+                return self.outcome == 'pass'
+
+            def get_observation(self):
+                return 0 if self.is_passed() else 1
+
+            def as_dict(self):
+                return {'_tast_name': self.full_name, '_outcome': self.outcome}
+
+        outcomes = {}
+        for report in get_surefire_files():
+            try:
+                for case in JUnitXml.fromfile(report):
+                    test = Test(case)
+                    outcomes[test.full_name] = test
+            except:
+                pass
+        return outcomes
+
     # Returns tests reports objects currently exists in this repo in path_to_reports
     def parse_tests_reports(self, path_to_reports, module =None):
         inspected_module = self.repo_dir
@@ -129,7 +177,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False, parsed_dir=None):
+    def run_under_jcov(self, target_dir, parsed_dir=None, debug=False):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
