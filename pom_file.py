@@ -6,9 +6,14 @@ et.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 def is_surefire_plugin(plugin):
     return filter(lambda x: x.text == PomPlugin.SUREFIRE_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
 
+def is_junit_plugin(plugin):
+    return filter(lambda x: x.text == PomPlugin.JUNIT_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
+
+
 class PomPlugin(object):
     PLUGINS_PATH = ['build', 'plugins', 'plugin']
     SUREFIRE_ARTIFACT_ID = "maven-surefire-plugin"
+    JUNIT_ARTIFACT_ID = "junit"
     ARTIFACT_ID_NAME = "artifactId"
     PLUGINS = {"maven-surefire-plugin": is_surefire_plugin}
 
@@ -29,11 +34,15 @@ class PomValue(object):
         self.value = value
         self.should_append = should_append
 
+    def is_plugin(self):
+        return self.plugin_name
+
 
 class Pom(object):
     def __init__(self, pom_path):
         self.pom_path = pom_path
         self.element_tree = et.parse(self.pom_path)
+        self.set_junit_version()
 
     @staticmethod
     def get_children_by_name(element, name):
@@ -60,9 +69,9 @@ class Pom(object):
         return elements
 
     def add_pom_value(self, pom_value):
-        elements = PomPlugin.get_plugin_by_name(self, pom_value.plugin_name)
-        for element in elements:
-            created_element = Pom.get_or_create_by_path(element, pom_value.path_to_create)
+        plugins_path = PomPlugin.get_plugin_by_name(self, pom_value.plugin_name)
+        for plugin_path in plugins_path:
+            created_element = Pom.get_or_create_by_path(plugin_path, pom_value.path_to_create)
             element_text = ''
             if pom_value.should_append and created_element.text:
                 element_text = created_element.text + ' '
@@ -70,8 +79,12 @@ class Pom(object):
             created_element.text = element_text
         self.save()
 
+    def set_junit_version(self, version='4.11'):
+        junit_dependencies = filter(is_junit_plugin, self.get_elements_by_path(['dependencies', 'dependency']))
+        for dependency in junit_dependencies:
+            created_element = Pom.get_or_create_by_path(dependency, ['version'])
+            created_element.text = version
+        self.save()
+
     def save(self):
         self.element_tree.write(self.pom_path, xml_declaration=True)
-
-
-

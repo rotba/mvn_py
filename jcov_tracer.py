@@ -94,7 +94,8 @@ class JcovTracer(object):
     def static_values_to_add_to_pom():
         return [PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "name"], "listener"),
                 PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
-                PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH)]
+                PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH),
+                PomValue("maven-surefire-plugin", ["version"], "2.18.1")]
 
     def get_enviroment_variables_values(self):
         return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always"),
