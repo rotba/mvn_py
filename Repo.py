@@ -153,7 +153,7 @@ class Repo(object):
             if os.path.isdir(inspected_module + '\\src\\test\\java'):
                 ans.extend(mvn.parse_tests(inspected_module + '\\src\\test\\java'))
             else:
-                ans.extend(parse_tests(inspected_module + '\\src\\test'))
+                ans.extend(mvn.parse_tests(inspected_module + '\\src\\test'))
         for filename in os.listdir(inspected_module):
             file_abs_path = os.path.join(inspected_module, filename)
             if os.path.isdir(file_abs_path):

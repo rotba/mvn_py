@@ -9,15 +9,19 @@ import TestObjects
 
 orig_wd = os.getcwd()
 class Test_mvnpy(unittest.TestCase):
-    os.system('mvn clean install  -fn -f '+os.getcwd() + r'\static_files\MavenProj')
-    os.system('mvn clean install -f ' + os.getcwd() + r'\static_files\tika_1')
     def setUp(self):
         os.chdir(orig_wd)
         test_doc_1 = os.getcwd() + r'\static_files\TEST-org.apache.tika.cli.TikaCLIBatchCommandLineTest.xml'
         test_doc_2 = os.getcwd() + r'\static_files\MavenProj\sub_mod_2\target\surefire-reports\TEST-p_1.AssafTest.xml'
         self.test_report_1 = TestObjects.TestClassReport(test_doc_1, '')
-        self.test_report_2 = TestObjects.TestClassReport(test_doc_2,
-                                                  os.getcwd() + r'\static_files\MavenProj\sub_mod_2')
+        try:
+            self.test_report_2 = TestObjects.TestClassReport(test_doc_2,
+                                                             os.getcwd() + r'\static_files\MavenProj\sub_mod_2')
+        except TestObjects.TestParserException as e:
+            print("Unexpected state of the test driver. Caused excpetion:")
+            print (e.msg)
+            resetEnvritonment()
+
         self.test_1 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\MavenProj\sub_mod_2\src\test\java\NaimTest.java')
         self.test_2 = TestObjects.TestClass(
@@ -59,7 +63,7 @@ class Test_mvnpy(unittest.TestCase):
     def test_get_testcases(self):
         expected_testcase_id = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\AmitTest.java#AmitTest#None_hoo()'
         self.assertTrue(expected_testcase_id in list(map(lambda tc: tc.id, self.test_2.testcases)))
-        self.assertEqual(len(self.test_2.testcases), 4, "p_1.AmitTest should have only one method")
+        self.assertEqual(len(self.test_2.testcases), 5, "p_1.AmitTest should have only one method")
 
     def test_get_report_path(self):
         expected_report_path = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\target\surefire-reports\TEST-p_1.AmitTest.xml'
@@ -384,6 +388,7 @@ class Test_mvnpy(unittest.TestCase):
         repo.test(tests = white_list)
         reports = repo.get_tests_reports()
         report_names = list(map(lambda r: os.path.basename(r.xml_path), reports))
+        resetEnvritonment()
         self.assertEquals(len(reports) , len(white_list))
         for mvn_name in mvn_names:
             self.assertTrue( ('TEST-'+mvn_name+'.xml') in report_names )
@@ -391,11 +396,11 @@ class Test_mvnpy(unittest.TestCase):
     def test_exclusive_testing_long_lists_of_tests(self):
         module = os.path.join(os.getcwd(), r'static_files\commons-math')
         repo = Repo.Repo(module)
-        tests = repo.get_tests()
+        tests = repo.get_tests()[:20]
         white_list  = tests
         mvn_names = list( map( lambda t: t.mvn_name, white_list ) )
         repo.clean()
-        repo.test(tests = white_list)
+        tmp = repo.test(tests = white_list)
         reports = repo.get_tests_reports()
         report_names = list(map(lambda r: os.path.basename(r.xml_path), reports))
         self.assertEquals(len(reports) , len(white_list))
@@ -404,6 +409,10 @@ class Test_mvnpy(unittest.TestCase):
 
 
 
+
+def resetEnvritonment():
+    os.system('mvn clean install  -fn -f '+os.getcwd() + r'\static_files\MavenProj')
+    os.system('mvn clean install -fn -f ' + os.getcwd() + r'\static_files\tika_1')
 
 
 def duplicate_stdout(proc, file):
@@ -416,4 +425,5 @@ def duplicate_stdout(proc, file):
 
 
 if __name__ == '__main__':
+    resetEnvritonment()
     unittest.main()
