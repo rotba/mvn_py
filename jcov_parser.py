@@ -82,12 +82,12 @@ class Trace(object):
     def files_trace(self):
         return list(set(map(lambda x: ".".join((x.split("(")[0].split(".")[:-1])), self.trace)))
 
-    def get_trace(self, trace_granularity='methods'):
-        if trace_granularity == 'methods':
+    def get_trace(self, trace_granularity="Method"):
+        if trace_granularity == "Method":
             return list(set(self.trace))
-        elif trace_granularity == 'files':
+        elif trace_granularity == "File":
             return self.files_trace()
-        assert False
+        assert False, "granularity is {0}".format(trace_granularity)
 
 
 class JcovParser(object):
