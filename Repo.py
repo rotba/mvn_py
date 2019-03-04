@@ -12,7 +12,6 @@ from jcov_parser import JcovParser
 from junitparser.junitparser import Error, Failure
 import tempfile
 
-
 class TestResult(object):
     def __init__(self, junit_test):
         self.junit_test = junit_test
@@ -63,6 +62,17 @@ class Repo(object):
         if not module == None:
             inspected_module = module
         test_cmd = self.generate_mvn_test_cmd(module=inspected_module, tests=tests)
+        build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+        return build_report
+
+    # Generates tests. As for now implemented with evosuite
+    def generate_tests(self, module=None, tests=[], time_limit=sys.maxint):
+        inspected_module = self.repo_dir
+        if not self.tests_generator_setup():
+            self.setup_tests_generator()
+        if not module == None:
+            inspected_module = module
+        test_cmd = self.generate_mvn_generate_tests_cmd(module=inspected_module, tests=tests)
         build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
         return build_report
 
@@ -384,6 +394,24 @@ class Repo(object):
         ans += ' -f ' + self.repo_dir
         return ans
 
+    # Returns mvn command string that generates tests for the given module
+    def generate_mvn_generate_tests_cmd(self, tests, module=None):
+        mvn_names = list(map(lambda t: t.mvn_name, tests))
+        if module == None or module == self.repo_dir:
+            ans = 'mvn evosuite:generate -fn'
+        else:
+            ans = 'mvn -pl :{} -am evosuite:generate -fn'.format(
+                os.path.basename(module))
+        #if len(mvn_names) > 0:
+        if False:
+            ans += ' -Dtest='
+            for mvn_name in mvn_names:
+                if not ans.endswith('='):
+                    ans += ','
+                ans += mvn_name
+        ans += ' -f ' + self.repo_dir
+        return ans
+
     # Returns mvn command string that runns the given tests in the given module
     def generate_mvn_install_cmd(self, testcases, module=None, debug=False):
         testclasses = []
@@ -424,6 +452,16 @@ class Repo(object):
             ans = 'mvn clean '
         else:
             ans = 'mvn -pl :{} -am clean -fn'.format(
+                os.path.basename(module))
+        ans += ' -f ' + self.repo_dir
+        return ans
+
+    # Returns mvn command string that prints evosuite help material
+    def generate_mvn_evosuite_help_cmd(self, module):
+        if module == self.repo_dir:
+            ans = 'mvn evosuite:help '
+        else:
+            ans = 'mvn -pl :{} -am mvn evosuite:help -fn'.format(
                 os.path.basename(module))
         ans += ' -f ' + self.repo_dir
         return ans
@@ -582,6 +620,18 @@ class Repo(object):
             ans = ans.replace('= ', '=')
         return ans
 
+    #Returns true if self has tests generator setup
+    def tests_generator_setup(self):
+        mvn_help_cmd = self.generate_mvn_evosuite_help_cmd()
+        EVOUSUITE_CONFIGURED_INDICATION = 'evosuite:generate'
+        with os.popen(mvn_help_cmd) as proc:
+            tmp_file_path = 'tmp_file.txt'
+            with open(tmp_file_path, "w+") as tmp_file:
+                mvn.duplicate_stdout(proc, tmp_file)
+            with open(tmp_file_path, "r") as tmp_file:
+                mvn.duplicate_stdout(proc, tmp_file)
+                build_report = tmp_file.readlines()
+            return any(list(map(lambda l: EVOUSUITE_CONFIGURED_INDICATION in l, build_report)))
 
 
 

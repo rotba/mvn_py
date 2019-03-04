@@ -20,7 +20,7 @@ class Test_mvnpy(unittest.TestCase):
         except TestObjects.TestParserException as e:
             print("Unexpected state of the test driver. Caused excpetion:")
             print (e.msg)
-            resetEnvritonment()
+            #resetEnvritonment()
 
         self.test_1 = TestObjects.TestClass(
             os.getcwd() + r'\static_files\MavenProj\sub_mod_2\src\test\java\NaimTest.java')
@@ -382,7 +382,7 @@ class Test_mvnpy(unittest.TestCase):
         module = os.path.join(os.getcwd(), r'static_files\MavenProj')
         repo = Repo.Repo(module)
         tests = repo.get_tests()
-        white_list  = tests[3:4]
+        white_list = tests[3:4]
         mvn_names = list( map( lambda t: t.mvn_name, white_list ) )
         repo.clean()
         repo.test(tests = white_list)
@@ -391,7 +391,16 @@ class Test_mvnpy(unittest.TestCase):
         resetEnvritonment()
         self.assertEquals(len(reports) , len(white_list))
         for mvn_name in mvn_names:
-            self.assertTrue( ('TEST-'+mvn_name+'.xml') in report_names )
+            self.assertTrue( ('TEST-'+mvn_name+'.xml') in report_names)
+
+    def test_setup_test_generations(self):
+        expected_testclass_id = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\Amit_ESTest.java'
+        module = os.path.join(os.getcwd(), r'static_files\MavenProj\sub_mod_1')
+        repo = Repo.Repo(module)
+        repo.clean()
+        repo.generate_tests()
+        tests = repo.get_tests()
+        self.assertTrue(expected_testclass_id in list(map(lambda t: t.src_path, tests)))
 
     def test_exclusive_testing_long_lists_of_tests(self):
         module = os.path.join(os.getcwd(), r'static_files\commons-math')
@@ -425,5 +434,5 @@ def duplicate_stdout(proc, file):
 
 
 if __name__ == '__main__':
-    resetEnvritonment()
+    #resetEnvritonment()
     unittest.main()

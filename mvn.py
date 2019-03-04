@@ -282,8 +282,8 @@ def wrap_mvn_cmd(cmd, time_limit = sys.maxint, dir=None):
         print(build_report)
     if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
         raise MVNTimeoutError('Build took too long', build_report)
-    if has_compilation_error(build_report):
-        raise MVNTimeoutError('Build report has compilation error', build_report)
+    #if has_compilation_error(build_report):
+    #    raise MVNTimeoutError('Build report has compilation error', build_report)
     return build_report.replace('\\n','\n')
 
 def wrap_mvn_cmd_1(cmd, time_limit = sys.maxint):
