@@ -4,10 +4,57 @@
 [INFO] Building sub_mod_1 1.0-SNAPSHOT
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ sub_mod_1 ---
+[INFO] >>> evosuite-maven-plugin:1.0.6:generate (default-cli) > compile @ sub_mod_1 >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ sub_mod_1 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Code\Libraries\python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\main\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ sub_mod_1 ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 2 source files to C:\Code\Libraries\python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\classes
+[INFO] 
+[INFO] <<< evosuite-maven-plugin:1.0.6:generate (default-cli) < compile @ sub_mod_1 <<<
+[INFO] 
+[INFO] 
+[INFO] --- evosuite-maven-plugin:1.0.6:generate (default-cli) @ sub_mod_1 ---
+[INFO] Going to generate tests with EvoSuite
+[INFO] Total memory: 800mb
+[INFO] Time per class: 2 minutes
+[INFO] Number of used cores: 1
+[INFO] Target: C:\Code\Libraries\python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\target\classes
+[INFO] Basedir: C:\Code\Libraries\python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1
+[INFO] Started spawn process manager on port 55874
+[INFO] SLF4J: Class path contains multiple SLF4J bindings.
+[INFO] SLF4J: Found binding in [jar:file:/C:/Users/rotem/.m2/repository/org/evosuite/evosuite-master/1.0.6/evosuite-master-1.0.6.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+[INFO] SLF4J: Found binding in [jar:file:/C:/Users/rotem/.m2/repository/ch/qos/logback/logback-classic/1.1.3/logback-classic-1.1.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+[INFO] SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+[INFO] SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+[INFO] * EvoSuite 1.0.6
+[INFO] Registered remote process from /127.0.0.1:55875
+[INFO] Going to execute 2 jobs
+[INFO] Estimated completion time: 4 minutes, by 2019-03-16T14:07:29.196
+[INFO] Going to start job for: p_1.Amit. Expected to end in 120 seconds, by 2019-03-16T14:05:29.630
+[INFO] Registered remote process from /127.0.0.1:55876
+[INFO] Registered remote process from /127.0.0.1:55882
+[INFO] Completed job. Left: 1
+[INFO] Going to start job for: Main. Expected to end in 120 seconds, by 2019-03-16T14:06:40.634
+[INFO] Registered remote process from /127.0.0.1:55888
+[INFO] Registered remote process from /127.0.0.1:55894
+[INFO] Completed job. Left: 0
+[INFO] * Updating database to p_1.Amit
+[INFO] * Updating database to Main
+[INFO] === CTG run results ===
+[INFO] Removed test suites: 0
+[INFO] New test suites: 2
+[INFO] Stopping spawn process manager
+[INFO] 
+[INFO] --- evosuite-maven-plugin:1.0.6:export (default-cli) @ sub_mod_1 ---
+[INFO] Exporting tests
+[INFO] Exported tests to C:\Code\Libraries\python\mvnpy\mvnpy\static_files\MavenProj\sub_mod_1\src\test\java
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  0.220 s
-[INFO] Finished at: 2019-03-04T15:40:48+02:00
+[INFO] Total time:  02:24 min
+[INFO] Finished at: 2019-03-16T14:05:51+02:00
 [INFO] ------------------------------------------------------------------------

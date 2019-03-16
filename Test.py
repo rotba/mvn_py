@@ -434,5 +434,5 @@ def duplicate_stdout(proc, file):
 
 
 if __name__ == '__main__':
-    #resetEnvritonment()
+    resetEnvritonment()
     unittest.main()
