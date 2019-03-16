@@ -69,14 +69,16 @@ class Repo(object):
         return build_report
 
     # Generates tests. As for now implemented with evosuite
-    def generate_tests(self, module=None, tests=[], time_limit=sys.maxint):
+    def generate_tests(self, module=None, classes=[], time_limit=sys.maxint):
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
         if not self.tests_generator_setup(inspected_module):
             self.setup_tests_generator(inspected_module)
-        test_cmd = self.generate_mvn_generate_tests_cmd(module=inspected_module, tests=tests)
+        test_cmd = self.generate_mvn_generate_tests_cmd(module=inspected_module, classes=classes)
         build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+        if os.path.exists(os.path.join(self.repo_dir, 'cutsFile.txt')):
+            os.remove(os.path.join(self.repo_dir, 'cutsFile.txt'))
         return build_report
 
     # Executes mvn clean
@@ -402,20 +404,18 @@ class Repo(object):
         return ans
 
     # Returns mvn command string that generates tests for the given module
-    def generate_mvn_generate_tests_cmd(self, tests, module=None):
-        mvn_names = list(map(lambda t: t.mvn_name, tests))
+    def generate_mvn_generate_tests_cmd(self, classes, module=None):
         if module == None or module == self.repo_dir:
             ans = 'mvn evosuite:generate evosuite:export -fn'
         else:
             ans = 'mvn -pl :{} -am evosuite:generate -fn'.format(
                 os.path.basename(module))
-        # if len(mvn_names) > 0:
-        if False:
-            ans += ' -Dtest='
-            for mvn_name in mvn_names:
-                if not ans.endswith('='):
-                    ans += ','
-                ans += mvn_name
+        if len(classes) > 0:
+            path_to_cutsfile = os.path.join(self.repo_dir,"cutsFile.txt")
+            with open(path_to_cutsfile , "w+") as tmp_file:
+                tmp_file.write(' ,'.join(classes))
+                ans += ' '
+                ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
         ans += ' -f ' + self.repo_dir
         return ans
 

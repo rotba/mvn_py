@@ -393,7 +393,7 @@ class Test_mvnpy(unittest.TestCase):
         for mvn_name in mvn_names:
             self.assertTrue( ('TEST-'+mvn_name+'.xml') in report_names)
 
-    def test_setup_test_generations(self):
+    def test_setup_test_generations_1(self):
         expected_testclass_id = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\Amit_ESTest.java'
         module = os.path.join(os.getcwd(), r'static_files\MavenProj\sub_mod_1')
         repo = Repo.Repo(module)
@@ -401,6 +401,17 @@ class Test_mvnpy(unittest.TestCase):
         repo.generate_tests()
         tests = repo.get_tests()
         self.assertTrue(expected_testclass_id in list(map(lambda t: t.src_path, tests)))
+
+    def test_setup_test_generations_exclusive_classes_list(self):
+        expected_testclass_id = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\p_1\Amit_ESTest.java'
+        expected_not_testclass_id = os.getcwd() + r'\static_files\MavenProj\sub_mod_1\src\test\java\Main_ESTest.java'
+        module = os.path.join(os.getcwd(), r'static_files\MavenProj\sub_mod_1')
+        repo = Repo.Repo(module)
+        repo.clean()
+        repo.generate_tests(classes = ['p_1.Amit'])
+        tests = repo.get_tests()
+        self.assertTrue(expected_testclass_id in list(map(lambda t: t.src_path, tests)))
+        self.assertFalse(expected_not_testclass_id in list(map(lambda t: t.src_path, tests)))
 
     def test_exclusive_testing_long_lists_of_tests(self):
         module = os.path.join(os.getcwd(), r'static_files\commons-math')
