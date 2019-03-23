@@ -82,12 +82,12 @@ class Trace(object):
     def files_trace(self):
         return list(set(map(lambda x: ".".join((x.split("(")[0].split(".")[:-1])), self.trace)))
 
-    def get_trace(self, trace_granularity='methods'):
-        if trace_granularity == 'methods':
+    def get_trace(self, trace_granularity="Method"):
+        if trace_granularity == "Method":
             return list(set(self.trace))
-        elif trace_granularity == 'files':
+        elif trace_granularity == "File":
             return self.files_trace()
-        assert False
+        assert False, "granularity is {0}".format(trace_granularity)
 
 
 class JcovParser(object):
@@ -119,9 +119,8 @@ class JcovParser(object):
         for method in self._get_lines_by_inds(jcov_file):
             data = dict(map(lambda val: val.split('='),
                             method[len(JcovParser.METHENTER) + 1:-len(JcovParser.CLOSER)].replace('"', "").split()))
-            count = data["count"]
-            if int(count):
-                counts[data["id"]] = count
+            if data.has_key('count') and data.has_key('id') and int(data.get('count')):
+                counts[data["id"]] = data.get('count')
         return counts
 
     def _get_lines_by_inds(self, file_path):
@@ -172,6 +171,6 @@ class JcovParser(object):
 
 
 if __name__ == "__main__":
-    traces = JcovParser(r"C:\temp\tik\out").parse()
+    traces = JcovParser(r"C:\Users\deanc\Desktop\workspaces\java\subjects\commons-math\dbguer\traces").parse()
     print traces
     pass
