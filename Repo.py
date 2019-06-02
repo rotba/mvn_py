@@ -214,7 +214,7 @@ class Repo(object):
         os.close(f)
         os.remove(path_to_template)
         jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
-        jcov.execute_jcov_process()
+        jcov.execute_jcov_process(debug=debug)
         self.install(debug=debug)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)

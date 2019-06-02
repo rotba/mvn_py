@@ -29,6 +29,7 @@ class JcovTracer(object):
     JCOV_JAR_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "externals", "jcov.jar")
     LISTENER_JAR_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "externals", "listener.jar")
     LISTENER_CLASS = "com.sun.tdk.listener.JUnitExecutionListener"
+    DEBUG_CMD = ["-Xdebug", "-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y"]
 
     def __init__(self, classes_dir, path_to_out_template=None, path_to_classes_file=None, path_to_result_file=None, class_path=None, instrument_only_methods=True):
         self.classes_dir = classes_dir
@@ -49,8 +50,8 @@ class JcovTracer(object):
             s.close()
             return port
 
-    def template_creator_cmd_line(self):
-        cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
+    def template_creator_cmd_line(self, debug=False):
+        cmd_line = ['java', '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
         if self.class_path :
             cmd_line.extend(['-cp', self.class_path])
         if self.path_to_out_template:
@@ -62,8 +63,8 @@ class JcovTracer(object):
         cmd_line.extend(self.get_classes_path())
         return cmd_line
 
-    def grabber_cmd_line(self):
-            cmd_line = ['java', '-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.agent_port, '-command_port', self.command_port]
+    def grabber_cmd_line(self, debug=False):
+            cmd_line = ['java', '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.agent_port, '-command_port', self.command_port]
             if self.path_to_out_template:
                 cmd_line.extend(['-t', self.path_to_out_template])
             if self.path_to_result_file:
@@ -108,6 +109,6 @@ class JcovTracer(object):
         Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save",'-command_port', self.command_port]).communicate()
         Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-stop", '-command_port', self.command_port]).communicate()
 
-    def execute_jcov_process(self):
-        Popen(self.template_creator_cmd_line()).communicate()
-        Popen(self.grabber_cmd_line())
+    def execute_jcov_process(self, debug=False):
+        Popen(self.template_creator_cmd_line(debug=debug)).communicate()
+        Popen(self.grabber_cmd_line(debug=debug))

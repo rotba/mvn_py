@@ -1,93 +1,369 @@
 [INFO] Scanning for projects...
-[WARNING] 
-[WARNING] Some problems were encountered while building the effective model for commons-math:commons-math:jar:1.2-SNAPSHOT
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ org.apache.commons:commons-parent:2, C:\Users\rotem\.m2\repository\org\apache\commons\commons-parent\2\commons-parent-2.pom, line 115, column 15
-[WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:cobertura-maven-plugin is missing. @ line 211, column 12
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-idea-plugin is missing. @ org.apache.commons:commons-parent:2, C:\Users\rotem\.m2\repository\org\apache\commons\commons-parent\2\commons-parent-2.pom, line 140, column 15
-[WARNING] 
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING] 
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
-[WARNING] 
-[INFO] 
-[INFO] ---------------------< commons-math:commons-math >----------------------
-[INFO] Building Math 1.2-SNAPSHOT
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO] 
-[INFO] --- maven-antrun-plugin:1.3:run (default) @ commons-math ---
-[INFO] Executing tasks
-     [copy] Copying 2 files to C:\Code\Libraries\python\mvnpy\static_files\commons-math\target\classes\META-INF
-[INFO] Executed tasks
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ commons-math ---
-[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] Copying 2 resources to META-INF
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ commons-math ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding Cp1252, i.e. build is platform dependent!
-[INFO] Compiling 215 source files to C:\Code\Libraries\python\mvnpy\static_files\commons-math\target\classes
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ commons-math ---
-[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] Copying 11 resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ commons-math ---
-[INFO] Changes detected - recompiling the module!
-[WARNING] File encoding has not been set, using platform encoding Cp1252, i.e. build is platform dependent!
-[INFO] Compiling 162 source files to C:\Code\Libraries\python\mvnpy\static_files\commons-math\target\test-classes
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.22.0:test (default-test) @ commons-math ---
-[INFO] 
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running org.apache.commons.math.analysis.BisectionSolverTest
-[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.181 s - in org.apache.commons.math.analysis.BisectionSolverTest
-[INFO] Running org.apache.commons.math.analysis.BrentSolverTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.BrentSolverTest
-[INFO] Running org.apache.commons.math.analysis.DividedDifferenceInterpolatorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.DividedDifferenceInterpolatorTest
-[INFO] Running org.apache.commons.math.analysis.Expm1Function
-[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in org.apache.commons.math.analysis.Expm1Function
-[INFO] Running org.apache.commons.math.analysis.LaguerreSolverTest
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in org.apache.commons.math.analysis.LaguerreSolverTest
-[INFO] Running org.apache.commons.math.analysis.MullerSolverTest
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.MullerSolverTest
-[INFO] Running org.apache.commons.math.analysis.NevilleInterpolatorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.NevilleInterpolatorTest
-[INFO] Running org.apache.commons.math.analysis.NewtonSolverTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.NewtonSolverTest
-[INFO] Running org.apache.commons.math.analysis.PolynomialFunctionLagrangeFormTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.PolynomialFunctionLagrangeFormTest
-[INFO] Running org.apache.commons.math.analysis.PolynomialFunctionNewtonFormTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in org.apache.commons.math.analysis.PolynomialFunctionNewtonFormTest
-[INFO] Running org.apache.commons.math.analysis.PolynomialFunctionTest
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in org.apache.commons.math.analysis.PolynomialFunctionTest
-[INFO] Running org.apache.commons.math.analysis.PolynomialSplineFunctionTest
-[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.PolynomialSplineFunctionTest
-[INFO] Running org.apache.commons.math.analysis.QuinticFunction
-[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in org.apache.commons.math.analysis.QuinticFunction
-[INFO] Running org.apache.commons.math.analysis.RiddersSolverTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.RiddersSolverTest
-[INFO] Running org.apache.commons.math.analysis.RombergIntegratorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.RombergIntegratorTest
-[INFO] Running org.apache.commons.math.analysis.SimpsonIntegratorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.SimpsonIntegratorTest
-[INFO] Running org.apache.commons.math.analysis.SinFunction
-[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.SinFunction
-[INFO] Running org.apache.commons.math.analysis.SplineInterpolatorTest
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in org.apache.commons.math.analysis.SplineInterpolatorTest
-[INFO] Running org.apache.commons.math.analysis.TrapezoidIntegratorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.commons.math.analysis.TrapezoidIntegratorTest
-[INFO] 
-[INFO] Results:
-[INFO] 
-[INFO] Tests run: 69, Failures: 0, Errors: 0, Skipped: 0
-[INFO] 
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Apache Tika parent
+[INFO] Apache Tika core
+[INFO] Apache Tika parsers
+[INFO] Apache Tika XMP
+[INFO] Apache Tika serialization
+[INFO] Apache Tika batch
+[INFO] Apache Tika application
+[INFO] Apache Tika OSGi bundle
+[INFO] Apache Tika server
+[INFO] Apache Tika translate
+[INFO] Apache Tika examples
+[INFO] Apache Tika Java-7 Components
+[INFO] Apache Tika
+[INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  11.310 s
-[INFO] Finished at: 2019-02-18T10:53:41+02:00
+[INFO] Building Apache Tika parent 1.8
 [INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika-parent ---
+[INFO] 
+[INFO] --- forbiddenapis:1.7:check (default) @ tika-parent ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika-parent ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- maven-site-plugin:3.0:attach-descriptor (attach-descriptor) @ tika-parent ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ tika-parent ---
+[INFO] Installing C:\Temp\tika\tika-parent\pom.xml to C:\Users\User\.m2\repository\org\apache\tika\tika-parent\1.8\tika-parent-1.8.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika core 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika parsers 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika XMP 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika serialization 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika batch 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika application 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika OSGi bundle 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika server 1.8
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika-server ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ tika-server ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.2:compile (default-compile) @ tika-server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- forbiddenapis:1.7:check (default) @ tika-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe
+[INFO] Reading bundled API signatures: jdk-deprecated
+[INFO] Loading classes to check...
+[INFO] Scanning for API signatures and dependencies...
+[INFO] Scanned 37 (and 363 related) class file(s) for forbidden API invocations (in 0.19s), 0 error(s).
+[INFO] 
+[INFO] --- miredot-maven-plugin:1.4:restdoc (default) @ tika-server ---
+[ERROR] Licence key expired on 01 ‡Â‚ 2016
+[WARNING] Miredot is unable to document the status codes of rest interfaces, unless a statusCodes-block is specified in the project-pom.
+[INFO] Building reflective model of API and reading annotations...
+[INFO] Built.
+[INFO] Reading javadoc comments from sourcefiles...
+[INFO] Read.
+[INFO] Merging reflective and javadoc models...
+[WARNING] Limited support for jdk8 (@link, @see, @linkplain javadoc tags won't format properly)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.UnpackerResourcemetadataToCsvMetadatajava.io.OutputStream)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaWelcomeidentifyEndpoints)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcecreateParserTikaConfig)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcedetectFilename<any>)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcefillParseContextParseContext<any>Parser)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcefillMetadataAutoDetectParserMetadataParseContext<any>)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourceparseParserLogjava.lang.Stringjava.io.InputStreamorg.xml.sax.ContentHandlerMetadataParseContext)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcelogRequestLogUriInfoMetadata)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourceproduceTextjava.io.InputStream<any>UriInfo)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersHTMLboolean)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersJSONboolean)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersPlainboolean)
+[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaMimeTypesgetMediaTypes)
+[INFO] Merged.
+[INFO] Performing issue analysis...
+[INFO] Analysis done.
+[INFO] Constructing Html documentation
+[WARNING] Intro file is not supported in the unlicensed version of Miredot.
+[INFO] Miredot: Completed
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ tika-server ---
+[debug] execute contextualize
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 14 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.2:testCompile (default-testCompile) @ tika-server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe
+[INFO] Reading bundled API signatures: jdk-deprecated
+[INFO] Loading classes to check...
+[INFO] Scanning for API signatures and dependencies...
+[INFO] Scanned 13 (and 273 related) class file(s) for forbidden API invocations (in 0.10s), 0 error(s).
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ tika-server ---
+[WARNING] The parameter forkMode is deprecated since version 2.14. Use forkCount and reuseForks instead.
+[INFO] Surefire report directory: C:\Temp\tika\tika-server\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.apache.tika.server.DetectorResourceTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.197 sec - in org.apache.tika.server.DetectorResourceTest
+Running org.apache.tika.server.MetadataResourceTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.058 sec - in org.apache.tika.server.MetadataResourceTest
+Running org.apache.tika.server.RecursiveMetadataResourceTest
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 16.192 sec <<< FAILURE! - in org.apache.tika.server.RecursiveMetadataResourceTest
+testSimpleWord(org.apache.tika.server.RecursiveMetadataResourceTest)  Time elapsed: 12.958 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<11> but was:<7>
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:743)
+	at org.junit.Assert.assertEquals(Assert.java:118)
+	at org.junit.Assert.assertEquals(Assert.java:555)
+	at org.junit.Assert.assertEquals(Assert.java:542)
+	at org.apache.tika.server.RecursiveMetadataResourceTest.testSimpleWord(RecursiveMetadataResourceTest.java:70)
+
+Running org.apache.tika.server.StackTraceOffTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.37 sec - in org.apache.tika.server.StackTraceOffTest
+Running org.apache.tika.server.StackTraceTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.744 sec - in org.apache.tika.server.StackTraceTest
+Running org.apache.tika.server.TikaDetectorsTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.519 sec - in org.apache.tika.server.TikaDetectorsTest
+Running org.apache.tika.server.TikaMimeTypesTest
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 188.966 sec <<< FAILURE! - in org.apache.tika.server.TikaMimeTypesTest
+testGetPlainText(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 66.647 sec  <<< ERROR!
+javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
+	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
+	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
+	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
+	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
+	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
+	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
+	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
+	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
+	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
+	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
+	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
+	at org.apache.tika.server.TikaMimeTypesTest.testGetPlainText(TikaMimeTypesTest.java:57)
+
+testGetHTML(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 60.053 sec  <<< ERROR!
+javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
+	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
+	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
+	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
+	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
+	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
+	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
+	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
+	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
+	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
+	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
+	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
+	at org.apache.tika.server.TikaMimeTypesTest.testGetHTML(TikaMimeTypesTest.java:75)
+
+testGetJSON(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 60.054 sec  <<< ERROR!
+javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
+	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
+	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
+	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
+	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
+	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
+	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
+	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
+	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
+	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
+	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
+	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
+	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
+	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
+	at org.apache.tika.server.TikaMimeTypesTest.testGetJSON(TikaMimeTypesTest.java:97)
+
+Running org.apache.tika.server.TikaParsersTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.087 sec - in org.apache.tika.server.TikaParsersTest
+Running org.apache.tika.server.TikaResourceTest
+Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 23.916 sec <<< FAILURE! - in org.apache.tika.server.TikaResourceTest
+testEmbedded(org.apache.tika.server.TikaResourceTest)  Time elapsed: 4.459 sec  <<< FAILURE!
+java.lang.AssertionError: null
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertTrue(Assert.java:52)
+	at org.apache.tika.server.TikaResourceTest.testEmbedded(TikaResourceTest.java:162)
+
+Running org.apache.tika.server.TikaVersionTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.549 sec - in org.apache.tika.server.TikaVersionTest
+Running org.apache.tika.server.TikaWelcomeTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.851 sec - in org.apache.tika.server.TikaWelcomeTest
+Running org.apache.tika.server.UnpackerResourceTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 23.37 sec - in org.apache.tika.server.UnpackerResourceTest
+
+Results :
+
+Failed tests: 
+  RecursiveMetadataResourceTest.testSimpleWord:70 expected:<11> but was:<7>
+  TikaResourceTest.testEmbedded:162 null
+Tests in error: 
+  TikaMimeTypesTest.testGetHTML:75 ª Processing java.net.SocketTimeoutException:...
+  TikaMimeTypesTest.testGetJSON:97 ª Processing java.net.SocketTimeoutException:...
+  TikaMimeTypesTest.testGetPlainText:57 ª Processing java.net.SocketTimeoutExcep...
+
+Tests run: 54, Failures: 2, Errors: 3, Skipped: 0
+
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika translate 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika examples 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika Java-7 Components 1.8
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Apache Tika 1.8
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika ---
+[INFO] 
+[INFO] --- forbiddenapis:1.7:check (default) @ tika ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- maven-site-plugin:3.0:attach-descriptor (attach-descriptor) @ tika ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ tika ---
+[INFO] Installing C:\Temp\tika\pom.xml to C:\Users\User\.m2\repository\org\apache\tika\tika\1.8\tika-1.8.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] Apache Tika parent ................................. SUCCESS [  1.201 s]
+[INFO] Apache Tika core ................................... FAILURE [  0.044 s]
+[INFO] Apache Tika parsers ................................ FAILURE [  0.000 s]
+[INFO] Apache Tika XMP .................................... FAILURE [  0.004 s]
+[INFO] Apache Tika serialization .......................... FAILURE [  0.004 s]
+[INFO] Apache Tika batch .................................. FAILURE [  0.015 s]
+[INFO] Apache Tika application ............................ FAILURE [  0.003 s]
+[INFO] Apache Tika OSGi bundle ............................ FAILURE [  0.003 s]
+[INFO] Apache Tika server ................................. FAILURE [06:38 min]
+[INFO] Apache Tika translate .............................. FAILURE [  0.016 s]
+[INFO] Apache Tika examples ............................... FAILURE [  0.004 s]
+[INFO] Apache Tika Java-7 Components ...................... FAILURE [  0.004 s]
+[INFO] Apache Tika ........................................ SUCCESS [  0.064 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 06:40 min
+[INFO] Finished at: 2019-06-02T22:09:03+03:00
+[INFO] Final Memory: 38M/336M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.18.1:test (default-test) on project tika-server: There are test failures.
+[ERROR] 
+[ERROR] Please refer to C:\Temp\tika\tika-server\target\surefire-reports for the individual test results.
+[ERROR] -> [Help 2]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException
+[ERROR] [Help 2] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :tika-server
+[INFO] Build failures were ignored.
