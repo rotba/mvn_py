@@ -90,6 +90,14 @@ class Repo(object):
         build_report = mvn.wrap_mvn_cmd(test_cmd)
         return build_report
 
+    # Executes mvn clean
+    def site(self, module=None):
+        inspected_module = self.repo_dir
+        if not module == None:
+            inspected_module = module
+        build_report = mvn.wrap_mvn_cmd(self.generate_mvn_site_cmd(inspected_module))
+        return build_report
+
     # Executes mvn compile
     def test_compile(self, module=None):
         inspected_module = self.repo_dir
@@ -462,6 +470,9 @@ class Repo(object):
         ans += ' -f ' + self.repo_dir
         return ans
 
+    def generate_mvn_site_cmd(self, module):
+        return 'mvn site -f {0} -fn '.format(module)
+
     # Returns mvn command string that prints evosuite help material
     def generate_mvn_evosuite_help_cmd(self, module):
         if module == self.repo_dir:
@@ -682,6 +693,15 @@ class Repo(object):
         self.set_pom_tag(xquery=set_groupId_xquery, create_if_not_exist=True, module=module, value=groupId)
         self.set_pom_tag(xquery=set_version_xquery, create_if_not_exist=True, module=module, value=version)
 
+    def add_javadoc(self):
+        from javadoc import JavaDoc
+        for pom_file in self.get_all_pom_paths(self._repo_dir):
+            pom = Pom(pom_file)
+            pom.set_site_version()
+            for value in JavaDoc.get_pom_values():
+                pom.add_pom_value(value)
+            pom.save()
+
 
 if __name__ == "__main__":
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
@@ -692,6 +712,12 @@ if __name__ == "__main__":
 
     start = time.time()
     print "start time:", start
+    # repo = Repo(r"C:\Temp\bugs-dot-jar\accumulo")
+    # repo.add_javadoc()
+    # repo.site()
+    # exit()
     repo = Repo(r"C:\Temp\tika")
+    repo.add_javadoc()
+    obs = repo.observe_tests()
     repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
     print "end time:", time.time() - start
