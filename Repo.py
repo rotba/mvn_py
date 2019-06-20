@@ -699,8 +699,12 @@ class Repo(object):
             pom = Pom(pom_file)
             pom.set_site_version()
             for value in JavaDoc.get_pom_values():
-                pom.add_pom_value(value)
+                pom.add_pom_value(value, create_plugin_if_not_exists=True)
             pom.save()
+
+    def javadoc_command(self):
+        from javadoc import JavaDoc
+        return JavaDoc.get_dir_javadoc(self._repo_dir)
 
 
 if __name__ == "__main__":
@@ -716,8 +720,17 @@ if __name__ == "__main__":
     # repo.add_javadoc()
     # repo.site()
     # exit()
-    repo = Repo(r"C:\Temp\tika")
-    repo.add_javadoc()
+    repo = Repo(r"C:\Temp\lang4j\defects4j-lang")
+    jsons = repo.javadoc_command()
+    exit()
     obs = repo.observe_tests()
-    repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+    traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+    import networkx
+    for trace in traces:
+        g = networkx.DiGraph()
+        g.add_edges_from(traces[trace].get_execution_edges())
+        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_execution.gexf"))
+        g = networkx.DiGraph()
+        g.add_edges_from(traces[trace].get_call_graph_edges())
+        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_call_graph.gexf"))
     print "end time:", time.time() - start
