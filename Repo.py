@@ -702,9 +702,14 @@ class Repo(object):
                 pom.add_pom_value(value, create_plugin_if_not_exists=True)
             pom.save()
 
-    def javadoc_command(self):
+    def javadoc_command(self, dump_path=None):
         from javadoc import JavaDoc
-        return JavaDoc.get_dir_javadoc(self._repo_dir)
+        import json
+        jsons = JavaDoc.get_dir_javadoc(self._repo_dir)
+        if dump_path:
+            with open(dump_path, "wb") as f:
+                json.dump(jsons, f)
+        return jsons
 
 
 if __name__ == "__main__":
@@ -721,7 +726,7 @@ if __name__ == "__main__":
     # repo.site()
     # exit()
     repo = Repo(r"C:\Temp\lang4j\defects4j-lang")
-    jsons = repo.javadoc_command()
+    jsons = repo.javadoc_command(r"c:\temp\jsons.json")
     exit()
     obs = repo.observe_tests()
     traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
