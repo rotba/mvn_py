@@ -100,7 +100,7 @@ class TraceElement(object):
         map(lambda hit: hit.set_previous_method(method_name_by_id), self.hits_information)
 
     def have_count(self):
-        return self.count
+        return self.count != 0
 
     def get_trace(self, trace_granularity='methods'):
         if trace_granularity == 'methods':
@@ -122,7 +122,7 @@ class Trace(object):
         self.trace = trace
 
     def get_trace(self, trace_granularity='methods'):
-        return list(set(map(lambda t: t.get_trace(trace_granularity), self.trace)))
+        return list(set(map(lambda t: self.trace[t].get_trace(trace_granularity), self.trace)))
 
     def get_execution_edges(self):
         return reduce(list.__add__, map(lambda element: element.get_execution_edges(), self.trace.values()), [])
