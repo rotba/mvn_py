@@ -312,6 +312,7 @@ class Bug_type(Enum):
     DELTA_2 = "Delta^2"
     DELTA_3 = "Delta^3"
     REGRESSION = "Regression"
+    GEN = "Auto-generated"
     def __str__(self):
         return self.value
     def __repr__(self):
@@ -354,8 +355,10 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copy2(s, d)
 
 # Returns the ype of the bug
-def determine_type(testcase, delta_testcases):
+def determine_type(testcase, delta_testcases, gen_commit_valid_testcases):
     if testcase in delta_testcases:
         return Bug_type.DELTA
+    elif testcase in gen_commit_valid_testcases:
+        return Bug_type.GEN
     else:
         return Bug_type.REGRESSION
