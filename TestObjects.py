@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 import re
 import javalang
+from pathlib import Path
 
 
 
@@ -106,7 +107,7 @@ class TestClass(object):
                len(method.parameters)==0 and method.return_type==None
 
     def generate_mvn_name(self):
-        relpath = os.path.relpath(self.src_path, self.module + '\\src\\test\\java').replace('.java', '')
+        relpath = self.get_testclass_rel_path()
         if relpath.startswith('..\\'):
             relpath = relpath[3:]
         return relpath.replace('\\', '.')
@@ -119,6 +120,11 @@ class TestClass(object):
             return False
         else:
             return self.id == other.id
+
+    def get_testclass_rel_path(self):
+        if is_evosuite_test_class(self.src_path):
+            return os.path.relpath(self.src_path, self.module + '\\.evosuite\\best-tests').replace('.java', '')
+        return os.path.relpath(self.src_path, self.module + '\\src\\test\\java').replace('.java', '')
 
 
 class TestCase(object):
@@ -410,6 +416,9 @@ class TestCaseReport(object):
     def get_error(self):
         return self.error.text
 
+    def is_evosuite_test_class(src_path):
+        return '.evosuite' in Path(src_path).parts
+
     def __repr__(self):
         return str(self.name)
 
@@ -419,3 +428,5 @@ class TestParserException(Exception):
 
     def __str__(self):
         return repr(self.msg)
+
+

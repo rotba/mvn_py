@@ -1,0 +1,17 @@
+diff --git a/setup.py b/setup.py
+index 3c7f42d..5fb5299 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1,10 +1,10 @@
+ from setuptools import setup, find_packages
+ 
+-install_requires = ['javalang', 'enum']
++install_requires = ['javalang', 'enum','pathlib']
+ 
+ setup(
+     name='mvnpy',
+-    version='1.0.0',
++    version='1.0.1',
+     packages=find_packages(),
+     url='https://github.com/rotba/mvnpy',
+     license='',

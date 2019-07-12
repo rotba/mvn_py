@@ -669,6 +669,16 @@ class Repo(object):
         self.set_pom_tag(xquery=listener_value_xquery, create_if_not_exist=True, module=module,
                          value='org.evosuite.runtime.InitializingListener')
 
+    def get_generated_testcases(self, module = None):
+        generated_tests_dir = self.get_generated_testcases_dir(module= module)
+        test_classes = mvn.parse_tests(generated_tests_dir)
+        return mvn.get_testcases(test_classes=test_classes)
+
+
+    def get_generated_testcases_dir(self, module = None):
+        module_path = self.repo_dir if module == None else module
+        return os.path.join(module_path, os.path.join('.evosuite','best-tests'))
+
     def add_plugin(self, artifactId, groupId, version, module):
         plugin_xpath = r"./build/plugins/plugin[artifactId = '{}']".format(artifactId)
         set_groupId_xquery = '/'.join([plugin_xpath, "groupId"])

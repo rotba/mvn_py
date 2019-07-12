@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = ['javalang', 'enum']
+install_requires = ['javalang', 'enum','pathlib']
 
 setup(
     name='mvnpy',
