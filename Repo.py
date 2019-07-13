@@ -405,10 +405,11 @@ class Repo(object):
 
     # Returns mvn command string that generates tests for the given module
     def generate_mvn_generate_tests_cmd(self, classes, module=None):
+        inspeced_module = self.repo_dir if module== None else module
         if module == None or module == self.repo_dir:
             ans = 'mvn evosuite:generate evosuite:export -fn'
         else:
-            ans = 'mvn -pl :{} -am evosuite:generate -fn'.format(
+            ans = 'mvn -pl :{} -am evosuite:generate evosuite:export -fn'.format(
                 os.path.basename(module))
         if len(classes) > 0:
             path_to_cutsfile = os.path.join(self.repo_dir,"cutsFile.txt")
@@ -416,7 +417,7 @@ class Repo(object):
                 tmp_file.write(' ,'.join(classes))
                 ans += ' '
                 ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
-        ans += ' -f ' + self.repo_dir
+        ans += ' -f ' + inspeced_module
         return ans
 
     # Returns mvn command string that runns the given tests in the given module
