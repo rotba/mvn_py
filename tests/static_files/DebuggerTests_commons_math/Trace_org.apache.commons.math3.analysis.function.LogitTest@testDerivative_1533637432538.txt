@@ -1,0 +1,12 @@
+[inst2] + org.apache.commons.math3.analysis.function.LogitTest@testDerivative
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getValue
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getOrder
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getOrder
+[inst2] + org.apache.commons.math3.util.FastMath@log
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@compose
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@compose
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getPartialDerivative
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getPartialDerivativeIndex
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getFreeParameters

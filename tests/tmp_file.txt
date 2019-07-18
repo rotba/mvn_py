@@ -1,0 +1,51 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< GMT_P:sub_mod_1 >---------------------------
+[INFO] Building sub_mod_1 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- evosuite-maven-plugin:1.0.6:help (default-cli) @ sub_mod_1 ---
+[INFO] Maven Plugin for EvoSuite 1.0.6
+  Plugin used to run EvoSuite to automatically generate high coverage JUnit
+  tests
+
+This plugin has 7 goals:
+
+evosuite:clean
+  Remove all local files created by EvoSuite so far
+
+evosuite:coverage
+  Execute the manually written test suites (usually located under src/test/java)
+  and return the coverage of each class.
+
+evosuite:export
+  When run, EvoSuite generate tests in a specific folder. New runs of EvoSuite
+  can exploit the tests in such folder, and/or modify them.
+  
+  So, with 'export' we can copy all generated tests to a specific folder, which
+  by default points to where Maven searches for tests. If another folder is
+  rather used (or if we want to run with Maven the tests in the default EvoSuite
+  folder), then Maven plugins like build-helper-maven-plugin are needed
+
+evosuite:generate
+  Generate JUnit tests
+
+evosuite:help
+  Display help information on evosuite-maven-plugin.
+  Call mvn evosuite:help -Ddetail=true -Dgoal=<goal-name> to display parameter
+  details.
+
+evosuite:info
+  Obtain info of generated tests so far
+
+evosuite:prepare
+  Mojo needed to prepare the EvoSuite tests for execution. This is needed to
+  make sure that bytecode is properly instrumented.
+
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.707 s
+[INFO] Finished at: 2019-07-18T15:45:39+03:00
+[INFO] ------------------------------------------------------------------------

@@ -1,0 +1,6 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@testMath341
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@derivative
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@polynomialDerivative
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@differentiate
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@evaluate

@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.linear.MatrixUtilsTest@testSolveUpperTriangularSystem
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@solveUpperTriangularSystem
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getRowDimension
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getDimension
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getColumnDimension
+[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getEntry
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkMatrixIndex
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkRowIndex
+[inst2] + org.apache.commons.math3.linear.MatrixUtils@checkColumnIndex
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getEntry
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@setEntry
+[inst2] + org.apache.commons.math3.linear.ArrayRealVector@toArray
+[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcd
+[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcdPositive
+[inst2] + org.apache.commons.math3.util.FastMath@abs

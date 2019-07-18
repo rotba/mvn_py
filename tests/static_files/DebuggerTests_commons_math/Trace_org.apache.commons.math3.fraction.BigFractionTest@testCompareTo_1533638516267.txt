@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testCompareTo
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.fraction.BigFraction@compareTo
+[inst2] + org.apache.commons.math3.fraction.BigFraction@doubleValue

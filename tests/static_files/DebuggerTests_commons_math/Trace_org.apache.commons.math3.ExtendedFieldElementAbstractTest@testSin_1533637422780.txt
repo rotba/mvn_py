@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@testSin
+[inst2] + org.apache.commons.math3.util.FastMath@sin
+[inst2] + org.apache.commons.math3.util.FastMath@sinQ
+[inst2] + org.apache.commons.math3.util.FastMath@polySine
+[inst2] + org.apache.commons.math3.util.FastMath@polyCosine
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@build
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@sin
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@sin
+[inst2] + org.apache.commons.math3.util.FastMath@cos
+[inst2] + org.apache.commons.math3.util.FastMath@cosQ
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@compose
+[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@checkRelative
+[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getReal

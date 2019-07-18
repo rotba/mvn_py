@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.fraction.FractionFieldTest@testSerial
+[inst2] + org.apache.commons.math3.fraction.FractionField@getInstance
+[inst2] + org.apache.commons.math3.fraction.FractionField$LazyHolder@access$000
+[inst2] + org.apache.commons.math3.TestUtils@serializeAndRecover

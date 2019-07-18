@@ -1,0 +1,14 @@
+[inst2] + org.apache.commons.math3.analysis.interpolation.FieldHermiteInterpolatorTest@testMixedDerivatives
+[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
+[inst2] + org.apache.commons.math3.analysis.interpolation.FieldHermiteInterpolator@addSamplePoint
+[inst2] + org.apache.commons.math3.fraction.BigFraction@getField
+[inst2] + org.apache.commons.math3.fraction.BigFractionField@getInstance
+[inst2] + org.apache.commons.math3.fraction.BigFractionField$LazyHolder@access$000
+[inst2] + org.apache.commons.math3.fraction.BigFractionField@getOne
+[inst2] + org.apache.commons.math3.fraction.BigFraction@equals
+[inst2] + org.apache.commons.math3.fraction.BigFraction@reduce
+[inst2] + org.apache.commons.math3.fraction.BigFraction@reciprocal
+[inst2] + org.apache.commons.math3.analysis.interpolation.FieldHermiteInterpolator@derivatives
+[inst2] + org.apache.commons.math3.fraction.BigFractionField@getZero
+[inst2] + org.apache.commons.math3.util.MathArrays@buildArray
+[inst2] + org.apache.commons.math3.fraction.BigFractionField@getRuntimeClass

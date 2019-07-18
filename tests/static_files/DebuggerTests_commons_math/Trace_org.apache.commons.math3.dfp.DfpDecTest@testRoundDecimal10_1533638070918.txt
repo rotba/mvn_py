@@ -1,0 +1,9 @@
+[inst2] + org.apache.commons.math3.dfp.DfpDecTest@testRoundDecimal10
+[inst2] + org.apache.commons.math3.dfp.DfpField@setRoundingMode
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@getRadixDigits
+[inst2] + org.apache.commons.math3.dfp.DfpDec@round
+[inst2] + org.apache.commons.math3.dfp.Decimal10@getDecimalDigits
+[inst2] + org.apache.commons.math3.dfp.Dfp@getField
+[inst2] + org.apache.commons.math3.dfp.DfpField@getRoundingMode
+[inst2] + org.apache.commons.math3.dfp.DfpField@setIEEEFlagsBits

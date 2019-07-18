@@ -1,0 +1,4 @@
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompilerTest@testMultiplicationRules
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getPartialDerivativeOrders
+[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompilerTest@ordersToString

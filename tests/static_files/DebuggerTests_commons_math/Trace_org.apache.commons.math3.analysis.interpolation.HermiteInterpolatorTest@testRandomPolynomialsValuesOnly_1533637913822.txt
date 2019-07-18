@@ -1,0 +1,16 @@
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolatorTest@testRandomPolynomialsValuesOnly
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolatorTest@randomPolynomial
+[inst2] + org.apache.commons.math3.util.FastMath@max
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@value
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@evaluate
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolator@addSamplePoint
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolator@value
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolator@checkInterpolation
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolator@getPolynomials
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolator@polynomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@multiply
+[inst2] + org.apache.commons.math3.util.FastMath@min
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@add
+[inst2] + org.apache.commons.math3.analysis.interpolation.HermiteInterpolatorTest@checkPolynomial
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@degree
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients

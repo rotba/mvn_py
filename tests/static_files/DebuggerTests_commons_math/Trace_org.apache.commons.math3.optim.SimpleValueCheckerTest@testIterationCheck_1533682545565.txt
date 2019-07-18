@@ -1,0 +1,2 @@
+[inst2] + org.apache.commons.math3.optim.SimpleValueCheckerTest@testIterationCheck
+[inst2] + org.apache.commons.math3.optim.SimpleValueChecker@converged

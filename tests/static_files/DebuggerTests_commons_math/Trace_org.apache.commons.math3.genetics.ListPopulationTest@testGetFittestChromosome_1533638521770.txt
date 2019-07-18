@@ -1,0 +1,7 @@
+[inst2] + org.apache.commons.math3.genetics.ListPopulationTest@testGetFittestChromosome
+[inst2] + org.apache.commons.math3.genetics.ListPopulation@getFittestChromosome
+[inst2] + org.apache.commons.math3.genetics.Chromosome@compareTo
+[inst2] + org.apache.commons.math3.genetics.Chromosome@getFitness
+[inst2] + org.apache.commons.math3.genetics.ListPopulationTest$1@fitness
+[inst2] + org.apache.commons.math3.genetics.ListPopulationTest$2@fitness
+[inst2] + org.apache.commons.math3.genetics.ListPopulationTest$3@fitness

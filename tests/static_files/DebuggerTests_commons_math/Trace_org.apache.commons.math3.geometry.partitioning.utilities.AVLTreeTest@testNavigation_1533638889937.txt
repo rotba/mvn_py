@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTreeTest@testNavigation
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTreeTest@buildTree
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree@insert
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@insert
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@rebalanceRightGrown
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@rotateCCW
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree@getSmallest
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@getSmallest
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTreeTest@value
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@getElement
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@getNext
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree@getLargest
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@getLargest
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTree$Node@getPrevious
+[inst2] + org.apache.commons.math3.geometry.partitioning.utilities.AVLTreeTest@checkOrder

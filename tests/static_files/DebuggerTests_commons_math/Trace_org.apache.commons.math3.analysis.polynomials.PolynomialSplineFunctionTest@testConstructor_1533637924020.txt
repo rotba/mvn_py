@@ -1,0 +1,8 @@
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunctionTest@testConstructor
+[inst2] + org.apache.commons.math3.util.MathArrays@checkOrder
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction@getKnots
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction@getPolynomials
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients
+[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction@getN
+[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
+[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

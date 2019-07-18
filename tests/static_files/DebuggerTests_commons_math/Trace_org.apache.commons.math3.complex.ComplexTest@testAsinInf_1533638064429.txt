@@ -1,0 +1,17 @@
+[inst2] + org.apache.commons.math3.complex.ComplexTest@testAsinInf
+[inst2] + org.apache.commons.math3.complex.Complex@asin
+[inst2] + org.apache.commons.math3.complex.Complex@sqrt1z
+[inst2] + org.apache.commons.math3.complex.Complex@createComplex
+[inst2] + org.apache.commons.math3.complex.Complex@multiply
+[inst2] + org.apache.commons.math3.complex.Complex@subtract
+[inst2] + org.apache.commons.math3.complex.Complex@getReal
+[inst2] + org.apache.commons.math3.complex.Complex@getImaginary
+[inst2] + org.apache.commons.math3.complex.Complex@sqrt
+[inst2] + org.apache.commons.math3.complex.Complex@abs
+[inst2] + org.apache.commons.math3.complex.Complex@isInfinite
+[inst2] + org.apache.commons.math3.util.FastMath@sqrt
+[inst2] + org.apache.commons.math3.util.FastMath@copySign
+[inst2] + org.apache.commons.math3.complex.Complex@add
+[inst2] + org.apache.commons.math3.complex.Complex@log
+[inst2] + org.apache.commons.math3.complex.Complex@negate
+[inst2] + org.apache.commons.math3.TestUtils@assertSame

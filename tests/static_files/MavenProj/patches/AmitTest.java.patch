@@ -1,0 +1,12 @@
+diff --git a/sub_mod_1/src/test/java/p_1/AmitTest.java b/sub_mod_1/src/test/java/p_1/AmitTest.java
+index 84887c7..8b6b6c7 100644
+--- a/sub_mod_1/src/test/java/p_1/AmitTest.java
++++ b/sub_mod_1/src/test/java/p_1/AmitTest.java
+@@ -24,7 +24,6 @@ class AmitTest {
+     void deltaPassedTest() {
+         assertEquals(0,a.foo());
+     }
+-	
+ 	@Test
+     void delta_3_Test() {
+         assertEquals(0,a.foo());

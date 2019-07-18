@@ -1,0 +1,15 @@
+[inst2] + org.apache.commons.math3.optimization.univariate.BrentOptimizerTest@testBoundaries
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@optimize
+[inst2] + org.apache.commons.math3.util.Incrementor@setMaximalCount
+[inst2] + org.apache.commons.math3.util.Incrementor@resetCount
+[inst2] + org.apache.commons.math3.optimization.univariate.BrentOptimizer@doOptimize
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@getGoalType
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@getMin
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@getStartValue
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@getMax
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@getConvergenceChecker
+[inst2] + org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer@computeObjectiveValue
+[inst2] + org.apache.commons.math3.optimization.univariate.BrentOptimizerTest$1@value
+[inst2] + org.apache.commons.math3.optimization.univariate.BrentOptimizer@best
+[inst2] + org.apache.commons.math3.optimization.univariate.UnivariatePointValuePair@getValue
+[inst2] + org.apache.commons.math3.optimization.univariate.UnivariatePointValuePair@getPoint

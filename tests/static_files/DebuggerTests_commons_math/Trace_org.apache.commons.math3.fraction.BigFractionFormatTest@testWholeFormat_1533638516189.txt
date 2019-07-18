@@ -1,0 +1,5 @@
+[inst2] + org.apache.commons.math3.fraction.BigFractionFormatTest@testWholeFormat
+[inst2] + org.apache.commons.math3.fraction.ProperBigFractionFormat@getWholeFormat
+[inst2] + org.apache.commons.math3.fraction.ProperBigFractionFormat@setWholeFormat
+[inst2] + org.apache.commons.math3.fraction.BigFractionFormatTest@setUp
+[inst2] + org.apache.commons.math3.fraction.BigFractionFormatTest@getLocale
