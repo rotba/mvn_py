@@ -478,12 +478,12 @@ class Repo(object):
 
     # Returns mvn command string that cleans the given the given module
     def generate_mvn_evosuite_clean_cmd(self, module):
+        ans = 'mvn evosuite:clean '
         if module == self.repo_dir:
-            ans = 'mvn evosuite:clean '
+            ans += ' -f ' + self.repo_dir
         else:
-            ans = 'mvn -pl :{} -am evosuite:clean -fn'.format(
-                os.path.basename(module))
-        ans += ' -f ' + self.repo_dir
+            ans += ' -f ' + module
+
         return ans
 
     # Returns mvn command string that prints evosuite help material

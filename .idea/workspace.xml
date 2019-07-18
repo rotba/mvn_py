@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mvnpy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mvnpy.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestObjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestObjects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mvn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
@@ -319,12 +315,12 @@
       <workItem from="1563265866426" duration="6382000" />
       <workItem from="1563356799628" duration="2133000" />
       <workItem from="1563370147371" duration="18000" />
-      <workItem from="1563430714841" duration="4030000" />
+      <workItem from="1563430714841" duration="4324000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38473000" />
+    <option name="totallyTimeSpent" value="38767000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
