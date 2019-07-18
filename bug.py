@@ -221,6 +221,13 @@ class Bug_data_handler(object):
             ans = list(reader)
         return ans
 
+    def get_scaffolding_dir(self, bug):
+        return self.get_testclass_path(bug.issue, bug.commit, bug.bugged_testcase.parent.id+'_scaffolding')
+
+    def get_file_patch(self, file_dir):
+        for filename in os.listdir(file_dir):
+            if filename.endswith(".patch"):
+                return os.path.join(file_dir, filename)
 
 
 class Bug_csv_report_handler(object):
@@ -356,9 +363,9 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 # Returns the ype of the bug
 def determine_type(testcase, delta_testcases, gen_commit_valid_testcases):
-    if testcase in delta_testcases:
-        return Bug_type.DELTA
-    elif testcase in gen_commit_valid_testcases:
+    if testcase in gen_commit_valid_testcases:
         return Bug_type.GEN
+    elif testcase in delta_testcases:
+        return Bug_type.DELTA
     else:
         return Bug_type.REGRESSION
