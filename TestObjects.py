@@ -120,7 +120,7 @@ class TestClass(object):
 			return self.id == other.id
 
 	def get_testclass_rel_path(self):
-		if is_evosuite_test_class(self.src_path):
+		if is_evosuite_test_class(self.src_path) and '.evosuite' in Path(self.src_path).parts:
 			return os.path.relpath(self.src_path, self.module + '\\.evosuite\\best-tests').replace('.java', '')
 		return os.path.relpath(self.src_path, self.module + '\\src\\test\\java').replace('.java', '')
 
@@ -418,7 +418,7 @@ class TestCaseReport(object):
 
 
 def is_evosuite_test_class(src_path):
-	return '.evosuite' in Path(src_path).parts
+	return '.evosuite' in Path(src_path).parts or os.path.basename(src_path).endswith('_ESTest_scaffolding.java') or os.path.basename(src_path).endswith('_ESTest.java')
 
 
 class TestParserException(Exception):

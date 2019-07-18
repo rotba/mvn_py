@@ -39,12 +39,16 @@ class TestResult(object):
         return {'_tast_name': self.full_name, '_outcome': self.outcome}
 
 
+
+
+
 class Repo(object):
     def __init__(self, repo_dir):
         self._repo_dir = repo_dir
         self.DEFAULT_ES_VERSION = '1.0.6'
         self.DEFAULT_SUREFIRE_VERSION = '2.17'
         self.DEFAULT_JUNIT_VERSION = '4.12'
+        self.DEFAULT_XERCES_VERSION = '2.11.0'
 
     @property
     def repo_dir(self):
@@ -99,6 +103,12 @@ class Repo(object):
         build_report = mvn.wrap_mvn_cmd(test_cmd)
         return build_report
 
+    # Executes mvn evosuite_clean
+    def evosuite_clean(self, module=None):
+        inspected_module = self.repo_dir if module == None else module
+        clean_cmd = self.generate_mvn_evosuite_clean_cmd(inspected_module)
+        build_report = mvn.wrap_mvn_cmd(clean_cmd)
+        return build_report
     def get_test_results(self):
         from junitparser import JUnitXml
         from junitparser.junitparser import Error, Failure
@@ -111,6 +121,8 @@ class Repo(object):
                     if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
                         surefire_files.append(os.path.join(root, name))
             return surefire_files
+
+        
 
         class Test(object):
             def __init__(self, junit_test):
@@ -464,6 +476,16 @@ class Repo(object):
         ans += ' -f ' + self.repo_dir
         return ans
 
+    # Returns mvn command string that cleans the given the given module
+    def generate_mvn_evosuite_clean_cmd(self, module):
+        if module == self.repo_dir:
+            ans = 'mvn evosuite:clean '
+        else:
+            ans = 'mvn -pl :{} -am evosuite:clean -fn'.format(
+                os.path.basename(module))
+        ans += ' -f ' + self.repo_dir
+        return ans
+
     # Returns mvn command string that prints evosuite help material
     def generate_mvn_evosuite_help_cmd(self, module):
         if module == self.repo_dir:
@@ -645,7 +667,8 @@ class Repo(object):
                 build_report = tmp_file.readlines()
             return any(list(map(lambda l: EVOUSUITE_CONFIGURED_INDICATION in l, build_report)))
 
-    def setup_tests_generator(self, module):
+    def setup_tests_generator(self, module = None):
+        module = self.repo_dir if module == None else module
         evousuite_version_property_xquery = '/'.join(['.','properties','evosuiteVersion'])
         self.set_pom_tag(xquery=evousuite_version_property_xquery, create_if_not_exist=True, module=module,
                          value=self.DEFAULT_ES_VERSION)
@@ -657,6 +680,8 @@ class Repo(object):
                             version='${evosuiteVersion}', module=module)
         self.add_dependency(artifactId='junit', groupId='junit',
                             version=self.DEFAULT_JUNIT_VERSION, module=module)
+        self.add_dependency(artifactId='xercesImpl', groupId='xerces',
+                            version=self.DEFAULT_XERCES_VERSION, module=module)
         evousuite_xpath = r"./build/plugins/plugin[artifactId = 'evosuite-maven-plugin']"
         surefire_xpath = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']"
         execution_xpath = "executions/execution"
@@ -672,13 +697,25 @@ class Repo(object):
 
     def get_generated_testcases(self, module = None):
         generated_tests_dir = self.get_generated_testcases_dir(module= module)
-        test_classes = mvn.parse_tests(generated_tests_dir)
-        return mvn.get_testcases(test_classes=test_classes)
+        if not os.path.isdir(generated_tests_dir):
+            return self.find_all_evosuite_tests(module)
+        generated_test_classes = mvn.parse_tests(generated_tests_dir)
+        generated_test_classes_mvn_names = map(lambda x: x.mvn_name, generated_test_classes)
+        all_tests = self.get_tests()
+        exported_tests = filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests)
+        return mvn.get_testcases(test_classes=exported_tests)
+
+    def find_all_evosuite_tests(self, module):
+        all_testcases = mvn.get_testcases(self.get_tests(module))
+        return filter(lambda x: TestObjects.is_evosuite_test_class(x.parent.src_path),all_testcases)
 
 
     def get_generated_testcases_dir(self, module = None):
         module_path = self.repo_dir if module == None else module
         return os.path.join(module_path, os.path.join('.evosuite','best-tests'))
+
+    def is_generated_test(self, test):
+        return TestObjects.is_evosuite_test_class(test.src_path)
 
     def add_plugin(self, artifactId, groupId, version, module):
         plugin_xpath = r"./build/plugins/plugin[artifactId = '{}']".format(artifactId)

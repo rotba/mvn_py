@@ -220,6 +220,8 @@ def generate_mvn_class_names(src_path, module):
     return relpath.replace('\\', '.')
 
 
+
+
 # changes the plugin version of 'plugin_artifact_id' to 'version'. Does nothing if the 'plugin_artifact_id' is not in plugins_tag
 def add_plugin_configuration_argline(plugins_tag, plugin_artifact_id, content):
     plugin_p = None
@@ -264,6 +266,7 @@ def parse_tests(tests_dir):
         elif filename.endswith(".java"):
             ans.append(TestObjects.TestClass(abs_path))
     return ans
+
 
 
 def wrap_mvn_cmd(cmd, time_limit = sys.maxint, dir=None):
