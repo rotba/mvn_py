@@ -61,7 +61,7 @@ class Bug(object):
         return self._module
 
     def __str__(self):
-        return 'type: ' + self.type.value + ' ,issue: ' + self.issue + ' ,commit: ' + self._commit_hexsha+ ' ,parent: ' + self.parent+ ' ,test: ' + self.bugged_testcase.mvn_name + ' description: ' + self._desc
+        return 'type: ' + self.type.value + ' ,issue: ' + self.issue + ' ,commit: ' + self._commit_hexsha+ ' ,parent: ' + self.parent+ ' ,test: ' + self.bugged_testcase.mvn_name + ' description: ' + str(self._desc)
 
 
 class Bug_data_handler(object):
