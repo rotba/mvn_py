@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Repo.py" afterPath="$PROJECT_DIR$/Repo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc.py" afterPath="$PROJECT_DIR$/javadoc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" afterPath="$PROJECT_DIR$/tmp_files/stdout_duplication/tmp_file.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jcov_tracer.py" afterPath="$PROJECT_DIR$/jcov_tracer.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -126,8 +124,8 @@
       <file leaf-file-name="Repo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="724" column="0" selection-start-line="724" selection-start-column="0" selection-end-line="724" selection-end-column="0" />
+            <state relative-caret-position="252">
+              <caret line="727" column="1" selection-start-line="727" selection-start-column="1" selection-end-line="727" selection-end-column="1" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -138,7 +136,7 @@
       <file leaf-file-name="jcov_parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jcov_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1785">
+            <state relative-caret-position="1717">
               <caret line="105" column="97" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="97" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
@@ -170,7 +168,7 @@
       <file leaf-file-name="pom_file.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom_file.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
+            <state relative-caret-position="2244">
               <caret line="132" column="69" selection-start-line="132" selection-start-column="42" selection-end-line="132" selection-end-column="69" />
               <folding />
             </state>
@@ -191,9 +189,21 @@
         <entry file="file://$PROJECT_DIR$/jcov_tracer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1496">
-              <caret line="88" column="58" selection-start-line="88" selection-start-column="58" selection-end-line="88" selection-end-column="58" />
+              <caret line="89" column="48" selection-start-line="89" selection-start-column="48" selection-end-line="89" selection-end-column="48" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+                <marker date="1564739638070" expanded="true" signature="95:6069" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="100:1127" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1564739638070" expanded="true" signature="1667:2081" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="2111:2339" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="2394:2986" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="3032:3481" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="3516:4094" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="4128:4462" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="4229:4435" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="4262:4435" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="4520:5001" ph="..." />
+                <marker date="1564739638070" expanded="true" signature="4537:5001" ph="..." />
               </folding>
             </state>
           </provider>
@@ -202,8 +212,8 @@
       <file leaf-file-name="javadoc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javadoc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+            <state relative-caret-position="1207">
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -348,6 +358,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -401,12 +412,11 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/trace_information.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Debugger" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -664,23 +674,23 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.112737924" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21451104" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29810727" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2791798" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29810727" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21451104" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27760252" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,13 +737,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Repo.py</url>
-          <line>724</line>
+          <line>729</line>
           <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/javadoc.py</url>
-          <line>76</line>
-          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -799,6 +804,18 @@
           <caret line="36" column="54" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <marker date="1564739638070" expanded="true" signature="95:6069" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="100:1127" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1564739638070" expanded="true" signature="1667:2081" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2111:2339" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2394:2986" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3032:3481" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3516:4094" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4128:4462" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4229:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4262:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4520:5001" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4537:5001" ph="..." />
           </folding>
         </state>
       </provider>
@@ -870,6 +887,18 @@
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <marker date="1564739638070" expanded="true" signature="95:6069" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="100:1127" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1564739638070" expanded="true" signature="1667:2081" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2111:2339" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2394:2986" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3032:3481" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3516:4094" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4128:4462" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4229:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4262:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4520:5001" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4537:5001" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1058,7 +1087,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26248">
           <caret line="1579" column="0" selection-start-line="1579" selection-start-column="0" selection-end-line="1579" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1073,7 +1101,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1116,9 +1143,21 @@
     <entry file="file://$PROJECT_DIR$/jcov_tracer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1496">
-          <caret line="88" column="58" selection-start-line="88" selection-start-column="58" selection-end-line="88" selection-end-column="58" />
+          <caret line="89" column="48" selection-start-line="89" selection-start-column="48" selection-end-line="89" selection-end-column="48" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <marker date="1564739638070" expanded="true" signature="95:6069" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="100:1127" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1564739638070" expanded="true" signature="1667:2081" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2111:2339" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="2394:2986" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3032:3481" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="3516:4094" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4128:4462" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4229:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4262:4435" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4520:5001" ph="..." />
+            <marker date="1564739638070" expanded="true" signature="4537:5001" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1133,7 +1172,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jcov_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
+        <state relative-caret-position="1717">
           <caret line="105" column="97" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="97" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
@@ -1143,7 +1182,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom_file.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
+        <state relative-caret-position="2244">
           <caret line="132" column="69" selection-start-line="132" selection-start-column="42" selection-end-line="132" selection-end-column="69" />
           <folding />
         </state>
@@ -1151,8 +1190,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javadoc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        <state relative-caret-position="1207">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -1161,8 +1200,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="724" column="0" selection-start-line="724" selection-start-column="0" selection-end-line="724" selection-end-column="0" />
+        <state relative-caret-position="252">
+          <caret line="727" column="1" selection-start-line="727" selection-start-column="1" selection-end-line="727" selection-end-column="1" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
