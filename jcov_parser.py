@@ -1,5 +1,6 @@
 import functools
 import os
+import gc
 import xml.etree.cElementTree as et
 
 from trace_information import Signature, TraceElement, Trace
@@ -19,14 +20,13 @@ class JcovParser(object):
         self.lines_to_read = self._get_methods_lines()
 
     def parse(self):
-        traces = {}
         for jcov_file in self.jcov_files:
             print jcov_file
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
-            traces[test_name] = self._parse_jcov_file(jcov_file, test_name)
-        return traces
+            yield self._parse_jcov_file(jcov_file, test_name)
 
     def _parse_jcov_file(self, jcov_file, test_name):
+        gc.collect()
         trace = self._get_trace_for_file(jcov_file)
         method_name_by_extra_slot = dict(map(lambda e: (e.extra_slot, self.method_name_by_id[e.id]),filter(lambda e: hasattr(e,'extra_slot'),trace.values())))
         method_name_by_extra_slot[-1] = 'None'
@@ -39,7 +39,7 @@ class JcovParser(object):
             data = dict(map(lambda val: val.split('='),
                             method[len(JcovParser.METHENTER) + 1:-len(JcovParser.CLOSER)].replace('"', "").split()))
             trace_element = TraceElement(data, self.method_name_by_id)
-            if trace_element.have_count:
+            if trace_element.have_count():
                 trace[trace_element.id] = trace_element
         return trace
 
