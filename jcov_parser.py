@@ -21,7 +21,6 @@ class JcovParser(object):
 
     def parse(self):
         for jcov_file in self.jcov_files:
-            print jcov_file
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             yield self._parse_jcov_file(jcov_file, test_name)
 
@@ -40,6 +39,7 @@ class JcovParser(object):
                             method[len(JcovParser.METHENTER) + 1:-len(JcovParser.CLOSER)].replace('"', "").split()))
             trace_element = TraceElement(data, self.method_name_by_id)
             if trace_element.have_count():
+                assert trace_element.id not in trace
                 trace[trace_element.id] = trace_element
         return trace
 
