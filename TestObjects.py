@@ -242,6 +242,7 @@ class TestCase(object):
 				continue
 			j = 1
 			for letter in line:
+
 				if '{' == letter:
 					brackets_stack.append('{')
 					break
@@ -254,6 +255,7 @@ class TestCase(object):
 		if open_position[0] == -1 or open_position[1] == -1:
 			return -1
 		i = 1
+		is_string = False
 		for line in lines:
 			if i < open_position[0]:
 				i += 1
@@ -263,6 +265,8 @@ class TestCase(object):
 				if i == open_position[0] and j <= open_position[1]:
 					j += 1
 					continue
+				if '"' == letter: is_string = not is_string
+				if is_string: continue
 				if letter == '{':
 					brackets_stack.append('{')
 				if letter == '}':

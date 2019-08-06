@@ -7,10 +7,13 @@ class CompilationErrorReport(object):
         self._error_col = ''
         self.str = compilation_error_report_line
         parts = compilation_error_report_line.split(' ')
-        path_and_error_address = parts[1].split(':')
+        if parts[1].endswith(':'):
+            path_and_error_address = parts[1][:-1].split(':')
+        else:
+            path_and_error_address = parts[1].split(':')
         error_address = path_and_error_address[len(path_and_error_address) - 1]
         self._error_line = int(error_address.strip('[]').split(',')[0])
-        self._error_col = int(error_address.strip('[]').split(',')[1])
+        self._error_col = int(error_address.strip('[]').split(',')[1]) if len(error_address.strip('[]').split(',')) >1 else -1
         self._path = ':'.join(path_and_error_address[:-1])
         if self._path.startswith('/') or self._path.startswith('\\'):
             self._path = self._path[1:]
