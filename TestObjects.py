@@ -80,8 +80,9 @@ class TestClass(object):
 			self.report = TestClassReport(self.get_report_path(), self.module)
 			for t in self.testcases:
 				self.attach_report_to_testcase(t)
+			return True
 		except TestParserException:
-			pass
+			return False
 
 	def clear_report(self):
 		self.report = None

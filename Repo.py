@@ -429,6 +429,7 @@ class Repo(object):
                 tmp_file.write(' ,'.join(classes))
                 ans += ' '
                 ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
+                ans += ' -Dassertion_strategy=ALL  -Dcriterion=BRANCH:EXCEPTION:METHOD'
         ans += ' -f ' + inspeced_module
         return ans
 
