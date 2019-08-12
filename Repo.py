@@ -14,11 +14,12 @@ import tempfile
 
 
 class TestResult(object):
-    def __init__(self, junit_test):
+    def __init__(self, junit_test, suite_name=None):
         self.junit_test = junit_test
-        self.classname = junit_test.classname
+        self.classname = junit_test.classname or suite_name
         self.name = junit_test.name
-        self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name).lower()
+        self.time = junit_test.time
+        self.full_name = "{classname}:{name}".format(classname=self.classname, name=self.name)
         result = 'pass'
         if type(junit_test.result) is Error:
             result = 'error'
@@ -558,8 +559,9 @@ class Repo(object):
         outcomes = {}
         for report in self.get_surefire_files():
             try:
-                for case in JUnitXml.fromfile(report):
-                    test = TestResult(case)
+                suite = JUnitXml.fromfile(report)
+                for case in suite:
+                    test = TestResult(case, suite.name)
                     outcomes[test.full_name] = test
             except Exception as e:
                 pass
