@@ -1,371 +1,302 @@
 [INFO] Scanning for projects...
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Build Order:
-[INFO] 
-[INFO] Apache Tika parent
-[INFO] Apache Tika core
-[INFO] Apache Tika parsers
-[INFO] Apache Tika XMP
-[INFO] Apache Tika serialization
-[INFO] Apache Tika batch
-[INFO] Apache Tika application
-[INFO] Apache Tika OSGi bundle
-[INFO] Apache Tika server
-[INFO] Apache Tika translate
-[INFO] Apache Tika examples
-[INFO] Apache Tika Java-7 Components
-[INFO] Apache Tika
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.commons:commons-beanutils2:jar:2.0.0-SNAPSHOT
+[WARNING] 'parent.relativePath' of POM org.apache.commons:commons-beanutils2:2.0.0-SNAPSHOT (C:\Temp\commons-beanutils\pom.xml) points at org.apache.tez:tez instead of org.apache.commons:commons-parent, please verify your project structure @ line 2, column 11
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika parent 1.8
+[INFO] Building Apache Commons BeanUtils 2.0.0-SNAPSHOT
 [INFO] ------------------------------------------------------------------------
+[WARNING] The POM for commons-collections:commons-collections-testframework:jar:3.2.1 is missing, no dependency information available
 [INFO] 
-[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika-parent ---
+[INFO] --- maven-enforcer-plugin:3.0.0-M2:enforce (enforce-maven-version) @ commons-beanutils2 ---
 [INFO] 
-[INFO] --- forbiddenapis:1.7:check (default) @ tika-parent ---
-[INFO] Skipping execution for packaging "pom"
+[INFO] --- maven-enforcer-plugin:3.0.0-M2:enforce (enforce-maven-3) @ commons-beanutils2 ---
 [INFO] 
-[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika-parent ---
-[INFO] Skipping execution for packaging "pom"
+[INFO] --- apache-rat-plugin:0.13:check (rat-check) @ commons-beanutils2 ---
+[INFO] RAT will not execute since it is configured to be skipped via system property 'rat.skip'.
 [INFO] 
-[INFO] --- maven-site-plugin:3.0:attach-descriptor (attach-descriptor) @ tika-parent ---
+[INFO] --- build-helper-maven-plugin:3.0.0:parse-version (parse-version) @ commons-beanutils2 ---
 [INFO] 
-[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ tika-parent ---
-[INFO] Installing C:\Temp\tika\tika-parent\pom.xml to C:\Users\User\.m2\repository\org\apache\tika\tika-parent\1.8\tika-parent-1.8.pom
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika core 1.8
-[INFO] ------------------------------------------------------------------------
-Downloading: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/2.18.1%202.18.1/maven-surefire-plugin-2.18.1%202.18.1.pom
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-Downloading: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/2.18.1%202.18.1/maven-surefire-plugin-2.18.1%202.18.1.jar
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika parsers 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika XMP 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika serialization 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika batch 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika application 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika OSGi bundle 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika server 1.8
-[INFO] ------------------------------------------------------------------------
+[INFO] --- maven-antrun-plugin:1.8:run (javadoc.resources) @ commons-beanutils2 ---
+[INFO] Executing tasks
+
+main:
+[INFO] Executed tasks
 [INFO] 
-[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika-server ---
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ commons-beanutils2 ---
 [INFO] 
-[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ tika-server ---
-[debug] execute contextualize
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Copying 3 resources
-[INFO] Copying 3 resources
+[INFO] --- buildnumber-maven-plugin:1.4:create (default) @ commons-beanutils2 ---
+[INFO] Executing: cmd.exe /X /C "git rev-parse --verify HEAD"
+[INFO] Working directory: C:\Temp\commons-beanutils
+[INFO] Storing buildNumber: 6515953bd2c69b7dfc65dd7b9497b7a6e8fceb60 at timestamp: 1564740417077
+[INFO] Storing buildScmBranch: master
 [INFO] 
-[INFO] --- maven-compiler-plugin:3.2:compile (default-compile) @ tika-server ---
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ commons-beanutils2 ---
+[INFO] Using 'utf-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Temp\commons-beanutils\src\main\resources
+[INFO] Copying 2 resources to META-INF
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ commons-beanutils2 ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 100 source files to C:\Temp\commons-beanutils\target\classes
+[INFO] /C:/Temp/commons-beanutils/src/main/java/org/apache/commons/beanutils2/PropertyUtilsBean.java: Some input files use unchecked or unsafe operations.
+[INFO] /C:/Temp/commons-beanutils/src/main/java/org/apache/commons/beanutils2/PropertyUtilsBean.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-bundle-plugin:4.1.0:manifest (bundle-manifest) @ commons-beanutils2 ---
+[INFO] 
+[INFO] --- animal-sniffer-maven-plugin:1.17:check (checkAPIcompatibility) @ commons-beanutils2 ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ commons-beanutils2 ---
+[INFO] Using 'utf-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Temp\commons-beanutils\src\test\resources
+[INFO] Copying 2 resources to META-INF
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ commons-beanutils2 ---
 [INFO] Nothing to compile - all classes are up to date
 [INFO] 
-[INFO] --- forbiddenapis:1.7:check (default) @ tika-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe
-[INFO] Reading bundled API signatures: jdk-deprecated
-[INFO] Loading classes to check...
-[INFO] Scanning for API signatures and dependencies...
-[INFO] Scanned 37 (and 363 related) class file(s) for forbidden API invocations (in 0.92s), 0 error(s).
+[INFO] --- jacoco-maven-plugin:0.8.4:prepare-agent (prepare-agent) @ commons-beanutils2 ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
 [INFO] 
-[INFO] --- miredot-maven-plugin:1.4:restdoc (default) @ tika-server ---
-[ERROR] Licence key expired on 01 ‡Â‚ 2016
-[WARNING] Miredot is unable to document the status codes of rest interfaces, unless a statusCodes-block is specified in the project-pom.
-[INFO] Building reflective model of API and reading annotations...
-[INFO] Built.
-[INFO] Reading javadoc comments from sourcefiles...
-[INFO] Read.
-[INFO] Merging reflective and javadoc models...
-[WARNING] Limited support for jdk8 (@link, @see, @linkplain javadoc tags won't format properly)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.UnpackerResourcemetadataToCsvMetadatajava.io.OutputStream)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaWelcomeidentifyEndpoints)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcecreateParserTikaConfig)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcedetectFilename<any>)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcefillParseContextParseContext<any>Parser)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcefillMetadataAutoDetectParserMetadataParseContext<any>)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourceparseParserLogjava.lang.Stringjava.io.InputStreamorg.xml.sax.ContentHandlerMetadataParseContext)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourcelogRequestLogUriInfoMetadata)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaResourceproduceTextjava.io.InputStream<any>UriInfo)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersHTMLboolean)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersJSONboolean)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaParsersgetParsersPlainboolean)
-[INFO] Method found in REST interface without JaxRS annotations. Ignored. (Lookup key: org.apache.tika.server.resource.TikaMimeTypesgetMediaTypes)
-[INFO] Merged.
-[INFO] Performing issue analysis...
-[INFO] Analysis done.
-[INFO] Constructing Html documentation
-[WARNING] Intro file is not supported in the unlicensed version of Miredot.
-[INFO] Miredot: Completed
-[INFO] 
-[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ tika-server ---
-[debug] execute contextualize
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Copying 14 resources
-[INFO] Copying 3 resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.2:testCompile (default-testCompile) @ tika-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe
-[INFO] Reading bundled API signatures: jdk-deprecated
-[INFO] Loading classes to check...
-[INFO] Scanning for API signatures and dependencies...
-[INFO] Scanned 13 (and 273 related) class file(s) for forbidden API invocations (in 0.22s), 0 error(s).
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ tika-server ---
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ commons-beanutils2 ---
 [WARNING] The parameter forkMode is deprecated since version 2.14. Use forkCount and reuseForks instead.
-[INFO] Surefire report directory: C:\Temp\tika\tika-server\target\surefire-reports
+[INFO] Surefire report directory: C:\Temp\commons-beanutils\target\surefire-reports
 
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running org.apache.tika.server.DetectorResourceTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 35.249 sec - in org.apache.tika.server.DetectorResourceTest
-Running org.apache.tika.server.MetadataResourceTest
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 39.276 sec - in org.apache.tika.server.MetadataResourceTest
-Running org.apache.tika.server.RecursiveMetadataResourceTest
-Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 40.946 sec <<< FAILURE! - in org.apache.tika.server.RecursiveMetadataResourceTest
-testSimpleWord(org.apache.tika.server.RecursiveMetadataResourceTest)  Time elapsed: 36.141 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<11> but was:<7>
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.failNotEquals(Assert.java:743)
-	at org.junit.Assert.assertEquals(Assert.java:118)
-	at org.junit.Assert.assertEquals(Assert.java:555)
-	at org.junit.Assert.assertEquals(Assert.java:542)
-	at org.apache.tika.server.RecursiveMetadataResourceTest.testSimpleWord(RecursiveMetadataResourceTest.java:70)
-
-Running org.apache.tika.server.StackTraceOffTest
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.205 sec - in org.apache.tika.server.StackTraceOffTest
-Running org.apache.tika.server.StackTraceTest
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.654 sec - in org.apache.tika.server.StackTraceTest
-Running org.apache.tika.server.TikaDetectorsTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.846 sec - in org.apache.tika.server.TikaDetectorsTest
-Running org.apache.tika.server.TikaMimeTypesTest
-Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 192.627 sec <<< FAILURE! - in org.apache.tika.server.TikaMimeTypesTest
-testGetPlainText(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 69.763 sec  <<< ERROR!
-javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
-	at java.net.SocketInputStream.read(SocketInputStream.java:171)
-	at java.net.SocketInputStream.read(SocketInputStream.java:141)
-	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
-	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
-	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
-	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
-	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
-	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
-	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
-	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
-	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
-	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
-	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
-	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
-	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
-	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
-	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
-	at org.apache.tika.server.TikaMimeTypesTest.testGetPlainText(TikaMimeTypesTest.java:57)
-
-testGetHTML(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 60.073 sec  <<< ERROR!
-javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
-	at java.net.SocketInputStream.read(SocketInputStream.java:171)
-	at java.net.SocketInputStream.read(SocketInputStream.java:141)
-	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
-	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
-	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
-	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
-	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
-	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
-	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
-	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
-	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
-	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
-	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
-	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
-	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
-	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
-	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
-	at org.apache.tika.server.TikaMimeTypesTest.testGetHTML(TikaMimeTypesTest.java:75)
-
-testGetJSON(org.apache.tika.server.TikaMimeTypesTest)  Time elapsed: 60.152 sec  <<< ERROR!
-javax.ws.rs.ProcessingException: java.net.SocketTimeoutException: SocketTimeoutException invoking http://localhost:9998/mime-types: Read timed out
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
-	at java.net.SocketInputStream.read(SocketInputStream.java:171)
-	at java.net.SocketInputStream.read(SocketInputStream.java:141)
-	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
-	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
-	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
-	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:735)
-	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:678)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1587)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
-	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:480)
-	at org.apache.cxf.transport.http.URLConnectionHTTPConduit$URLConnectionWrappedOutputStream.getResponseCode(URLConnectionHTTPConduit.java:266)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponseInternal(HTTPConduit.java:1557)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.handleResponse(HTTPConduit.java:1527)
-	at org.apache.cxf.transport.http.HTTPConduit$WrappedOutputStream.close(HTTPConduit.java:1330)
-	at org.apache.cxf.transport.AbstractConduit.close(AbstractConduit.java:56)
-	at org.apache.cxf.transport.http.HTTPConduit.close(HTTPConduit.java:638)
-	at org.apache.cxf.interceptor.MessageSenderInterceptor$MessageSenderEndingInterceptor.handleMessage(MessageSenderInterceptor.java:62)
-	at org.apache.cxf.phase.PhaseInterceptorChain.doIntercept(PhaseInterceptorChain.java:307)
-	at org.apache.cxf.jaxrs.client.AbstractClient.doRunInterceptorChain(AbstractClient.java:623)
-	at org.apache.cxf.jaxrs.client.WebClient.doChainedInvocation(WebClient.java:1084)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:883)
-	at org.apache.cxf.jaxrs.client.WebClient.doInvoke(WebClient.java:854)
-	at org.apache.cxf.jaxrs.client.WebClient.invoke(WebClient.java:320)
-	at org.apache.cxf.jaxrs.client.WebClient.get(WebClient.java:346)
-	at org.apache.tika.server.TikaMimeTypesTest.testGetJSON(TikaMimeTypesTest.java:97)
-
-Running org.apache.tika.server.TikaParsersTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.185 sec - in org.apache.tika.server.TikaParsersTest
-Running org.apache.tika.server.TikaResourceTest
-Tests run: 10, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 28.477 sec <<< FAILURE! - in org.apache.tika.server.TikaResourceTest
-testEmbedded(org.apache.tika.server.TikaResourceTest)  Time elapsed: 4.726 sec  <<< FAILURE!
-java.lang.AssertionError: null
-	at org.junit.Assert.fail(Assert.java:86)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at org.junit.Assert.assertTrue(Assert.java:52)
-	at org.apache.tika.server.TikaResourceTest.testEmbedded(TikaResourceTest.java:162)
-
-Running org.apache.tika.server.TikaVersionTest
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.619 sec - in org.apache.tika.server.TikaVersionTest
-Running org.apache.tika.server.TikaWelcomeTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.35 sec - in org.apache.tika.server.TikaWelcomeTest
-Running org.apache.tika.server.UnpackerResourceTest
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.727 sec - in org.apache.tika.server.UnpackerResourceTest
+Running org.apache.commons.beanutils2.BasicDynaBeanTestCase
+Tests run: 35, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.545 sec - in org.apache.commons.beanutils2.BasicDynaBeanTestCase
+Running org.apache.commons.beanutils2.BeanComparatorTestCase
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.967 sec - in org.apache.commons.beanutils2.BeanComparatorTestCase
+Running org.apache.commons.beanutils2.BeanificationTestCase
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.082 sec - in org.apache.commons.beanutils2.BeanificationTestCase
+Running org.apache.commons.beanutils2.BeanIntrospectionDataTestCase
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.302 sec - in org.apache.commons.beanutils2.BeanIntrospectionDataTestCase
+Running org.apache.commons.beanutils2.BeanMapTestCase
+Tests run: 130, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.156 sec - in org.apache.commons.beanutils2.BeanMapTestCase
+Running org.apache.commons.beanutils2.BeanPredicateTestCase
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.621 sec - in org.apache.commons.beanutils2.BeanPredicateTestCase
+Running org.apache.commons.beanutils2.BeanPropertyValueChangeClosureTestCase
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.049 sec - in org.apache.commons.beanutils2.BeanPropertyValueChangeClosureTestCase
+Running org.apache.commons.beanutils2.BeanPropertyValueEqualsPredicateTestCase
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.772 sec - in org.apache.commons.beanutils2.BeanPropertyValueEqualsPredicateTestCase
+Running org.apache.commons.beanutils2.BeanToPropertyValueTransformerTestCase
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.259 sec - in org.apache.commons.beanutils2.BeanToPropertyValueTransformerTestCase
+Running org.apache.commons.beanutils2.BeanUtils2TestCase
+Tests run: 55, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.981 sec - in org.apache.commons.beanutils2.BeanUtils2TestCase
+Running org.apache.commons.beanutils2.BeanUtilsTestCase
+Tests run: 55, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.798 sec - in org.apache.commons.beanutils2.BeanUtilsTestCase
+Running org.apache.commons.beanutils2.bugs.Jira157TestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.37 sec - in org.apache.commons.beanutils2.bugs.Jira157TestCase
+Running org.apache.commons.beanutils2.bugs.Jira18TestCase
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.556 sec - in org.apache.commons.beanutils2.bugs.Jira18TestCase
+Running org.apache.commons.beanutils2.bugs.Jira273TestCase
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.448 sec - in org.apache.commons.beanutils2.bugs.Jira273TestCase
+Running org.apache.commons.beanutils2.bugs.Jira298TestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.338 sec - in org.apache.commons.beanutils2.bugs.Jira298TestCase
+Running org.apache.commons.beanutils2.bugs.Jira339TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.289 sec - in org.apache.commons.beanutils2.bugs.Jira339TestCase
+Running org.apache.commons.beanutils2.bugs.Jira345TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.304 sec - in org.apache.commons.beanutils2.bugs.Jira345TestCase
+Running org.apache.commons.beanutils2.bugs.Jira347TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.386 sec - in org.apache.commons.beanutils2.bugs.Jira347TestCase
+Running org.apache.commons.beanutils2.bugs.Jira349TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.339 sec - in org.apache.commons.beanutils2.bugs.Jira349TestCase
+Running org.apache.commons.beanutils2.bugs.Jira357TestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.386 sec - in org.apache.commons.beanutils2.bugs.Jira357TestCase
+Running org.apache.commons.beanutils2.bugs.Jira358TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.414 sec - in org.apache.commons.beanutils2.bugs.Jira358TestCase
+Running org.apache.commons.beanutils2.bugs.Jira359TestCase
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.447 sec - in org.apache.commons.beanutils2.bugs.Jira359TestCase
+Running org.apache.commons.beanutils2.bugs.Jira368TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.288 sec - in org.apache.commons.beanutils2.bugs.Jira368TestCase
+Running org.apache.commons.beanutils2.bugs.Jira369TestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.35 sec - in org.apache.commons.beanutils2.bugs.Jira369TestCase
+Running org.apache.commons.beanutils2.bugs.Jira381TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.08 sec - in org.apache.commons.beanutils2.bugs.Jira381TestCase
+Running org.apache.commons.beanutils2.bugs.Jira411TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.295 sec - in org.apache.commons.beanutils2.bugs.Jira411TestCase
+Running org.apache.commons.beanutils2.bugs.Jira422bTestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.391 sec - in org.apache.commons.beanutils2.bugs.Jira422bTestCase
+Running org.apache.commons.beanutils2.bugs.Jira422TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.021 sec - in org.apache.commons.beanutils2.bugs.Jira422TestCase
+Running org.apache.commons.beanutils2.bugs.Jira454TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.306 sec - in org.apache.commons.beanutils2.bugs.Jira454TestCase
+Running org.apache.commons.beanutils2.bugs.Jira456TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.218 sec - in org.apache.commons.beanutils2.bugs.Jira456TestCase
+Running org.apache.commons.beanutils2.bugs.Jira458TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 sec - in org.apache.commons.beanutils2.bugs.Jira458TestCase
+Running org.apache.commons.beanutils2.bugs.Jira463TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.324 sec - in org.apache.commons.beanutils2.bugs.Jira463TestCase
+Running org.apache.commons.beanutils2.bugs.Jira465TestCase
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.409 sec - in org.apache.commons.beanutils2.bugs.Jira465TestCase
+Running org.apache.commons.beanutils2.bugs.Jira492TestCase
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.615 sec - in org.apache.commons.beanutils2.bugs.Jira492TestCase
+Running org.apache.commons.beanutils2.bugs.Jira493TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.326 sec - in org.apache.commons.beanutils2.bugs.Jira493TestCase
+Running org.apache.commons.beanutils2.bugs.Jira509TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.001 sec - in org.apache.commons.beanutils2.bugs.Jira509TestCase
+Running org.apache.commons.beanutils2.bugs.Jira520TestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.379 sec - in org.apache.commons.beanutils2.bugs.Jira520TestCase
+Running org.apache.commons.beanutils2.bugs.Jira61TestCase
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.748 sec - in org.apache.commons.beanutils2.bugs.Jira61TestCase
+Running org.apache.commons.beanutils2.bugs.Jira87TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.325 sec - in org.apache.commons.beanutils2.bugs.Jira87TestCase
+Running org.apache.commons.beanutils2.bugs.Jira92TestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.389 sec - in org.apache.commons.beanutils2.bugs.Jira92TestCase
+Running org.apache.commons.beanutils2.ConstructorUtilsTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.99 sec - in org.apache.commons.beanutils2.ConstructorUtilsTestCase
+Running org.apache.commons.beanutils2.converters.ArrayConverterTestCase
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.273 sec - in org.apache.commons.beanutils2.converters.ArrayConverterTestCase
+Running org.apache.commons.beanutils2.converters.BigDecimalConverterTestCase
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.791 sec - in org.apache.commons.beanutils2.converters.BigDecimalConverterTestCase
+Running org.apache.commons.beanutils2.converters.BigIntegerConverterTestCase
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.202 sec - in org.apache.commons.beanutils2.converters.BigIntegerConverterTestCase
+Running org.apache.commons.beanutils2.converters.BooleanConverterTestCase
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.198 sec - in org.apache.commons.beanutils2.converters.BooleanConverterTestCase
+Running org.apache.commons.beanutils2.converters.ByteConverterTestCase
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.735 sec - in org.apache.commons.beanutils2.converters.ByteConverterTestCase
+Running org.apache.commons.beanutils2.converters.CalendarConverterTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.34 sec - in org.apache.commons.beanutils2.converters.CalendarConverterTestCase
+Running org.apache.commons.beanutils2.converters.CharacterConverterTestCase
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.243 sec - in org.apache.commons.beanutils2.converters.CharacterConverterTestCase
+Running org.apache.commons.beanutils2.converters.ClassConverterTestCase
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.449 sec - in org.apache.commons.beanutils2.converters.ClassConverterTestCase
+Running org.apache.commons.beanutils2.converters.ClassReloaderTestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 sec - in org.apache.commons.beanutils2.converters.ClassReloaderTestCase
+Running org.apache.commons.beanutils2.converters.DateConverterTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.44 sec - in org.apache.commons.beanutils2.converters.DateConverterTestCase
+Running org.apache.commons.beanutils2.converters.DoubleConverterTestCase
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.941 sec - in org.apache.commons.beanutils2.converters.DoubleConverterTestCase
+Running org.apache.commons.beanutils2.converters.FileConverterTestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.216 sec - in org.apache.commons.beanutils2.converters.FileConverterTestCase
+Running org.apache.commons.beanutils2.converters.FloatConverterTestCase
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.719 sec - in org.apache.commons.beanutils2.converters.FloatConverterTestCase
+Running org.apache.commons.beanutils2.converters.IntegerConverterTestCase
+Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.926 sec - in org.apache.commons.beanutils2.converters.IntegerConverterTestCase
+Running org.apache.commons.beanutils2.converters.LongConverterTestCase
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.818 sec - in org.apache.commons.beanutils2.converters.LongConverterTestCase
+Running org.apache.commons.beanutils2.converters.ShortConverterTestCase
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.991 sec - in org.apache.commons.beanutils2.converters.ShortConverterTestCase
+Running org.apache.commons.beanutils2.converters.SqlDateConverterTestCase
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.41 sec - in org.apache.commons.beanutils2.converters.SqlDateConverterTestCase
+Running org.apache.commons.beanutils2.converters.SqlTimeConverterTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.371 sec - in org.apache.commons.beanutils2.converters.SqlTimeConverterTestCase
+Running org.apache.commons.beanutils2.converters.SqlTimestampConverterTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.305 sec - in org.apache.commons.beanutils2.converters.SqlTimestampConverterTestCase
+Running org.apache.commons.beanutils2.converters.StringConverterTestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.118 sec - in org.apache.commons.beanutils2.converters.StringConverterTestCase
+Running org.apache.commons.beanutils2.converters.URLConverterTestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.107 sec - in org.apache.commons.beanutils2.converters.URLConverterTestCase
+Running org.apache.commons.beanutils2.ConvertUtilsTestCase
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.078 sec - in org.apache.commons.beanutils2.ConvertUtilsTestCase
+Running org.apache.commons.beanutils2.DefaultIntrospectionContextTestCase
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 sec - in org.apache.commons.beanutils2.DefaultIntrospectionContextTestCase
+Running org.apache.commons.beanutils2.DynaBeanMapDecoratorTestCase
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.301 sec - in org.apache.commons.beanutils2.DynaBeanMapDecoratorTestCase
+Running org.apache.commons.beanutils2.DynaBeanUtilsTestCase
+Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.096 sec - in org.apache.commons.beanutils2.DynaBeanUtilsTestCase
+Running org.apache.commons.beanutils2.DynaPropertyTestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.103 sec - in org.apache.commons.beanutils2.DynaPropertyTestCase
+Running org.apache.commons.beanutils2.DynaPropertyUtilsTestCase
+Tests run: 55, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.751 sec - in org.apache.commons.beanutils2.DynaPropertyUtilsTestCase
+Running org.apache.commons.beanutils2.DynaResultSetTestCase
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.355 sec - in org.apache.commons.beanutils2.DynaResultSetTestCase
+Running org.apache.commons.beanutils2.DynaRowSetTestCase
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.634 sec - in org.apache.commons.beanutils2.DynaRowSetTestCase
+Running org.apache.commons.beanutils2.expression.DefaultResolverTestCase
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 sec - in org.apache.commons.beanutils2.expression.DefaultResolverTestCase
+Running org.apache.commons.beanutils2.FluentPropertyBeanIntrospectorTestCase
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.227 sec - in org.apache.commons.beanutils2.FluentPropertyBeanIntrospectorTestCase
+Running org.apache.commons.beanutils2.IndexedPropertyTestCase
+Tests run: 29, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 1.761 sec - in org.apache.commons.beanutils2.IndexedPropertyTestCase
+Running org.apache.commons.beanutils2.LazyDynaBeanTestCase
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.732 sec - in org.apache.commons.beanutils2.LazyDynaBeanTestCase
+Running org.apache.commons.beanutils2.LazyDynaClassTestCase
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.486 sec - in org.apache.commons.beanutils2.LazyDynaClassTestCase
+Running org.apache.commons.beanutils2.LazyDynaListTestCase
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.753 sec - in org.apache.commons.beanutils2.LazyDynaListTestCase
+Running org.apache.commons.beanutils2.LazyDynaMapTestCase
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.646 sec - in org.apache.commons.beanutils2.LazyDynaMapTestCase
+Running org.apache.commons.beanutils2.locale.converters.BaseLocaleConverterTestCase
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 sec - in org.apache.commons.beanutils2.locale.converters.BaseLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.BigDecimalLocaleConverterTestCase
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.261 sec - in org.apache.commons.beanutils2.locale.converters.BigDecimalLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.BigIntegerLocaleConverterTestCase
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.282 sec - in org.apache.commons.beanutils2.locale.converters.BigIntegerLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.ByteLocaleConverterTestCase
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.31 sec - in org.apache.commons.beanutils2.locale.converters.ByteLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.DateLocaleConverterTestCase
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.361 sec - in org.apache.commons.beanutils2.locale.converters.DateLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.DoubleLocaleConverterTestCase
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.306 sec - in org.apache.commons.beanutils2.locale.converters.DoubleLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.FloatLocaleConverterTestCase
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.623 sec - in org.apache.commons.beanutils2.locale.converters.FloatLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.IntegerLocaleConverterTestCase
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.316 sec - in org.apache.commons.beanutils2.locale.converters.IntegerLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.LongLocaleConverterTestCase
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.28 sec - in org.apache.commons.beanutils2.locale.converters.LongLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.converters.ShortLocaleConverterTestCase
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.267 sec - in org.apache.commons.beanutils2.locale.converters.ShortLocaleConverterTestCase
+Running org.apache.commons.beanutils2.locale.LocaleBeanificationTestCase
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.1 sec - in org.apache.commons.beanutils2.locale.LocaleBeanificationTestCase
+Running org.apache.commons.beanutils2.locale.LocaleBeanUtilsTestCase
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.414 sec - in org.apache.commons.beanutils2.locale.LocaleBeanUtilsTestCase
+Running org.apache.commons.beanutils2.locale.LocaleConvertUtilsTestCase
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.451 sec - in org.apache.commons.beanutils2.locale.LocaleConvertUtilsTestCase
+Running org.apache.commons.beanutils2.MappedPropertyTestCase
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.633 sec - in org.apache.commons.beanutils2.MappedPropertyTestCase
+Running org.apache.commons.beanutils2.memoryleaktests.MemoryLeakTestCase
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 78.922 sec - in org.apache.commons.beanutils2.memoryleaktests.MemoryLeakTestCase
+Running org.apache.commons.beanutils2.MethodUtilsTestCase
+Tests run: 32, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.795 sec - in org.apache.commons.beanutils2.MethodUtilsTestCase
+Running org.apache.commons.beanutils2.PropertyUtilsTestCase
+Tests run: 116, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.434 sec - in org.apache.commons.beanutils2.PropertyUtilsTestCase
+Running org.apache.commons.beanutils2.SuppressPropertiesBeanIntrospectorTestCase
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.12 sec - in org.apache.commons.beanutils2.SuppressPropertiesBeanIntrospectorTestCase
+Running org.apache.commons.beanutils2.WrapDynaBeanTestCase
+Tests run: 43, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.59 sec - in org.apache.commons.beanutils2.WrapDynaBeanTestCase
 
 Results :
 
-Failed tests: 
-  RecursiveMetadataResourceTest.testSimpleWord:70 expected:<11> but was:<7>
-  TikaResourceTest.testEmbedded:162 null
-Tests in error: 
-  TikaMimeTypesTest.testGetHTML:75 ª Processing java.net.SocketTimeoutException:...
-  TikaMimeTypesTest.testGetJSON:97 ª Processing java.net.SocketTimeoutException:...
-  TikaMimeTypesTest.testGetPlainText:57 ª Processing java.net.SocketTimeoutExcep...
+Tests run: 1282, Failures: 0, Errors: 0, Skipped: 4
 
-Tests run: 54, Failures: 2, Errors: 3, Skipped: 0
-
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika translate 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika examples 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika Java-7 Components 1.8
-[INFO] ------------------------------------------------------------------------
-[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 is missing, no dependency information available
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Apache Tika 1.8
-[INFO] ------------------------------------------------------------------------
 [INFO] 
-[INFO] --- maven-remote-resources-plugin:1.2.1:process (default) @ tika ---
+[INFO] --- maven-jar-plugin:3.1.1:jar (default-jar) @ commons-beanutils2 ---
+[INFO] Building jar: C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT.jar
 [INFO] 
-[INFO] --- forbiddenapis:1.7:check (default) @ tika ---
-[INFO] Skipping execution for packaging "pom"
+[INFO] --- maven-site-plugin:3.7.1:attach-descriptor (attach-descriptor) @ commons-beanutils2 ---
+[INFO] Skipping because packaging 'jar' is not pom.
 [INFO] 
-[INFO] --- forbiddenapis:1.7:testCheck (default) @ tika ---
-[INFO] Skipping execution for packaging "pom"
+[INFO] --- maven-jar-plugin:3.1.1:test-jar (default) @ commons-beanutils2 ---
+[INFO] Building jar: C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-tests.jar
 [INFO] 
-[INFO] --- maven-site-plugin:3.0:attach-descriptor (attach-descriptor) @ tika ---
+[INFO] --- maven-source-plugin:3.0.1:jar-no-fork (create-source-jar) @ commons-beanutils2 ---
+[INFO] Building jar: C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-sources.jar
 [INFO] 
-[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ tika ---
-[INFO] Installing C:\Temp\tika\pom.xml to C:\Users\User\.m2\repository\org\apache\tika\tika\1.8\tika-1.8.pom
+[INFO] --- maven-source-plugin:3.0.1:test-jar-no-fork (create-source-jar) @ commons-beanutils2 ---
+[INFO] Building jar: C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-test-sources.jar
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.4:check (check) @ commons-beanutils2 ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ commons-beanutils2 ---
+[INFO] Installing C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT.jar to C:\Users\User\.m2\repository\org\apache\commons\commons-beanutils2\2.0.0-SNAPSHOT\commons-beanutils2-2.0.0-SNAPSHOT.jar
+[INFO] Installing C:\Temp\commons-beanutils\pom.xml to C:\Users\User\.m2\repository\org\apache\commons\commons-beanutils2\2.0.0-SNAPSHOT\commons-beanutils2-2.0.0-SNAPSHOT.pom
+[INFO] Installing C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-tests.jar to C:\Users\User\.m2\repository\org\apache\commons\commons-beanutils2\2.0.0-SNAPSHOT\commons-beanutils2-2.0.0-SNAPSHOT-tests.jar
+[INFO] Installing C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-sources.jar to C:\Users\User\.m2\repository\org\apache\commons\commons-beanutils2\2.0.0-SNAPSHOT\commons-beanutils2-2.0.0-SNAPSHOT-sources.jar
+[INFO] Installing C:\Temp\commons-beanutils\target\commons-beanutils2-2.0.0-SNAPSHOT-test-sources.jar to C:\Users\User\.m2\repository\org\apache\commons\commons-beanutils2\2.0.0-SNAPSHOT\commons-beanutils2-2.0.0-SNAPSHOT-test-sources.jar
 [INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary:
-[INFO] 
-[INFO] Apache Tika parent ................................. SUCCESS [  6.444 s]
-[INFO] Apache Tika core ................................... FAILURE [  2.093 s]
-[INFO] Apache Tika parsers ................................ FAILURE [  0.005 s]
-[INFO] Apache Tika XMP .................................... FAILURE [  0.004 s]
-[INFO] Apache Tika serialization .......................... FAILURE [  0.003 s]
-[INFO] Apache Tika batch .................................. FAILURE [  0.019 s]
-[INFO] Apache Tika application ............................ FAILURE [  0.003 s]
-[INFO] Apache Tika OSGi bundle ............................ FAILURE [  0.002 s]
-[INFO] Apache Tika server ................................. FAILURE [09:23 min]
-[INFO] Apache Tika translate .............................. FAILURE [  0.022 s]
-[INFO] Apache Tika examples ............................... FAILURE [  0.005 s]
-[INFO] Apache Tika Java-7 Components ...................... FAILURE [  0.006 s]
-[INFO] Apache Tika ........................................ SUCCESS [  0.090 s]
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] Total time: 05:14 min
+[INFO] Finished at: 2019-08-02T13:12:08+03:00
+[INFO] Final Memory: 41M/455M
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 09:33 min
-[INFO] Finished at: 2019-06-04T19:53:43+03:00
-[INFO] Final Memory: 41M/393M
-[INFO] ------------------------------------------------------------------------
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Could not find artifact org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in central (https://repo.maven.apache.org/maven2) -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.18.1:test (default-test) on project tika-server: There are test failures.
-[ERROR] 
-[ERROR] Please refer to C:\Temp\tika\tika-server\target\surefire-reports for the individual test results.
-[ERROR] -> [Help 2]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] Plugin org.apache.maven.plugins:maven-surefire-plugin:2.18.1 2.18.1 or one of its dependencies could not be resolved: Failure to find org.apache.maven.plugins:maven-surefire-plugin:jar:2.18.1 2.18.1 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException
-[ERROR] [Help 2] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-[ERROR] 
-[ERROR] After correcting the problems, you can resume the build with the command
-[ERROR]   mvn <goals> -rf :tika-server
-[INFO] Build failures were ignored.

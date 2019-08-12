@@ -719,72 +719,72 @@ if __name__ == "__main__":
     # obs = repo.observe_tests()
     # pass
     # traces = JcovParser(r"C:\temp\traces").parse()
-    import time
-    import os
-    import gc
-    import git
-    import json
-
-    def mkdir(path):
-        if not os.path.exists(path):
-            os.mkdir(path)
-        return path
-
-    def dump(obj, file_name):
-        with open(file_name+".json", "wb") as f:
-            json.dump(obj, f)
-
-    base_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\clones")
-    traces_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\traces")
-    traces_json_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\traces_json")
-    call_graphs = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\call_graphs")
-    execution_graphs = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\execution_graphs")
-    obs_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\observations")
-    #interesting = ["0aa57f04ede369a4f813bbb86d3eac1ed20b084c", "0cc451d5e5cb565eb7311308466f487bc534ebaf", "19f33e4e0d824e732d07f06a08567c27b3c808f3", "1c606c3d96838e595a0664cbafdd60caae34aa0e", "229151ec41339450e4d4f857bf92ed080d3e2430", "38f8bcc60b90295f0a697f32e760a0082571bc09", "3905071819a14403d1cdb9437d2e005adf18fc70", "3b46d611b2d595131ce0bce9bdb3209c55391be7", "3cea4b2af3f9caf6aa72fa56d647c513d320e073", "3f900a7395e31eaa72e0fa2fb43c090e5a8fa4ed", "48bf241d4149919e0928e39616bee2e3783e2987", "5209cefa81c9c48a34e5472fdcf2a308a4da2589", "575be16474e8e8246d4bbde6f243fdf38c34ad5b", "5ccddb3ff7c65882ad6bbf95cbdac9debc76a871", "68217617c54467c7c6098168e714a2fb6a48847d", "7d1b54b33b07a570060824a703222a77c35b1fa0", "8185a5f63e23be852d600a80daa5b848fa836a65", "8da5fb28a764eee26c76a5018c293f224017887b", "ac2a39e92a71d5f9eb3ca7c6cc789b6341c582a4", "ac58807ede6d9a0625b489cdca6fd37bad9cacfe", "b2f1757bf9ec1632a940b9a2e65a1a022ba54af8", "b5906d3f325ca3a1147d5fa68912975e2e6c347e", "b6f7a8a8be57c9525c59e9f21e958e76cee0dbaf", "c71373047dc2172b0f06cebf61da284323d6ff99", "cbf8e4eb017a99af9a8f24eb8429e8a12b62af8b", "cf28c89dcf72d27573c478eb91e3b470de060edd", "cfff06bead88e2c1bb164285f89503a919e0e27f", "d8c22b8e1c8592bc8c6f6169a5b090082969acd4", "e28c95ac2ce95852add84bdf3d2d9c00ac98f5de", "ec0c4e5508dbd8af83253f7c50f8b728a1003388"]
-    for dir in os.listdir(base_path):
-        try:
-            gc.collect()
-            repo_path = os.path.join(base_path, dir)
-            repo = Repo(repo_path)
-            git.Repo(repo_path).git.checkout('--', '.')
-            repo.clean()
-            traces_dir = mkdir(os.path.join(traces_path, dir))
-            # traces = repo.run_under_jcov(traces_dir, False, instrument_only_methods=True)
-            traces = JcovParser(traces_dir).parse()
-            import networkx
-            for trace in traces:
-                g = networkx.DiGraph()
-                g.add_edges_from(trace.get_execution_edges())
-                execution = mkdir(os.path.join(execution_graphs, dir))
-                networkx.write_gexf(g, os.path.join(execution, trace.test_name + ".gexf"))
-                g = networkx.DiGraph()
-                call = mkdir(os.path.join(call_graphs, dir))
-                g.add_edges_from(trace.get_call_graph_edges())
-                networkx.write_gexf(g, os.path.join(call, trace.test_name + ".gexf"))
-                json_trace = os.path.join(mkdir(os.path.join(traces_json_path, dir)), trace.test_name)
-                dump(trace.get_trace(), json_trace)
-            obs = repo.observe_tests()
-            dump(map(lambda x: x.as_dict(), obs.values()), os.path.join(obs_path, dir))
-        except:
-            pass
-
-    start = time.time()
-    print "start time:", start
-    # repo = Repo(r"C:\Temp\bugs-dot-jar\accumulo")
-    # repo.add_javadoc()
-    # repo.site()
+    # import time
+    # import os
+    # import gc
+    # import git
+    # import json
+    #
+    # def mkdir(path):
+    #     if not os.path.exists(path):
+    #         os.mkdir(path)
+    #     return path
+    #
+    # def dump(obj, file_name):
+    #     with open(file_name+".json", "wb") as f:
+    #         json.dump(obj, f)
+    #
+    # base_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\clones")
+    # traces_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\traces")
+    # traces_json_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\traces_json")
+    # call_graphs = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\call_graphs")
+    # execution_graphs = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\execution_graphs")
+    # obs_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\observations")
+    # #interesting = ["0aa57f04ede369a4f813bbb86d3eac1ed20b084c", "0cc451d5e5cb565eb7311308466f487bc534ebaf", "19f33e4e0d824e732d07f06a08567c27b3c808f3", "1c606c3d96838e595a0664cbafdd60caae34aa0e", "229151ec41339450e4d4f857bf92ed080d3e2430", "38f8bcc60b90295f0a697f32e760a0082571bc09", "3905071819a14403d1cdb9437d2e005adf18fc70", "3b46d611b2d595131ce0bce9bdb3209c55391be7", "3cea4b2af3f9caf6aa72fa56d647c513d320e073", "3f900a7395e31eaa72e0fa2fb43c090e5a8fa4ed", "48bf241d4149919e0928e39616bee2e3783e2987", "5209cefa81c9c48a34e5472fdcf2a308a4da2589", "575be16474e8e8246d4bbde6f243fdf38c34ad5b", "5ccddb3ff7c65882ad6bbf95cbdac9debc76a871", "68217617c54467c7c6098168e714a2fb6a48847d", "7d1b54b33b07a570060824a703222a77c35b1fa0", "8185a5f63e23be852d600a80daa5b848fa836a65", "8da5fb28a764eee26c76a5018c293f224017887b", "ac2a39e92a71d5f9eb3ca7c6cc789b6341c582a4", "ac58807ede6d9a0625b489cdca6fd37bad9cacfe", "b2f1757bf9ec1632a940b9a2e65a1a022ba54af8", "b5906d3f325ca3a1147d5fa68912975e2e6c347e", "b6f7a8a8be57c9525c59e9f21e958e76cee0dbaf", "c71373047dc2172b0f06cebf61da284323d6ff99", "cbf8e4eb017a99af9a8f24eb8429e8a12b62af8b", "cf28c89dcf72d27573c478eb91e3b470de060edd", "cfff06bead88e2c1bb164285f89503a919e0e27f", "d8c22b8e1c8592bc8c6f6169a5b090082969acd4", "e28c95ac2ce95852add84bdf3d2d9c00ac98f5de", "ec0c4e5508dbd8af83253f7c50f8b728a1003388"]
+    # for dir in os.listdir(base_path):
+    #     try:
+    #         gc.collect()
+    #         repo_path = os.path.join(base_path, dir)
+    #         repo = Repo(repo_path)
+    #         git.Repo(repo_path).git.checkout('--', '.')
+    #         repo.clean()
+    #         traces_dir = mkdir(os.path.join(traces_path, dir))
+    #         # traces = repo.run_under_jcov(traces_dir, False, instrument_only_methods=True)
+    #         traces = JcovParser(traces_dir).parse()
+    #         import networkx
+    #         for trace in traces:
+    #             g = networkx.DiGraph()
+    #             g.add_edges_from(trace.get_execution_edges())
+    #             execution = mkdir(os.path.join(execution_graphs, dir))
+    #             networkx.write_gexf(g, os.path.join(execution, trace.test_name + ".gexf"))
+    #             g = networkx.DiGraph()
+    #             call = mkdir(os.path.join(call_graphs, dir))
+    #             g.add_edges_from(trace.get_call_graph_edges())
+    #             networkx.write_gexf(g, os.path.join(call, trace.test_name + ".gexf"))
+    #             json_trace = os.path.join(mkdir(os.path.join(traces_json_path, dir)), trace.test_name)
+    #             dump(trace.get_trace(), json_trace)
+    #         obs = repo.observe_tests()
+    #         dump(map(lambda x: x.as_dict(), obs.values()), os.path.join(obs_path, dir))
+    #     except:
+    #         pass
+    #
+    # start = time.time()
+    # print "start time:", start
+    # # repo = Repo(r"C:\Temp\bugs-dot-jar\accumulo")
+    # # repo.add_javadoc()
+    # # repo.site()
+    # # exit()
+    # jsons = repo.javadoc_command(r"c:\temp\jsons.json")
     # exit()
-    repo = Repo(r"C:\Temp\lang4j\defects4j-lang")
-    jsons = repo.javadoc_command(r"c:\temp\jsons.json")
-    exit()
-    obs = repo.observe_tests()
+    repo = Repo(r"C:\Temp\commons-beanutils")
+    # obs = repo.observe_tests()
     traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
-    import networkx
-    for trace in traces:
-        g = networkx.DiGraph()
-        g.add_edges_from(traces[trace].get_execution_edges())
-        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_execution.gexf"))
-        g = networkx.DiGraph()
-        g.add_edges_from(traces[trace].get_call_graph_edges())
-        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_call_graph.gexf"))
-    print "end time:", time.time() - start
+    # import networkx
+    # for trace in traces:
+    #     g = networkx.DiGraph()
+    #     g.add_edges_from(traces[trace].get_execution_edges())
+    #     networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_execution.gexf"))
+    #     g = networkx.DiGraph()
+    #     g.add_edges_from(traces[trace].get_call_graph_edges())
+    #     networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_call_graph.gexf"))
+    # print "end time:", time.time() - start
