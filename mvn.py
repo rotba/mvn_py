@@ -1,5 +1,6 @@
 import os
 import subprocess
+import traceback
 from threading import Timer
 from cStringIO import StringIO
 from bug  import BugError
@@ -213,6 +214,8 @@ def change_plugin_version_if_exists(plugins_tag, plugin_artifact_id, version):
 def generate_mvn_class_names(src_path, module):
     if 'src\\test' in src_path or 'src/test' in src_path or r'src\test' in src_path:
         relpath = os.path.relpath(src_path, module + '\\src\\test\\java').replace('.java', '')
+    elif 'src\\java' in src_path or 'src/java' in src_path or r'src\java' in src_path:
+        relpath = os.path.relpath(src_path, module + '\\src\\java').replace('.java', '')
     else:
         relpath = os.path.relpath(src_path, module + '\\src\\main\\java').replace('.java', '')
     while relpath.startswith('..\\'):
@@ -283,10 +286,8 @@ def wrap_mvn_cmd(cmd, time_limit = sys.maxint, dir=None):
     with open(tmp_file_path, "r") as tmp_f:
         build_report = tmp_f.read()
         print(build_report)
-    if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report):
-        raise MVNTimeoutError('Build took too long', build_report)
-    #if has_compilation_error(build_report):
-    #    raise MVNTimeoutError('Build report has compilation error', build_report)
+    if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report or '* Computation finished' in build_report):
+        raise MVNTimeoutError('Build took too long', build_report, trace= traceback.format_exc())
     return build_report.replace('\\n','\n')
 
 def wrap_mvn_cmd_1(cmd, time_limit = sys.maxint):
@@ -322,7 +323,7 @@ def wrap_mvn_cmd_3(cmd, time_limit = sys.maxint):
         sys.stderr = olderr
         sys.stdout = oldout
     if not time_limit == sys.maxint and not ('[INFO] BUILD SUCCESS' in build_log or '[INFO] BUILD FAILURE' in build_log):
-        raise MVNError('Build took too long', build_log)
+        raise MVNError('Build took too long', build_log, trace= traceback.format_exc())
     return build_log
 
 def duplicate_stdout(proc, file):
@@ -338,11 +339,12 @@ def kill(p):
     p.kill()
 
 class MVNError(Exception):
-    def __init__(self, msg, report = ''):
+    def __init__(self, msg, report = '', trace = ''):
         self.msg = msg
         self.report  = report
+        self.trace = trace
     def __str__(self):
-        return repr(self.msg+'\n'+self.report)
+        return repr(self.msg+'\n'+self.report+'\n'+self.trace)
 
 class MVNTimeoutError(MVNError):
     pass

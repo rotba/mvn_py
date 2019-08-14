@@ -93,7 +93,7 @@ class TestClass(object):
 		parent_dir = os.path.abspath(os.path.join(file_path, os.pardir))
 		is_root = False
 		while not is_root:
-			if os.path.isfile(parent_dir + '//pom.xml'):
+			if os.path.isfile(parent_dir + '//pom.xml') or os.path.isfile(parent_dir + '//project.xml'):
 				return parent_dir
 			else:
 				tmp = os.path.abspath(os.path.join(parent_dir, os.pardir))
