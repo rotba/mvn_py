@@ -8,7 +8,6 @@ from xml.dom.minidom import parseString
 
 import TestObjects
 import mvn
-from enum import Enum
 from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 from junitparser.junitparser import Error, Failure
@@ -50,8 +49,6 @@ class Repo(object):
 		self.DEFAULT_JUNIT_VERSION = '4.12'
 		self.DEFAULT_XERCES_VERSION = '2.11.0'
 
-
-
 	@property
 	def repo_dir(self):
 		return self._repo_dir
@@ -76,43 +73,11 @@ class Repo(object):
 
 	# Generates tests. As for now implemented with evosuite
 	def generate_tests(self, module=None, classes=[], time_limit=sys.maxint, strategy=TestGenerationStrategy.MAVEN):
-		return EvosuiteFactory.create(self,strategy).generate(module, classes, time_limit)
+		return EvosuiteFactory.create(self, strategy).generate(module, classes, time_limit)
 		return {
 			Repo.TestGenerationStrategy.MAVEN: self.generate_tests_mvn,
 			Repo.TestGenerationStrategy.CMD: self.generate_tests_cmd,
 		}[strategy](module=module, classes=classes, time_limit=time_limit)
-
-	# Generates tests. As for now implemented with evosuite
-	def generate_tests_mvn(self, module=None, classes=[], time_limit=sys.maxint):
-		inspected_module = self.repo_dir
-		if not module == None:
-			inspected_module = module
-		if not self.tests_generator_setup(inspected_module):
-			self.setup_tests_generator(inspected_module)
-		test_cmd = self.generate_mvn_generate_tests_cmd(module=inspected_module, classes=classes)
-		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
-		if os.path.exists(os.path.join(self.repo_dir, 'cutsFile.txt')):
-			os.remove(os.path.join(self.repo_dir, 'cutsFile.txt'))
-		return build_report
-
-	# Generates tests. As for now implemented with evosuite
-	def generate_tests_cmd(self, module=None, classes=[], time_limit=sys.maxint):
-		inspected_module = self.repo_dir
-		if not module == None:
-			inspected_module = module
-		if not self.tests_generator_setup(inspected_module):
-			self.setup_tests_generator(inspected_module)
-		compile_report = self.compile()
-		if mvn.has_compilation_error(compile_report):
-			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=compile())
-		self.copy_depenedencies()
-		test_cmd = self.generate_generate_tests_cmd(module=inspected_module, classes=classes)
-		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo_dir)
-		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
-		build_report += mvn.wrap_mvn_cmd(export_cmd, time_limit=time_limit)
-		if os.path.exists(os.path.join(self.repo_dir, 'cutsFile.txt')):
-			os.remove(os.path.join(self.repo_dir, 'cutsFile.txt'))
-		return build_report
 
 	# Executes mvn clean
 	def clean(self, module=None):
@@ -452,48 +417,6 @@ class Repo(object):
 		ans += ' -f ' + self.repo_dir
 		return ans
 
-	# Returns mvn command string that generates tests for the given module
-	def generate_mvn_generate_tests_cmd(self, classes, module=None):
-		inspeced_module = self.repo_dir if module == None else module
-		if module == None or module == self.repo_dir:
-			ans = 'mvn evosuite:generate evosuite:export -fn'
-		else:
-			ans = 'mvn -pl :{} -am evosuite:generate evosuite:export -fn'.format(
-				os.path.basename(module))
-		if len(classes) > 0:
-			path_to_cutsfile = os.path.join(self.repo_dir, "cutsFile.txt")
-			with open(path_to_cutsfile, "w+") as tmp_file:
-				tmp_file.write(' ,'.join(classes))
-				ans += ' '
-				ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
-		ans += ' -f ' + inspeced_module
-		return ans
-
-	# Returns mvn command string that generates tests for the given module
-	def generate_generate_tests_export_cmd(self, classes, module=None):
-		inspeced_module = self.repo_dir if module == None else module
-		if module == None or module == self.repo_dir:
-			ans = 'mvn evosuite:export -fn'
-		else:
-			ans = 'mvn -pl :{} -am evosuite:export -fn'.format(
-				os.path.basename(module))
-		if len(classes) > 0:
-			path_to_cutsfile = os.path.join(self.repo_dir, "cutsFile.txt")
-			with open(path_to_cutsfile, "w+") as tmp_file:
-				tmp_file.write(' ,'.join(classes))
-				ans += ' '
-				ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
-		ans += ' -f ' + inspeced_module
-		return ans
-
-	# Returns mvn command string that generates tests for the given module
-	def generate_generate_tests_cmd(self, classes, module=None):
-		return '{} -projectCP {};{}  -class {} {}'.format(self.generate_evosuite_run_cmd(),
-		                                                 self.generate_dependency_path(module),
-		                                                 self.generate_target_classes_binaries_path(module),
-		                                                 self.generate_target_class_mvn_names(classes),
-		                                                 self.generate_configuration_params())
-
 	# Returns mvn command string that runns the given tests in the given module
 	def generate_mvn_install_cmd(self, testcases, module=None, debug=False):
 		testclasses = []
@@ -716,47 +639,6 @@ class Repo(object):
 			ans = ans.replace('= ', '=')
 		return ans
 
-	# Returns true if self has tests generator setup
-	def tests_generator_setup(self, module):
-		mvn_help_cmd = self.generate_mvn_evosuite_help_cmd(module)
-		EVOUSUITE_CONFIGURED_INDICATION = 'evosuite:generate'
-		with os.popen(mvn_help_cmd) as proc:
-			tmp_file_path = 'tmp_file.txt'
-			with open(tmp_file_path, "w+") as tmp_file:
-				mvn.duplicate_stdout(proc, tmp_file)
-			with open(tmp_file_path, "r") as tmp_file:
-				mvn.duplicate_stdout(proc, tmp_file)
-				build_report = tmp_file.readlines()
-			return any(list(map(lambda l: EVOUSUITE_CONFIGURED_INDICATION in l, build_report)))
-
-	def setup_tests_generator(self, module=None):
-		module = self.repo_dir if module == None else module
-		evousuite_version_property_xquery = '/'.join(['.', 'properties', 'evosuiteVersion'])
-		self.set_pom_tag(xquery=evousuite_version_property_xquery, create_if_not_exist=True, module=module,
-		                 value=self.DEFAULT_ES_VERSION)
-		self.add_plugin(artifactId='evosuite-maven-plugin', groupId='org.evosuite.plugins',
-		                version='${evosuiteVersion}', module=module)
-		self.add_plugin(artifactId='maven-surefire-plugin', groupId='org.apache.maven.plugins',
-		                version=self.DEFAULT_SUREFIRE_VERSION, module=module)
-		self.add_dependency(artifactId='evosuite-standalone-runtime', groupId='org.evosuite',
-		                    version='${evosuiteVersion}', module=module)
-		self.add_dependency(artifactId='junit', groupId='junit',
-		                    version=self.DEFAULT_JUNIT_VERSION, module=module)
-		self.add_dependency(artifactId='xercesImpl', groupId='xerces',
-		                    version=self.DEFAULT_XERCES_VERSION, module=module)
-		evousuite_xpath = r"./build/plugins/plugin[artifactId = 'evosuite-maven-plugin']"
-		surefire_xpath = r"./build/plugins/plugin[artifactId = 'maven-surefire-plugin']"
-		execution_xpath = "executions/execution"
-		prepare_goal_xquery = '/'.join([evousuite_xpath, execution_xpath, "goals/goal"])
-		phase_xquery = '/'.join([evousuite_xpath, execution_xpath, "phase"])
-		listener_name_xquery = '/'.join([surefire_xpath, 'configuration', 'properties', 'property', 'name'])
-		listener_value_xquery = '/'.join([surefire_xpath, 'configuration', 'properties', 'property', 'value'])
-		self.set_pom_tag(xquery=prepare_goal_xquery, create_if_not_exist=True, module=module, value='prepare')
-		self.set_pom_tag(xquery=phase_xquery, create_if_not_exist=True, module=module, value='process-test-classes')
-		self.set_pom_tag(xquery=listener_name_xquery, create_if_not_exist=True, module=module, value='listener')
-		self.set_pom_tag(xquery=listener_value_xquery, create_if_not_exist=True, module=module,
-		                 value='org.evosuite.runtime.InitializingListener')
-
 	def get_generated_testcases(self, module=None):
 		generated_tests_dir = self.get_generated_testcases_dir(module=module)
 		if not os.path.isdir(generated_tests_dir):
@@ -792,39 +674,6 @@ class Repo(object):
 		self.set_pom_tag(xquery=set_groupId_xquery, create_if_not_exist=True, module=module, value=groupId)
 		self.set_pom_tag(xquery=set_version_xquery, create_if_not_exist=True, module=module, value=version)
 
-	def generate_evosuite_run_cmd(self):
-		return r'java -jar "C:\Program Files (x86)\evosuite\1.0.6\evosuite-1.0.6.jar"'
-
-	def generate_target_classes_binaries_path(self, module):
-		return os.path.relpath(
-			reduce(lambda acc, curr: os.path.join(acc,curr), [module,'target', 'classes'])
-		, self.repo_dir)
-
-	def generate_target_class_mvn_names(self, classes):
-		return classes[0]
-
-	def generate_configuration_params(self):
-		return "-Dassertion_strategy=ALL -criterion BRANCH:EXCEPTION:METHOD -Dtest_dir={}".format(self.get_gen_test_dir())
-
-	def generate_mvn_compile_cmd(self, module):
-		if module == self.repo_dir:
-			ans = 'mvn compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
-		else:
-			ans = 'mvn -pl :{} -am compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
-				os.path.basename(module))
-		ans += ' -f ' + self.repo_dir
-		return ans
-
-	def generate_dependency_path(self, module):
-		return reduce(
-			lambda acc, curr: acc + ';' + curr,
-			map(lambda x: os.path.relpath(os.path.join(self.get_dependecy_dir(module),x),module),
-			    os.listdir(self.get_dependecy_dir(module)))
-		)
-
-	def get_dependecy_dir(self, module):
-		return reduce(lambda acc, curr: os.path.join(acc, curr), ['target', 'dependency'], module)
-
 	if __name__ == "__main__":
 		# repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
 		# obs = repo.observe_tests()
@@ -838,8 +687,7 @@ class Repo(object):
 		repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
 		print "end time:", time.time() - start
 
-
-	def copy_depenedencies(self, module = None):
+	def copy_depenedencies(self, module=None):
 		inspected_module = self.repo_dir
 		if not module == None:
 			inspected_module = module
@@ -855,6 +703,3 @@ class Repo(object):
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
 		return ans
-
-	def get_gen_test_dir(self):
-		return reduce(lambda acc, curr: os.path.join(acc, curr), ['.evosuite','best-tests'])

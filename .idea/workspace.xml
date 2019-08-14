@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestObjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestObjects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mvn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/static_files/tika/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/static_files/tika/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/static_files/tika/tmp_file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/static_files/tika/tmp_file.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,19 +23,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="14" column="65" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="65" />
+            <state relative-caret-position="-12150">
+              <caret line="81" selection-start-line="81" selection-end-line="81" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2900">
+            <state relative-caret-position="1520">
               <caret line="154" column="92" selection-start-line="154" selection-start-column="92" selection-end-line="154" selection-end-column="92" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -89,19 +87,19 @@
       <find>generate</find>
       <find>Repo</find>
       <find>depene</find>
-      <find>generate_tests</find>
       <find>enum</find>
       <find>tests_generator_setup</find>
       <find>generate_mvn_evosuite_help_cmd</find>
       <find>self.</find>
       <find>setup_tests_generator(</find>
-      <find>generate_tests(</find>
       <find>generate_evosuite_run_cmd(</find>
       <find>generate_generate_tests_export_cmd(</find>
       <find>generate_Tests</find>
       <find>generate_Tests(</find>
       <find>get_dependecy_dir(</find>
       <find>get_gen_test_dir(</find>
+      <find>generate_tests</find>
+      <find>generate_tests(</find>
     </findStrings>
     <replaceStrings>
       <replace>MavenProj</replace>
@@ -133,8 +131,8 @@
         <option value="$PROJECT_DIR$/mvn.py" />
         <option value="$PROJECT_DIR$/plugins/evosuite/__init__.py" />
         <option value="$PROJECT_DIR$/plugins/__init__.py" />
-        <option value="$PROJECT_DIR$/Repo.py" />
         <option value="$PROJECT_DIR$/plugins/evosuite/evosuite.py" />
+        <option value="$PROJECT_DIR$/Repo.py" />
       </list>
     </option>
   </component>
@@ -389,7 +387,7 @@
       <workItem from="1564839160994" duration="173000" />
       <workItem from="1565609336922" duration="1334000" />
       <workItem from="1565691838536" duration="8147000" />
-      <workItem from="1565781780471" duration="4851000" />
+      <workItem from="1565781780471" duration="5173000" />
     </task>
     <servers />
   </component>
@@ -414,7 +412,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56330000" />
+    <option name="totallyTimeSpent" value="56652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -683,20 +681,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
+    <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2900">
-          <caret line="154" column="92" selection-start-line="154" selection-start-column="92" selection-end-line="154" selection-end-column="92" />
+        <state relative-caret-position="-12150">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Repo.py">
+    <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="14" column="65" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="65" />
+        <state relative-caret-position="1520">
+          <caret line="154" column="92" selection-start-line="154" selection-start-column="92" selection-end-line="154" selection-end-column="92" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
