@@ -53,6 +53,7 @@ class Repo(object):
 
     # Executes mvn test
     def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False):
+        self.change_surefire_ver()
         inspected_module = self.repo_dir
         if not module == None:
             inspected_module = module
@@ -261,7 +262,7 @@ class Repo(object):
         return ans
 
     # Changes surefire version in a pom
-    def change_surefire_ver(self, version, module=None):
+    def change_surefire_ver(self, version="2.18.1", module=None):
         ans = []
         inspected_module = self.repo_dir
         if not module == None:
