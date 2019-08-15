@@ -674,19 +674,6 @@ class Repo(object):
 		self.set_pom_tag(xquery=set_groupId_xquery, create_if_not_exist=True, module=module, value=groupId)
 		self.set_pom_tag(xquery=set_version_xquery, create_if_not_exist=True, module=module, value=version)
 
-	if __name__ == "__main__":
-		# repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
-		# obs = repo.observe_tests()
-		# pass
-		# traces = JcovParser(r"C:\temp\traces").parse()
-		import time
-
-		start = time.time()
-		print "start time:", start
-		repo = Repo(r"C:\Temp\tika")
-		repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
-		print "end time:", time.time() - start
-
 	def copy_depenedencies(self, module=None):
 		inspected_module = self.repo_dir
 		if not module == None:
@@ -703,3 +690,28 @@ class Repo(object):
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
 		return ans
+
+	def generate_mvn_compile_cmd(self, module):
+		if module == self.repo_dir:
+			ans = 'mvn compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
+		else:
+			ans = 'mvn -pl :{} -am compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
+				os.path.basename(module))
+		ans += ' -f ' + self.repo_dir
+		return ans
+
+	def setup_tests_generator(self, module):
+		EvosuiteFactory.create(repo=self).setup_tests_generator(module)
+
+	if __name__ == "__main__":
+		# repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
+		# obs = repo.observe_tests()
+		# pass
+		# traces = JcovParser(r"C:\temp\traces").parse()
+		import time
+
+		start = time.time()
+		print "start time:", start
+		repo = Repo(r"C:\Temp\tika")
+		repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+		print "end time:", time.time() - start

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_1/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/static_files/MavenProj/sub_mod_2/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
@@ -16,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/mvnpy$Test.coverage" NAME="Test Coverage Results" MODIFIED="1563453420011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/mvnpy$Unittests_in_test_py.coverage" NAME="Unittests in test.py Coverage Results" MODIFIED="1565724066848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/mvnpy$Unittests_in_test_py.coverage" NAME="Unittests in test.py Coverage Results" MODIFIED="1565789181774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -26,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12150">
-              <caret line="81" selection-start-line="81" selection-end-line="81" />
+            <state relative-caret-position="13760">
+              <caret line="702" column="29" selection-start-line="702" selection-start-column="29" selection-end-line="702" selection-end-column="29" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -38,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1520">
-              <caret line="154" column="92" selection-start-line="154" selection-start-column="92" selection-end-line="154" selection-end-column="92" />
+            <state relative-caret-position="321">
+              <caret line="153" column="17" lean-forward="true" selection-start-line="153" selection-start-column="17" selection-end-line="153" selection-end-column="21" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -50,7 +52,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mvn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
+            <state relative-caret-position="4100">
               <caret line="213" column="12" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="12" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -70,7 +72,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>path</find>
       <find>test_setup_test_generations</find>
       <find>genere</find>
       <find>get_patc</find>
@@ -100,6 +101,7 @@
       <find>get_gen_test_dir(</find>
       <find>generate_tests</find>
       <find>generate_tests(</find>
+      <find>generate_mvn_compile_cmd</find>
     </findStrings>
     <replaceStrings>
       <replace>MavenProj</replace>
@@ -131,15 +133,16 @@
         <option value="$PROJECT_DIR$/mvn.py" />
         <option value="$PROJECT_DIR$/plugins/evosuite/__init__.py" />
         <option value="$PROJECT_DIR$/plugins/__init__.py" />
-        <option value="$PROJECT_DIR$/plugins/evosuite/evosuite.py" />
         <option value="$PROJECT_DIR$/Repo.py" />
+        <option value="$PROJECT_DIR$/plugins/evosuite/evosuite.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="width" value="981" />
-    <option name="height" value="1032" />
+    <option name="x" value="-1289" />
+    <option name="y" value="-9" />
+    <option name="width" value="1298" />
+    <option name="height" value="993" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -153,17 +156,6 @@
             <path>
               <item name="mvnpy" type="b2602c69:ProjectViewProjectNode" />
               <item name="mvnpy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvnpy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvnpy" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvnpy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvnpy" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="evosuite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mvnpy" type="b2602c69:ProjectViewProjectNode" />
@@ -388,6 +380,8 @@
       <workItem from="1565609336922" duration="1334000" />
       <workItem from="1565691838536" duration="8147000" />
       <workItem from="1565781780471" duration="5173000" />
+      <workItem from="1565789394114" duration="3455000" />
+      <workItem from="1565788087947" duration="2089000" />
     </task>
     <servers />
   </component>
@@ -410,21 +404,30 @@
     <history-entry file="Unittests_in_test_py - 2019.08.13 at 22h 21m 16s.xml">
       <configuration name="Unittests in test.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_in_test_py - 2019.08.14 at 16h 46m 27s.xml">
+      <configuration name="Unittests in test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_py - 2019.08.14 at 16h 58m 42s.xml">
+      <configuration name="Unittests in test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_py - 2019.08.14 at 16h 26m 23s.xml">
+      <configuration name="Unittests in test.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56652000" />
+    <option name="totallyTimeSpent" value="62196000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-1287" y="-7" width="1038" height="794" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22672065" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.29141104" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32769555" />
-      <window_info anchor="bottom" x="178" y="566" width="1341" height="386" id="Run" order="2" weight="0.32222223" />
-      <window_info anchor="bottom" x="-94" y="325" width="1924" height="391" id="Debug" order="3" weight="0.4185185" />
+      <window_info anchor="bottom" x="178" y="566" width="1341" height="386" id="Run" order="2" weight="0.32081378" />
+      <window_info anchor="bottom" x="-94" y="325" width="1924" height="391" id="Debug" order="3" weight="0.41784036" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -671,20 +674,20 @@
     <entry file="file://$PROJECT_DIR$/plugins/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/mvn.py">
+    <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="213" column="12" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="12" />
+        <state relative-caret-position="13760">
+          <caret line="702" column="29" selection-start-line="702" selection-start-column="29" selection-end-line="702" selection-end-column="29" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Repo.py">
+    <entry file="file://$PROJECT_DIR$/mvn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12150">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        <state relative-caret-position="4100">
+          <caret line="213" column="12" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="12" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -693,8 +696,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1520">
-          <caret line="154" column="92" selection-start-line="154" selection-start-column="92" selection-end-line="154" selection-end-column="92" />
+        <state relative-caret-position="321">
+          <caret line="153" column="17" lean-forward="true" selection-start-line="153" selection-start-column="17" selection-end-line="153" selection-end-column="21" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

@@ -1,13 +1,15 @@
 import os
 import sys
 
-from mvnpy import mvn
 from enum import Enum
+from mvnpy import mvn
 
 
 class EvosuiteFactory(object):
 	@classmethod
-	def create(cls, repo, strategy):
+	def create(cls, repo, strategy=None):
+		if strategy == None:
+			return Evosuite(repo=repo)
 		if strategy == TestGenerationStrategy.MAVEN:
 			return MAVENEvosuite(repo=repo)
 		if strategy == TestGenerationStrategy.CMD:
@@ -96,6 +98,10 @@ class Evosuite(object):
 		ans += ' -f ' + inspeced_module
 		return ans
 
+	def gen_cuts_file(self, classes, path):
+		with open(path, "w+") as tmp_file:
+			tmp_file.write(' ,'.join(classes))
+
 
 class CMDEvosuite(Evosuite):
 
@@ -108,12 +114,13 @@ class CMDEvosuite(Evosuite):
 			inspected_module = module
 		if not self.is_tests_generator_setup(inspected_module):
 			self.setup_tests_generator(inspected_module)
-		compile_report = self.repo.compile()
-		if mvn.has_compilation_error(compile_report):
+		build_report = self.repo.compile(inspected_module)
+		if mvn.has_compilation_error(build_report):
 			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=compile())
 		self.repo.copy_depenedencies()
-		test_cmd = self.generate_tests_generation_cmd(module=inspected_module, classes=classes)
-		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
+		for cut in classes:
+			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut = cut)
+			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
 		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
 		build_report += mvn.wrap_mvn_cmd(export_cmd, time_limit=time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
@@ -123,36 +130,38 @@ class CMDEvosuite(Evosuite):
 	def export(self):
 		pass
 
-	def generate_tests_generation_cmd(self, module, classes):
+	def generate_tests_generation_cmd(self, module, cut):
 		return '{} -projectCP {};{}  -class {} {}'.format(self.generate_evosuite_run_cmd(),
 		                                                  self.generate_dependency_path(module),
 		                                                  self.generate_target_classes_binaries_path(module),
-		                                                  self.generate_target_class_mvn_names(classes),
-		                                                  self.generate_configuration_params())
+		                                                  self.generate_target_class_mvn_names(cut),
+		                                                  self.generate_configuration_params(module))
 
 	def generate_evosuite_run_cmd(self):
 		return r'java -jar "C:\Program Files (x86)\evosuite\1.0.6\evosuite-1.0.6.jar"'
 
 	def generate_target_classes_binaries_path(self, module):
 		return os.path.relpath(
-			reduce(lambda acc, curr: os.path.join(acc,curr), [module,'target', 'classes'])
-		, self.repo.repo_dir)
+			reduce(lambda acc, curr: os.path.join(acc, curr), [module, 'target', 'classes'])
+			, self.repo.repo_dir)
 
-	def generate_target_class_mvn_names(self, classes):
-		return classes[0]
+	def generate_target_class_mvn_names(self, cut):
+		return cut
 
-	def generate_configuration_params(self):
-		return "-Dassertion_strategy=ALL -criterion BRANCH:EXCEPTION:METHOD -Dtest_dir={}".format(self.get_gen_test_dir())
+	def generate_configuration_params(self, module):
+		return "-Dassertion_strategy=ALL " + \
+		      "-criterion BRANCH:EXCEPTION:METHOD " + \
+		      "-Dtest_dir={}".format(self.get_gen_test_dir(module))
 
 	def generate_dependency_path(self, module):
 		return reduce(
 			lambda acc, curr: acc + ';' + curr,
-			map(lambda x: os.path.relpath(os.path.join(self.get_dependecy_dir(module),x),module),
+			map(lambda x: os.path.relpath(os.path.join(self.get_dependecy_dir(module), x), self.repo.repo_dir),
 			    os.listdir(self.get_dependecy_dir(module)))
 		)
 
-	def get_gen_test_dir(self):
-		return reduce(lambda acc, curr: os.path.join(acc, curr), ['.evosuite','best-tests'])
+	def get_gen_test_dir(self, module):
+		return reduce(lambda acc, curr: os.path.join(acc, curr), [module, '.evosuite', 'best-tests'])
 
 
 class MAVENEvosuite(Evosuite):
@@ -182,10 +191,9 @@ class MAVENEvosuite(Evosuite):
 				os.path.basename(module))
 		if len(classes) > 0:
 			path_to_cutsfile = os.path.join(self.repo.repo_dir, "cutsFile.txt")
-			with open(path_to_cutsfile, "w+") as tmp_file:
-				tmp_file.write(' ,'.join(classes))
-				ans += ' '
-				ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
+			self.gen_cuts_file(classes, path_to_cutsfile)
+			ans += ' '
+			ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
 		ans += ' -f ' + inspeced_module
 		return ans
 
