@@ -49,23 +49,24 @@ class JavaDoc(object):
 
     @staticmethod
     def get_javadoc_data(base_dir):
-        sources_path = r'src\main\java'
-        target_path = r'target\classes'
+        code_sources_path = r'src\main\java'
+        test_sources_path = r'src\test\java'
+        code_target_path = r'target\classes'
+        test_target_path = r'target\test-classes'
         data = dict()
-        for root, dirs, files in os.walk(base_dir):
-            if not dirs:
-                continue
-            if not any(map(lambda x: x.endswith('.java'), files)):
-                continue
-            if sources_path in root:
-                sources, package = root.split(sources_path)
-                data.setdefault((os.path.join(sources, sources_path), os.path.join(sources, target_path)), []).append(
-                    package.replace(os.sep, '.')[1:])
+        for sources_path, target_path in [(code_sources_path, code_target_path), (test_sources_path, test_target_path)]:
+            for root, dirs, files in os.walk(base_dir):
+                if not any(map(lambda x: x.endswith('.java'), files)):
+                    continue
+                if sources_path in root:
+                    sources, package = root.split(sources_path)
+                    data.setdefault((os.path.join(sources, sources_path), os.path.join(sources, target_path)), []).append(
+                        package.replace(os.sep, '.')[1:])
         return data
 
     @staticmethod
     def get_cmd(sources_path, target_path, out_path, packages):
-        return ["javadoc", "-classpath", target_path, "-sourcepath", sources_path, "-docletpath",
+        return ["javadoc", "-classpath", ";".join([target_path, os.path.join(os.path.expanduser("~"), r".m2\repository\junit\junit\3.8.2\junit-3.8.2.jar")]), "-sourcepath", sources_path, "-docletpath",
                 JavaDoc.DOCLET_PATH, "-doclet", "jp.michikusa.chitose.doclet.JsonDoclet", "-source", "'1.6'", "-quiet", "-private",
                 "-encoding", "iso-8859-1", "-charset", "'iso-8859-1'", "-d", out_path] + packages
 
