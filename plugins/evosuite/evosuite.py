@@ -128,7 +128,7 @@ class CMDEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		build_report = self.repo.compile(inspected_module)
 		if mvn.has_compilation_error(build_report):
-			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=compile())
+			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=build_report)
 		self.repo.copy_depenedencies()
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut = cut)
