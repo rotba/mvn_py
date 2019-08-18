@@ -74,10 +74,6 @@ class Repo(object):
 	# Generates tests. As for now implemented with evosuite
 	def generate_tests(self, module=None, classes=[], time_limit=sys.maxint, strategy=TestGenerationStrategy.MAVEN):
 		return EvosuiteFactory.create(self, strategy).generate(module, classes, time_limit)
-		return {
-			Repo.TestGenerationStrategy.MAVEN: self.generate_tests_mvn,
-			Repo.TestGenerationStrategy.CMD: self.generate_tests_cmd,
-		}[strategy](module=module, classes=classes, time_limit=time_limit)
 
 	# Executes mvn clean
 	def clean(self, module=None):

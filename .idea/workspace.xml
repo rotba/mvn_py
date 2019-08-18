@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13760">
-              <caret line="702" column="29" selection-start-line="702" selection-start-column="29" selection-end-line="702" selection-end-column="29" />
+            <state relative-caret-position="1500">
+              <caret line="75" column="58" selection-start-line="75" selection-start-column="58" selection-end-line="75" selection-end-column="58" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -40,10 +40,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="153" column="17" lean-forward="true" selection-start-line="153" selection-start-column="17" selection-end-line="153" selection-end-column="21" />
+            <state relative-caret-position="468">
+              <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -52,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mvn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4100">
-              <caret line="213" column="12" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="12" />
+            <state relative-caret-position="363">
+              <caret line="333" column="30" lean-forward="true" selection-start-line="333" selection-start-column="8" selection-end-line="333" selection-end-column="30" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -72,8 +72,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>test_setup_test_generations</find>
-      <find>genere</find>
       <find>get_patc</find>
       <find>is_e</find>
       <find>get_get</find>
@@ -102,6 +100,8 @@
       <find>generate_tests</find>
       <find>generate_tests(</find>
       <find>generate_mvn_compile_cmd</find>
+      <find>generate_tests_mvn</find>
+      <find>duplicate_stdout</find>
     </findStrings>
     <replaceStrings>
       <replace>MavenProj</replace>
@@ -382,6 +382,7 @@
       <workItem from="1565781780471" duration="5173000" />
       <workItem from="1565789394114" duration="3455000" />
       <workItem from="1565788087947" duration="2089000" />
+      <workItem from="1566117094617" duration="2772000" />
     </task>
     <servers />
   </component>
@@ -415,7 +416,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62196000" />
+    <option name="totallyTimeSpent" value="64968000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1287" y="-7" width="1038" height="794" extended-state="6" />
@@ -674,20 +675,23 @@
     <entry file="file://$PROJECT_DIR$/plugins/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Repo.py">
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/150686295/sys.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13760">
-          <caret line="702" column="29" selection-start-line="702" selection-start-column="29" selection-end-line="702" selection-end-column="29" />
+        <state relative-caret-position="363">
+          <caret line="333" column="30" lean-forward="true" selection-start-line="333" selection-start-column="8" selection-end-line="333" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mvn.py">
+    <entry file="file://$PROJECT_DIR$/Repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4100">
-          <caret line="213" column="12" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="12" />
+        <state relative-caret-position="1500">
+          <caret line="75" column="58" selection-start-line="75" selection-start-column="58" selection-end-line="75" selection-end-column="58" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -696,10 +700,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plugins/evosuite/evosuite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="153" column="17" lean-forward="true" selection-start-line="153" selection-start-column="17" selection-end-line="153" selection-end-column="21" />
+        <state relative-caret-position="468">
+          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
