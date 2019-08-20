@@ -338,6 +338,7 @@ def duplicate_stdout(proc, file):
 		line = proc.readline()
 		if line == '':
 			break
+		sys.stdout.seek(0)
 		sys.stdout.write(line)
 		file.write(line)
 
