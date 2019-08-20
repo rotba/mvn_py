@@ -1,5 +1,7 @@
+import logging
 import os
 import sys
+import traceback
 
 from enum import Enum
 from mvnpy import mvn
@@ -30,14 +32,24 @@ class Evosuite(object):
 	def is_tests_generator_setup(self, module):
 		mvn_help_cmd = self.generate_mvn_evosuite_help_cmd(module)
 		EVOUSUITE_CONFIGURED_INDICATION = 'evosuite:generate'
-		with os.popen(mvn_help_cmd) as proc:
-			tmp_file_path = 'tmp_file.txt'
-			with open(tmp_file_path, "w+") as tmp_file:
-				mvn.duplicate_stdout(proc, tmp_file)
-			with open(tmp_file_path, "r") as tmp_file:
-				mvn.duplicate_stdout(proc, tmp_file)
-				build_report = tmp_file.readlines()
-			return any(list(map(lambda l: EVOUSUITE_CONFIGURED_INDICATION in l, build_report)))
+		tries = 0
+		success = False
+		while tries<3 and not success:
+			try:
+				with os.popen(mvn_help_cmd) as proc:
+					tmp_file_path = 'tmp_file.txt'
+					with open(tmp_file_path, "w+") as tmp_file:
+						mvn.duplicate_stdout(proc, tmp_file)
+					with open(tmp_file_path, "r") as tmp_file:
+						mvn.duplicate_stdout(proc, tmp_file)
+						build_report = tmp_file.readlines()
+				success = True
+			except IOError as e:
+				logging.info('Unexpcted IO problem. Trying again.')
+				logging.info(traceback.format_exc())
+				tries+=1
+
+		return any(list(map(lambda l: EVOUSUITE_CONFIGURED_INDICATION in l, build_report)))
 
 	# Returns mvn command string that prints evosuite help material
 	def generate_mvn_evosuite_help_cmd(self, module):
@@ -116,7 +128,7 @@ class CMDEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		build_report = self.repo.compile(inspected_module)
 		if mvn.has_compilation_error(build_report):
-			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=compile())
+			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=build_report)
 		self.repo.copy_depenedencies()
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut = cut)
