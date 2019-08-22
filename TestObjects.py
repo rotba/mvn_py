@@ -1,7 +1,11 @@
+import logging
+
 import javalang
 import os
 import re
 import xml.etree.ElementTree as ET
+
+from javalang.parser import JavaSyntaxError
 from pathlib import Path
 
 
@@ -18,6 +22,9 @@ class TestClass(object):
 				self._tree = javalang.parse.parse(src_file.read())
 			except UnicodeDecodeError as e:
 				raise TestParserException('Java file parsing problem:' + '\n' + str(e))
+			except JavaSyntaxError as e:
+				logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
+				self._tree = javalang.parse.parse('')
 		class_decls = [class_dec for _, class_dec in self.tree.filter(javalang.tree.ClassDeclaration)]
 		for class_decl in class_decls:
 			for method in class_decl.methods:

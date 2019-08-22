@@ -8,6 +8,8 @@ from threading import Timer
 import CompilationErrorObject
 import TestObjects
 
+DEBUG = False
+
 tracer_dir = path = os.path.join(os.path.dirname(__file__), r'tracer\java_tracer\tracer')
 dict_super_sub_tags = {'dependencies': 'dependency',
                        'mailingLists': 'mailingList',
@@ -215,7 +217,8 @@ def change_plugin_version_if_exists(plugins_tag, plugin_artifact_id, version):
 
 
 # Genrated maven class name
-def generate_mvn_class_names(src_path, module):
+def generate_mvn_class_names(src_path, module = None):
+	module = module if module is not None else find_module(src_path)
 	if 'src\\test' in src_path or 'src/test' in src_path or r'src\test' in src_path:
 		relpath = os.path.relpath(src_path, module + '\\src\\test\\java').replace('.java', '')
 	elif 'src\\java' in src_path or 'src/java' in src_path or r'src\java' in src_path:
@@ -224,7 +227,7 @@ def generate_mvn_class_names(src_path, module):
 		relpath = os.path.relpath(src_path, module + '\\src\\main\\java').replace('.java', '')
 	while relpath.startswith('..\\'):
 		relpath = relpath[3:]
-	return relpath.replace('\\', '.')
+	return os.path.basename(module)+'#'+relpath.replace('\\', '.')
 
 
 # changes the plugin version of 'plugin_artifact_id' to 'version'. Does nothing if the 'plugin_artifact_id' is not in plugins_tag
@@ -286,7 +289,8 @@ def wrap_mvn_cmd(cmd, time_limit=sys.maxint, dir=None):
 		t.cancel()
 	with open(tmp_file_path, "r") as tmp_f:
 		build_report = tmp_f.read()
-		print(build_report)
+		if DEBUG:
+			print(build_report)
 	if not time_limit == sys.maxint and not (
 			'[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report or '* Computation finished' in build_report):
 		raise MVNTimeoutError('Build took too long', build_report, trace=traceback.format_exc())
@@ -332,6 +336,18 @@ def wrap_mvn_cmd_3(cmd, time_limit=sys.maxint):
 		raise MVNError('Build took too long', build_log, trace=traceback.format_exc())
 	return build_log
 
+
+def find_module(file_path):
+	parent_dir = os.path.abspath(os.path.join(file_path, os.pardir))
+	is_root = False
+	while not is_root:
+		if os.path.isfile(parent_dir + '//pom.xml') or os.path.isfile(parent_dir + '//project.xml'):
+			return parent_dir
+		else:
+			tmp = os.path.abspath(os.path.join(parent_dir, os.pardir))
+			is_root = tmp == parent_dir
+			parent_dir = tmp
+	raise MVNError(file_path + ' is not part of a maven module')
 
 def duplicate_stdout(proc, file):
 	while (True):
