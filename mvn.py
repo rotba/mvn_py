@@ -371,6 +371,7 @@ class MVNError(Exception):
 		self.trace = trace
 
 	def __str__(self):
+		return 'Message: {}\nBuild report: {}\nTrace: {}'.format(str(self.msg),str(self.report),str(self.trace))
 		return repr(self.msg + '\n' + self.report + '\n' + self.trace)
 
 
