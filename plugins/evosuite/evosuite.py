@@ -2,7 +2,7 @@ import logging
 import os
 import sys
 import traceback
-
+import re
 from enum import Enum
 from mvnpy import mvn
 
@@ -19,6 +19,7 @@ class EvosuiteFactory(object):
 
 
 class Evosuite(object):
+	WEIRD_ERROR_STRING_1 = 'was cached in the local repository, resolution will not be reattempted'
 
 	def __init__(self, repo):
 		self.repo = repo
@@ -98,6 +99,11 @@ class Evosuite(object):
 		with open(path, "w+") as tmp_file:
 			tmp_file.write(' ,'.join(classes))
 
+	def has_weird_error_report(self, build_report):
+		WEIRD_ERROR_STRING = 'was cached in the local repository, resolution will not be reattempted'
+		WEIRD_ERROR_PATTERN = 'Failure to find .* in http://repository.apache.org/snapshots'
+		return Evosuite.WEIRD_ERROR_STRING_1 in build_report or re.search(WEIRD_ERROR_PATTERN, build_report) != None
+
 
 class CMDEvosuite(Evosuite):
 
@@ -115,7 +121,7 @@ class CMDEvosuite(Evosuite):
 			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=build_report)
 		self.repo.copy_depenedencies()
 		for cut in classes:
-			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut = cut)
+			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
 		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
 		build_report += mvn.wrap_mvn_cmd(export_cmd, time_limit=time_limit)
@@ -146,8 +152,8 @@ class CMDEvosuite(Evosuite):
 
 	def generate_configuration_params(self, module):
 		return "-Dassertion_strategy=ALL " + \
-		      "-criterion BRANCH:EXCEPTION:METHOD " + \
-		      "-Dtest_dir={}".format(self.get_gen_test_dir(module))
+		       "-criterion BRANCH:EXCEPTION:METHOD " + \
+		       "-Dtest_dir={}".format(self.get_gen_test_dir(module))
 
 	def generate_dependency_path(self, module):
 		return reduce(
@@ -171,6 +177,9 @@ class MAVENEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		test_cmd = self.generate_tests_generation_cmd(module=inspected_module, classes=classes)
 		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+		if self.has_weird_error_report(build_report):
+			self.repo.install()
+			build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
 			os.remove(os.path.join(self.repo.repo_dir, 'cutsFile.txt'))
 		return build_report
@@ -198,6 +207,7 @@ class TestGenerationStrategy(Enum):
 	MAVEN = 1
 	CMD = 2
 
+
 class TestsGenerationError(mvn.MVNError):
-	def __init__(self, msg= '', report = '', trace=''):
+	def __init__(self, msg='', report='', trace=''):
 		super(TestsGenerationError, self).__init__(msg=msg, report=report, trace=trace)
