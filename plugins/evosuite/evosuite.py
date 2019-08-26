@@ -99,11 +99,6 @@ class Evosuite(object):
 		with open(path, "w+") as tmp_file:
 			tmp_file.write(' ,'.join(classes))
 
-	def has_weird_error_report(self, build_report):
-		WEIRD_ERROR_STRING = 'was cached in the local repository, resolution will not be reattempted'
-		WEIRD_ERROR_PATTERN = 'Failure to find .* in http://repository.apache.org/snapshots'
-		return Evosuite.WEIRD_ERROR_STRING_1 in build_report or re.search(WEIRD_ERROR_PATTERN, build_report) != None
-
 
 class CMDEvosuite(Evosuite):
 
@@ -177,9 +172,11 @@ class MAVENEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		test_cmd = self.generate_tests_generation_cmd(module=inspected_module, classes=classes)
 		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
-		if self.has_weird_error_report(build_report):
+		if self.repo.has_weird_error_report(build_report):
 			self.repo.install()
 			build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+		if self.repo.has_license_error_report(build_report):
+			build_report = mvn.wrap_mvn_cmd(test_cmd+' -Drat.skip=true', time_limit=time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
 			os.remove(os.path.join(self.repo.repo_dir, 'cutsFile.txt'))
 		return build_report

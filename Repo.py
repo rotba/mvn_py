@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from shutil import copyfile
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-
+import re
 import TestObjects
 import mvn
 from jcov_parser import JcovParser
@@ -121,6 +121,18 @@ class Repo(object):
 					if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
 						surefire_files.append(os.path.join(root, name))
 			return surefire_files
+
+	def too_much_testcases_to_generate_cmd(self, testcases, module):
+		return len(self.generate_mvn_test_cmd(tests=testcases,module=module))> mvn.CMD_MAX_LENGTH
+
+	def has_weird_error_report(self, build_report):
+		WEIRD_ERROR_STRING = 'was cached in the local repository, resolution will not be reattempted'
+		WEIRD_ERROR_PATTERN = 'Failure to find .* in http://repository.apache.org/snapshots'
+		return WEIRD_ERROR_STRING in build_report or re.search(WEIRD_ERROR_PATTERN, build_report) != None
+
+	def has_license_error_report(self, build_report):
+		ERROR_STRING = 'Too many files with unapproved license:'
+		return ERROR_STRING in build_report
 
 		class Test(object):
 			def __init__(self, junit_test):
@@ -403,7 +415,7 @@ class Repo(object):
 			ans = 'mvn -pl :{} -am test -fn'.format(
 				os.path.basename(module))
 		# ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
-		ans += ' -DfailIfNoTests=false'
+		ans += ' -DfailIfNoTests=false -Drat.skip=true'
 		if len(mvn_names) > 0:
 			ans += ' -Dtest='
 			for mvn_name in mvn_names:
