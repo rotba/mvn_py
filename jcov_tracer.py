@@ -97,10 +97,12 @@ class JcovTracer(object):
                 PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
                 PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH),
                 PomValue("maven-surefire-plugin", ["version"], "2.18.1", should_append=False),
-                PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always", should_append=False)]
+                PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "once", should_append=False),
+                PomValue("maven-surefire-plugin", ["configuration", "forkCount"], "1", should_append=False)]
 
     def get_enviroment_variables_values(self):
-        return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always", should_append=False),
+        return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "once", should_append=False),
+                PomValue("maven-surefire-plugin", ["configuration", "forkCount"], "1", should_append=False),
                 PomValue("maven-surefire-plugin", ["configuration", "environmentVariables", "JcovGrabberCommandPort"], self.command_port)]
 
     def get_values_to_add(self):

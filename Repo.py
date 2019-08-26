@@ -19,7 +19,7 @@ class TestResult(object):
         self.classname = junit_test.classname or suite_name
         self.name = junit_test.name
         self.time = junit_test.time
-        self.full_name = "{classname}:{name}".format(classname=self.classname, name=self.name)
+        self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name)
         result = 'pass'
         if type(junit_test.result) is Error:
             result = 'error'
@@ -251,10 +251,15 @@ class Repo(object):
     def get_all_pom_paths(self, module=None):
         ans = []
         inspected_module = self.repo_dir
-        if not module == None:
+        if module is not None:
             inspected_module = module
-        if os.path.isfile(os.path.join(inspected_module, 'pom.xml')):
-            ans.append(os.path.join(inspected_module, 'pom.xml'))
+        pom_path = os.path.join(inspected_module, 'pom.xml')
+        if os.path.isfile(pom_path):
+            try:
+                parse(pom_path)
+                ans.append(pom_path)
+            except:
+                pass
         for file in os.listdir(inspected_module):
             full_path = os.path.join(inspected_module, file)
             if os.path.isdir(full_path):
@@ -265,12 +270,16 @@ class Repo(object):
     def change_surefire_ver(self, version="2.18.1", module=None):
         ans = []
         inspected_module = self.repo_dir
-        if not module == None:
+        if module is not None:
             inspected_module = module
         poms = self.get_all_pom_paths(inspected_module)
         new_file_lines = []
         for pom in poms:
-            xmlFile = parse(pom)
+            try:
+                xmlFile = parse(pom)
+            except:
+                pass
+                # assume that file is not valid pom
             tmp_build_list = xmlFile.getElementsByTagName('build')
             build_list = list(
                 filter(lambda b: not b.parentNode == None and b.parentNode.localName == 'project', tmp_build_list))
@@ -563,7 +572,7 @@ class Repo(object):
                 suite = JUnitXml.fromfile(report)
                 for case in suite:
                     test = TestResult(case, suite.name)
-                    outcomes[test.full_name] = test
+                    outcomes[test.full_name.lower()] = test
             except Exception as e:
                 pass
         return outcomes
