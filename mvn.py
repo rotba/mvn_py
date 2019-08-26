@@ -9,7 +9,7 @@ import CompilationErrorObject
 import TestObjects
 
 DEBUG = False
-
+CMD_MAX_LENGTH =2074
 tracer_dir = path = os.path.join(os.path.dirname(__file__), r'tracer\java_tracer\tracer')
 dict_super_sub_tags = {'dependencies': 'dependency',
                        'mailingLists': 'mailingList',
@@ -391,3 +391,5 @@ def tag_uri_and_name(elem):
 		uri = ''
 		tag = elem.tag
 	return uri, tag
+
+
