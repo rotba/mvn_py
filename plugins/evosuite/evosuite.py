@@ -134,7 +134,7 @@ class CMDEvosuite(Evosuite):
 		                                                  self.generate_configuration_params(module))
 
 	def generate_evosuite_run_cmd(self):
-		return r'java -jar "C:\Program Files\Evosuite\evosuite-1.0.6.jar"'
+		return r'java -jar "C:\Program Files (x86)\evosuite\1.0.6\evosuite-1.0.6.jar"'
 
 	def generate_target_classes_binaries_path(self, module):
 		return os.path.relpath(
