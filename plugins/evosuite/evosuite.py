@@ -197,3 +197,7 @@ class MAVENEvosuite(Evosuite):
 class TestGenerationStrategy(Enum):
 	MAVEN = 1
 	CMD = 2
+
+class TestsGenerationError(mvn.MVNError):
+	def __init__(self, msg= '', report = '', trace=''):
+		super(TestsGenerationError, self).__init__(msg=msg, report=report, trace=trace)
