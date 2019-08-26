@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestObjects.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestObjects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mvn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracer/java_tracer" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/java_tracer" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracer/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
@@ -206,6 +204,7 @@
       <workItem from="1566303020943" duration="847000" />
       <workItem from="1566304887754" duration="3019000" />
       <workItem from="1566390021671" duration="2162000" />
+      <workItem from="1566815529693" duration="1290000" />
     </task>
     <servers />
   </component>
