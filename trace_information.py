@@ -13,15 +13,15 @@ class PrimitiveTypes(object):
 class Signature(object):
     MATCHER = re.compile("\\(([^\\)]*)\\)(.*)")
 
-    def __init__(self, vmsig):
+    def __init__(self, vmsig, short_type=False):
         self.vmsig = vmsig
         m = Signature.MATCHER.match(self.vmsig)
         self.return_value = Signature.convert_vm_type(m.group(2))
-        self.args = Signature.get_args(m.group(1))
+        self.args = Signature.get_args(m.group(1), short_type)
 
     @staticmethod
     def convert_vm_type(vm_type):
-        return Signature.get_type_name(vm_type.replace('/', '.'))
+        return Signature.get_type_name(vm_type.replace('/', '.').replace('$', '.'))
 
     @staticmethod
     def get_type_name(vm_type):
@@ -36,7 +36,7 @@ class Signature(object):
         return type + "[]" * dims
 
     @staticmethod
-    def get_args(descr):
+    def get_args(descr, short_type=False):
         if descr == "":
             return descr
         pos = 0
@@ -58,6 +58,8 @@ class Signature(object):
             else:
                 type = PrimitiveTypes.get_primitive_type(ch)
                 pos += 1
+            if short_type:
+                type = type.split('.')[-1]
             args += type + "[]" * dims
             dims = 0
             if pos < last_pos:

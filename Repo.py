@@ -232,7 +232,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
@@ -245,7 +245,7 @@ class Repo(object):
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        return JcovParser(target_dir).parse()
+        return JcovParser(target_dir, short_type).parse()
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):

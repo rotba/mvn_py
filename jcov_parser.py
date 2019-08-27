@@ -12,11 +12,11 @@ class JcovParser(object):
     METHENTER = "<meth"
     CSV_HEADER = ["component", "hit_count"]
 
-    def __init__(self, xml_folder_dir, instrument_only_methods=True):
+    def __init__(self, xml_folder_dir, instrument_only_methods=True, short_type=True):
         self.jcov_files = map(lambda name: os.path.join(xml_folder_dir, name),
                               filter(lambda name: name.endswith('.xml'), os.listdir(xml_folder_dir)))
         self.instrument_only_methods = instrument_only_methods
-        self.method_name_by_id = self._get_method_ids()
+        self.method_name_by_id = self._get_method_ids(short_type)
         self.lines_to_read = self._get_methods_lines()
 
     def parse(self):
@@ -73,7 +73,7 @@ class JcovParser(object):
                                                    JcovParser.get_children_by_name(elem[1], name)), elements), [])
         return elements
 
-    def _get_method_ids(self):
+    def _get_method_ids(self, short_type):
         root = et.parse(self.jcov_files[0]).getroot()
         method_ids = {}
         for method_path, method in JcovParser.get_elements_by_path(root, ['package', 'class', 'meth']):
@@ -81,7 +81,7 @@ class JcovParser(object):
             if method_name == '<init>':
                 method_name = class_name
             method_name = ".".join([package_name, class_name, method_name]) + "({0})".format(
-                Signature(method.attrib['vmsig']).args)
+                Signature(method.attrib['vmsig'], short_type).args)
             id = 0
             extra_slot = 0
             if self.instrument_only_methods:
