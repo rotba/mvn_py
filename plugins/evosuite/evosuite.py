@@ -19,7 +19,6 @@ class EvosuiteFactory(object):
 
 
 class Evosuite(object):
-	WEIRD_ERROR_STRING_1 = 'was cached in the local repository, resolution will not be reattempted'
 
 	def __init__(self, repo):
 		self.repo = repo
@@ -135,7 +134,7 @@ class CMDEvosuite(Evosuite):
 		                                                  self.generate_configuration_params(module))
 
 	def generate_evosuite_run_cmd(self):
-		return r'java -jar "C:\Program Files (x86)\evosuite\1.0.6\evosuite-1.0.6.jar"'
+		return r'java -jar "{}"'.format(mvn.get_evosuite_path(evosuite_ver='1.6'))
 
 	def generate_target_classes_binaries_path(self, module):
 		return os.path.relpath(

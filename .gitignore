@@ -106,3 +106,4 @@ venv.bak/
 #my_suff
 DebuggerTests
 tmp_files/
+config/config.json
