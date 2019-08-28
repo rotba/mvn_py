@@ -102,6 +102,62 @@ class Repo(object):
 		build_report = mvn.wrap_mvn_cmd(test_cmd)
 		return build_report
 
+	# Executes mvn compile
+	def config(self, module=None):
+		inspected_module = module if module is not None else self.repo_dir
+		self.config_compiler(inspected_module)
+
+	def config_compiler(self, module):
+		if self.infer_java_home_dir(module) == None:
+			return
+		self.set_pom_tag(
+			xquery=reduce(lambda acc, curr: acc + '/' + curr, ['.', 'properties', 'JAVA_HOME']),
+			create_if_not_exist=True, module=module, value=self.infer_java_home_dir(module)
+		)
+		self.add_plugin(
+			artifactId='maven-compiler-plugin',groupId='org.apache.maven.plugins',version='3.1',module=module
+		)
+		compiler_configuration_query = reduce(
+			lambda acc, curr: acc + '/' + curr,
+			['.', 'build', 'plugins',"plugin[artifactId = '{}']".format('maven-compiler-plugin'),'configuration']
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query,'verbose']),create_if_not_exist=True, module=module, value='true'
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query, 'fork']), create_if_not_exist=True, module=module,
+			value='true'
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query, 'executable']), create_if_not_exist=True, module=module,
+			value='${JAVA_HOME}/bin/javac'
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query, 'compilerVersion']), create_if_not_exist=True, module=module,value='1.3'
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query, 'source']), create_if_not_exist=True, module=module,
+			value='${maven.compile.source}'
+		)
+		self.set_pom_tag(
+			xquery='/'.join([compiler_configuration_query, 'target']), create_if_not_exist=True, module=module,
+			value='${maven.compile.target}'
+		)
+
+	def infer_java_home_dir(self, module):
+		ans =mvn.get_jdk_dir(
+			java_ver=self.help_evaluate(expression='maven.compile.source', module=module)
+		)
+		if ans == None:
+			ans = mvn.get_jdk_dir(
+				java_ver=self.help_evaluate(expression='maven.compiler.source', module=module)
+			)
+		return ans
+
+	def help_evaluate(self, expression, module):
+		cmd = self.generate_mvn_help_evaluate_cmd(expression=expression, module=module)
+		return mvn.wrap_mvn_cmd(cmd).strip('\n')
+
 	# Executes mvn evosuite_clean
 	def evosuite_clean(self, module=None):
 		inspected_module = self.repo_dir if module == None else module
@@ -123,12 +179,15 @@ class Repo(object):
 			return surefire_files
 
 	def too_much_testcases_to_generate_cmd(self, testcases, module):
-		return len(self.generate_mvn_test_cmd(tests=testcases,module=module))> mvn.CMD_MAX_LENGTH
+		return len(self.generate_mvn_test_cmd(tests=testcases, module=module)) > mvn.CMD_MAX_LENGTH
 
 	def has_weird_error_report(self, build_report):
 		WEIRD_ERROR_STRING = 'was cached in the local repository, resolution will not be reattempted'
+		WEIRD_ERROR_STRING_2 = 'Could not resolve dependencies for project'
 		WEIRD_ERROR_PATTERN = 'Failure to find .* in http://repository.apache.org/snapshots'
-		return WEIRD_ERROR_STRING in build_report or re.search(WEIRD_ERROR_PATTERN, build_report) != None
+		WEIRD_ERROR_PATTERN_2 = 'Could not find artifact .* in apache.snapshots (http://repository.apache.org/snapshots)'
+		return WEIRD_ERROR_STRING in build_report or re.search(WEIRD_ERROR_PATTERN, build_report) != None or re.search(
+			WEIRD_ERROR_PATTERN_2, build_report) != None or WEIRD_ERROR_STRING_2 in build_report
 
 	def has_license_error_report(self, build_report):
 		ERROR_STRING = 'Too many files with unapproved license:'
@@ -484,9 +543,20 @@ class Repo(object):
 		if module == self.repo_dir:
 			ans = 'mvn evosuite:help '
 		else:
-			ans = 'mvn -pl :{} -am mvn evosuite:help -fn'.format(
+			ans = 'mvn -pl :{} -am evosuite:help -fn'.format(
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
+		return ans
+
+	# Returns mvn command string that prints evosuite help material
+	def generate_mvn_help_evaluate_cmd(self, expression, module):
+		if module == self.repo_dir:
+			ans = 'mvn help:evaluate -Dexpression={}'.format(expression)
+		else:
+			ans = 'mvn -pl :{} -am help:evaluate -Dexpression={} -fn'.format(
+				os.path.basename(module), expression)
+		ans += ' -f ' + self.repo_dir
+		ans += r' | findstr /R ^^[^^\[INFO\]]'
 		return ans
 
 	# Add tags to the pom. xquey is a string written in xpath aka xquery convention

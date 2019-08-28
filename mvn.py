@@ -4,10 +4,13 @@ import sys
 import traceback
 from cStringIO import StringIO
 from threading import Timer
-
+import json
 import CompilationErrorObject
 import TestObjects
 
+CONFIG_FILE =reduce( lambda acc,curr: os.path.join(acc,curr), [os.path.dirname(os.path.realpath(__file__)), 'config', 'config.json'])
+with open(CONFIG_FILE) as file:
+	CONFIG_DICT = json.load(file)
 DEBUG = False
 CMD_MAX_LENGTH =2074
 tracer_dir = path = os.path.join(os.path.dirname(__file__), r'tracer\java_tracer\tracer')
@@ -16,6 +19,7 @@ dict_super_sub_tags = {'dependencies': 'dependency',
                        'licenses': 'license',
                        'developers': 'developer',
                        'plugins': 'plugin'}
+
 
 
 # Returns the testcases generated compilation error in the maven build report
@@ -393,3 +397,9 @@ def tag_uri_and_name(elem):
 	return uri, tag
 
 
+def get_jdk_dir(java_ver):
+	return CONFIG_DICT['java_home_{}'.format(java_ver)] if 'java_home_{}'.format(java_ver) in CONFIG_DICT.keys() else None
+
+
+def get_evosuite_path(evosuite_ver):
+	return CONFIG_DICT['evosuite_{}'.format(evosuite_ver)]
