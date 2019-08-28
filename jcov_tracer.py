@@ -1,6 +1,7 @@
 import os
 from pom_file import PomValue
 from subprocess import Popen
+import socket
 
 
 class JcovTracer(object):
@@ -44,13 +45,24 @@ class JcovTracer(object):
         assert os.environ['JAVA_HOME'], "java home is not configured"
 
     def get_open_port(self):
-            import socket
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.bind(("", 0))
             s.listen(1)
             port = s.getsockname()[1]
             s.close()
             return port
+
+    def check_if_grabber_is_on(self):
+        import time
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            time.sleep(5)
+            s.connect(('127.0.0.1', int(self.command_port)))
+            s.close()
+            return True
+        except:
+            return False
+        return False
 
     def template_creator_cmd_line(self, debug=False):
         cmd_line = [os.path.join(os.environ['JAVA_HOME'], "bin\java.exe"), '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
@@ -120,4 +132,6 @@ class JcovTracer(object):
             if path:
                 with open(path) as f:
                     assert f.read(), "{0} is empty".format(path)
-        Popen(self.grabber_cmd_line(debug=debug))
+        p = Popen(self.grabber_cmd_line(debug=debug))
+        assert p.poll() is None
+        assert self.check_if_grabber_is_on()
