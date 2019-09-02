@@ -106,7 +106,7 @@ class Repo(object):
 
 	def config_for_evosuite(self, module):
 		self.change_surefire_ver(EVOSUITE_SUREFIRE_VERSION)
-		self.config_compiler_java_home(java_home=mvn.get_jdk_dir(java_ver=EVOSUITE_JAVA_VER),module=module, java_ver=EVOSUITE_JAVA_VER)
+		# self.config_compiler_java_home(java_home=mvn.get_jdk_dir(java_ver=EVOSUITE_JAVA_VER),module=module, java_ver=EVOSUITE_JAVA_VER)
 
 	def config(self, module=None):
 		inspected_module = module if module is not None else self.repo_dir
