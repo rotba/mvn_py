@@ -42,12 +42,14 @@ class TestResult(object):
 
 
 class Repo(object):
+
 	def __init__(self, repo_dir):
 		self._repo_dir = repo_dir
 		self.DEFAULT_ES_VERSION = '1.0.6'
 		self.DEFAULT_SUREFIRE_VERSION = '2.17'
 		self.DEFAULT_JUNIT_VERSION = '4.12'
 		self.DEFAULT_XERCES_VERSION = '2.11.0'
+		self.MAVEN_COMPILER_SOURCE = None
 
 	@property
 	def repo_dir(self):
@@ -137,22 +139,25 @@ class Repo(object):
 		)
 		self.set_pom_tag(
 			xquery='/'.join([compiler_configuration_query, 'source']), create_if_not_exist=True, module=module,
-			value='${maven.compile.source}'
+			value=self.evaluate_compiler_source(module=module)
 		)
 		self.set_pom_tag(
 			xquery='/'.join([compiler_configuration_query, 'target']), create_if_not_exist=True, module=module,
-			value='${maven.compile.target}'
+			value=self.evaluate_compiler_source(module=module)
 		)
 
 	def infer_java_home_dir(self, module):
-		ans =mvn.get_jdk_dir(
-			java_ver=self.help_evaluate(expression='maven.compile.source', module=module)
+		if self.evaluate_compiler_source(module=module) == '1.8': return  None
+		return mvn.get_jdk_dir(
+			java_ver=self.evaluate_compiler_source(module=module)
 		)
-		if ans == None:
-			ans = mvn.get_jdk_dir(
-				java_ver=self.help_evaluate(expression='maven.compiler.source', module=module)
-			)
-		return ans
+
+	def evaluate_compiler_source(self, module):
+		if self.MAVEN_COMPILER_SOURCE != None: return  self.MAVEN_COMPILER_SOURCE
+		self.MAVEN_COMPILER_SOURCE=self.help_evaluate(expression='maven.compiler.source', module=module)
+		if self.MAVEN_COMPILER_SOURCE != 'null object or invalid expression': return self.MAVEN_COMPILER_SOURCE
+		self.MAVEN_COMPILER_SOURCE = self.help_evaluate(expression='maven.compile.source', module=module)
+		return self.MAVEN_COMPILER_SOURCE
 
 	def help_evaluate(self, expression, module):
 		cmd = self.generate_mvn_help_evaluate_cmd(expression=expression, module=module)

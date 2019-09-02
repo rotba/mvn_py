@@ -194,7 +194,7 @@ class MAVENEvosuite(Evosuite):
 			path_to_cutsfile = os.path.join(self.repo.repo_dir, "cutsFile.txt")
 			self.gen_cuts_file(classes, path_to_cutsfile)
 			ans += ' '
-			ans += ' -DcutsFile="{}"'.format(path_to_cutsfile)
+			ans += ' -Drat.skip=true -DcutsFile="{}"'.format(path_to_cutsfile)
 		ans += ' -f ' + inspeced_module
 		return ans
 
