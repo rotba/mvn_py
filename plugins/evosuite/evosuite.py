@@ -6,6 +6,8 @@ import re
 from enum import Enum
 from mvnpy import mvn
 
+EVOSUITE_SUREFIRE_VERSION = '2.17'
+EVOSUITE_JAVA_VER = '1.8'
 
 class EvosuiteFactory(object):
 	@classmethod

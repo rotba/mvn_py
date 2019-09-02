@@ -11,7 +11,7 @@ import mvn
 from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 from junitparser.junitparser import Error, Failure
-from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy
+from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION, EVOSUITE_JAVA_VER
 from pom_file import Pom
 
 
@@ -104,27 +104,35 @@ class Repo(object):
 		build_report = mvn.wrap_mvn_cmd(test_cmd)
 		return build_report
 
-	# Executes mvn compile
+	def config_for_evosuite(self, module):
+		self.change_surefire_ver(EVOSUITE_SUREFIRE_VERSION)
+		self.config_compiler_java_home(java_home=mvn.get_jdk_dir(java_ver=EVOSUITE_JAVA_VER),module=module, java_ver=EVOSUITE_JAVA_VER)
+
 	def config(self, module=None):
 		inspected_module = module if module is not None else self.repo_dir
 		self.config_compiler(inspected_module)
 
 	def config_compiler(self, module):
-		if self.infer_java_home_dir(module) == None:
+		java_home = self.infer_java_home_dir(module)
+		if java_home == None:
 			return
+		self.config_compiler_java_home(java_home, module)
+
+	def config_compiler_java_home(self, java_home, module, java_ver= None):
 		self.set_pom_tag(
 			xquery=reduce(lambda acc, curr: acc + '/' + curr, ['.', 'properties', 'JAVA_HOME']),
-			create_if_not_exist=True, module=module, value=self.infer_java_home_dir(module)
+			create_if_not_exist=True, module=module, value=java_home
 		)
 		self.add_plugin(
-			artifactId='maven-compiler-plugin',groupId='org.apache.maven.plugins',version='3.1',module=module
+			artifactId='maven-compiler-plugin', groupId='org.apache.maven.plugins', version='3.1', module=module
 		)
 		compiler_configuration_query = reduce(
 			lambda acc, curr: acc + '/' + curr,
-			['.', 'build', 'plugins',"plugin[artifactId = '{}']".format('maven-compiler-plugin'),'configuration']
+			['.', 'build', 'plugins', "plugin[artifactId = '{}']".format('maven-compiler-plugin'), 'configuration']
 		)
 		self.set_pom_tag(
-			xquery='/'.join([compiler_configuration_query,'verbose']),create_if_not_exist=True, module=module, value='true'
+			xquery='/'.join([compiler_configuration_query, 'verbose']), create_if_not_exist=True, module=module,
+			value='true'
 		)
 		self.set_pom_tag(
 			xquery='/'.join([compiler_configuration_query, 'fork']), create_if_not_exist=True, module=module,
@@ -135,15 +143,16 @@ class Repo(object):
 			value='${JAVA_HOME}/bin/javac'
 		)
 		self.set_pom_tag(
-			xquery='/'.join([compiler_configuration_query, 'compilerVersion']), create_if_not_exist=True, module=module,value='1.3'
+			xquery='/'.join([compiler_configuration_query, 'compilerVersion']), create_if_not_exist=True, module=module,
+			value='1.3'
 		)
 		self.set_pom_tag(
 			xquery='/'.join([compiler_configuration_query, 'source']), create_if_not_exist=True, module=module,
-			value=self.evaluate_compiler_source(module=module)
+			value=self.evaluate_compiler_source(module=module) if java_ver is None else java_ver
 		)
 		self.set_pom_tag(
 			xquery='/'.join([compiler_configuration_query, 'target']), create_if_not_exist=True, module=module,
-			value=self.evaluate_compiler_source(module=module)
+			value=self.evaluate_compiler_source(module=module) if java_ver is None else java_ver
 		)
 
 	def infer_java_home_dir(self, module):
