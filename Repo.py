@@ -488,7 +488,7 @@ class Repo(object):
 			ans = 'mvn -pl :{} -am test -fn'.format(
 				os.path.basename(module))
 		# ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
-		ans += ' -DfailIfNoTests=false -Drat.skip=true'
+		ans += ' -DfailIfNoTests=false -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true'
 		if len(mvn_names) > 0:
 			ans += ' -Dtest='
 			for mvn_name in mvn_names:
@@ -505,9 +505,9 @@ class Repo(object):
 			if not testcase.parent in testclasses:
 				testclasses.append(testcase.parent)
 		if module == None or module == self.repo_dir:
-			ans = 'mvn install -fn -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true  -DfailIfNoTests=false'
+			ans = 'mvn install -fn -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true  -DfailIfNoTests=false'
 		else:
-			ans = 'mvn -pl :{} -am install -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true -fn'.format(
+			ans = 'mvn -pl :{} -am install -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true -fn'.format(
 				os.path.basename(module))
 		# ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
 		ans += ' -DfailIfNoTests=false'
@@ -525,9 +525,9 @@ class Repo(object):
 	# Returns mvn command string that compiles the given the given module
 	def generate_mvn_test_compile_cmd(self, module):
 		if module == self.repo_dir:
-			ans = 'mvn test-compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
+			ans = 'mvn test-compile -fn  -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
 		else:
-			ans = 'mvn -pl :{} -am test-compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
+			ans = 'mvn -pl :{} -am test-compile -fn  -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
 		return ans
@@ -785,9 +785,9 @@ class Repo(object):
 
 	def generate_mvn_compile_cmd(self, module):
 		if module == self.repo_dir:
-			ans = 'mvn compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
+			ans = 'mvn compile -fn  -Drat.skip=true -Dossindex.fail=false  -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'
 		else:
-			ans = 'mvn -pl :{} -am compile -fn  -Drat.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
+			ans = 'mvn -pl :{} -am compile -fn  -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000'.format(
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
 		return ans

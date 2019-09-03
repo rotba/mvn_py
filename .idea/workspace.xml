@@ -4,6 +4,7 @@
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/evosuite/evosuite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracer/java_tracer" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/java_tracer" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tracer/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tracer/java_tracer/tracer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
@@ -206,7 +207,7 @@
       <workItem from="1566390021671" duration="2162000" />
       <workItem from="1566465071386" duration="762000" />
       <workItem from="1566916416883" duration="7608000" />
-      <workItem from="1567408455653" duration="2696000" />
+      <workItem from="1567408455653" duration="4639000" />
     </task>
     <servers />
   </component>
@@ -289,6 +290,11 @@
           <url>file://$PROJECT_DIR$/Test.py</url>
           <line>328</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plugins/evosuite/evosuite.py</url>
+          <line>136</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -100,6 +100,22 @@ class Evosuite(object):
 		with open(path, "w+") as tmp_file:
 			tmp_file.write(' ,'.join(classes))
 
+	def generated_no_test(self, build_report):
+		return '[INFO] WARN: failed to generate tests for' in build_report
+
+	def handle_post_generate(self, build_report, cmd, time_limit):
+		if self.repo.has_weird_error_report(build_report):
+			self.repo.install()
+			build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+		if self.repo.has_license_error_report(build_report):
+			build_report = mvn.wrap_mvn_cmd(test_cmd + ' -Drat.skip=true', time_limit=time_limit)
+		if self.generated_no_test(build_report):
+			for i in range(0, 5):
+				if not self.generated_no_test(build_report):
+					break
+				build_report = mvn.wrap_mvn_cmd(test_cmd + ' -X', time_limit=time_limit)
+		return build_report
+
 
 class CMDEvosuite(Evosuite):
 
@@ -115,10 +131,11 @@ class CMDEvosuite(Evosuite):
 		build_report = self.repo.compile(inspected_module)
 		if mvn.has_compilation_error(build_report):
 			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=build_report)
-		self.repo.copy_depenedencies()
+		self.repo.copy_depenedencies(inspected_module)
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
+			build_report += self.handle_post_generate(build_report, test_cmd, time_limit)
 		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
 		build_report += mvn.wrap_mvn_cmd(export_cmd, time_limit=time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
@@ -173,11 +190,7 @@ class MAVENEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		test_cmd = self.generate_tests_generation_cmd(module=inspected_module, classes=classes)
 		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
-		if self.repo.has_weird_error_report(build_report):
-			self.repo.install()
-			build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
-		if self.repo.has_license_error_report(build_report):
-			build_report = mvn.wrap_mvn_cmd(test_cmd+' -Drat.skip=true', time_limit=time_limit)
+		build_report = self.handle_post_generate(build_report, test_cmd, time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
 			os.remove(os.path.join(self.repo.repo_dir, 'cutsFile.txt'))
 		return build_report
@@ -196,7 +209,7 @@ class MAVENEvosuite(Evosuite):
 			path_to_cutsfile = os.path.join(self.repo.repo_dir, "cutsFile.txt")
 			self.gen_cuts_file(classes, path_to_cutsfile)
 			ans += ' '
-			ans += ' -Drat.skip=true -DcutsFile="{}"'.format(path_to_cutsfile)
+			ans += ' -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -DcutsFile="{}"'.format(path_to_cutsfile)
 		ans += ' -f ' + inspeced_module
 		return ans
 
