@@ -56,6 +56,8 @@ class JavaDoc(object):
         data = dict()
         for sources_path, target_path in [(code_sources_path, code_target_path), (test_sources_path, test_target_path)]:
             for root, dirs, files in os.walk(base_dir):
+                if not dirs:
+                    continue
                 if not any(map(lambda x: x.endswith('.java'), files)):
                     continue
                 if sources_path in root:
