@@ -49,18 +49,21 @@ class JavaDoc(object):
 
     @staticmethod
     def get_javadoc_data(base_dir):
-        sources_path = r'src\main\java'
-        target_path = r'target\classes'
+        code_sources_path = r'src\main\java'
+        test_sources_path = r'src\test\java'
+        code_target_path = r'target\classes'
+        test_target_path = r'target\test-classes'
         data = dict()
-        for root, dirs, files in os.walk(base_dir):
-            if not dirs:
-                continue
-            if not any(map(lambda x: x.endswith('.java'), files)):
-                continue
-            if sources_path in root:
-                sources, package = root.split(sources_path)
-                data.setdefault((os.path.join(sources, sources_path), os.path.join(sources, target_path)), []).append(
-                    package.replace(os.sep, '.')[1:])
+        for sources_path, target_path in [(code_sources_path, code_target_path), (test_sources_path, test_target_path)]:
+            for root, dirs, files in os.walk(base_dir):
+                if not dirs:
+                    continue
+                if not any(map(lambda x: x.endswith('.java'), files)):
+                    continue
+                if sources_path in root:
+                    sources, package = root.split(sources_path)
+                    data.setdefault((os.path.join(sources, sources_path), os.path.join(sources, target_path)), []).append(
+                        package.replace(os.sep, '.')[1:])
         return data
 
     @staticmethod

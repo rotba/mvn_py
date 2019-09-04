@@ -21,7 +21,6 @@ class JcovParser(object):
 
     def parse(self):
         for jcov_file in self.jcov_files:
-            print jcov_file
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             yield self._parse_jcov_file(jcov_file, test_name)
 
