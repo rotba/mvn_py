@@ -1,6 +1,8 @@
 import os
 from pom_file import PomValue
 from subprocess import Popen
+import socket
+
 
 class JcovTracer(object):
     """
@@ -40,9 +42,9 @@ class JcovTracer(object):
         self.instrument_only_methods = instrument_only_methods
         self.agent_port = str(self.get_open_port())
         self.command_port = str(self.get_open_port())
+        assert os.environ['JAVA_HOME'], "java home is not configured"
 
     def get_open_port(self):
-            import socket
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.bind(("", 0))
             s.listen(1)
@@ -50,8 +52,20 @@ class JcovTracer(object):
             s.close()
             return port
 
+    def check_if_grabber_is_on(self):
+        import time
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            time.sleep(5)
+            s.connect(('127.0.0.1', int(self.command_port)))
+            s.close()
+            return True
+        except:
+            return False
+        return False
+
     def template_creator_cmd_line(self, debug=False):
-        cmd_line = ['java', '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
+        cmd_line = [os.path.join(os.environ['JAVA_HOME'], "bin\java.exe"), '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'tmplgen', '-verbose']
         if self.class_path :
             cmd_line.extend(['-cp', self.class_path])
         if self.path_to_out_template:
@@ -64,7 +78,7 @@ class JcovTracer(object):
         return cmd_line
 
     def grabber_cmd_line(self, debug=False):
-            cmd_line = ['java', '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.agent_port, '-command_port', self.command_port]
+            cmd_line = [os.path.join(os.environ['JAVA_HOME'], "bin\java.exe"), '-Xms2g'] + (JcovTracer.DEBUG_CMD if debug else []) + ['-jar', JcovTracer.JCOV_JAR_PATH, 'grabber', '-vv', '-port', self.agent_port, '-command_port', self.command_port]
             if self.path_to_out_template:
                 cmd_line.extend(['-t', self.path_to_out_template])
             if self.path_to_result_file:
@@ -96,19 +110,28 @@ class JcovTracer(object):
         return [PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "name"], "listener"),
                 PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
                 PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH),
-                PomValue("maven-surefire-plugin", ["version"], "2.18.1")]
+                PomValue("maven-surefire-plugin", ["version"], "2.18.1", should_append=False),
+                PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "once", should_append=False),
+                PomValue("maven-surefire-plugin", ["configuration", "forkCount"], "1", should_append=False)]
 
     def get_enviroment_variables_values(self):
-        return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "always"),
+        return [PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "once", should_append=False),
+                PomValue("maven-surefire-plugin", ["configuration", "forkCount"], "1", should_append=False),
                 PomValue("maven-surefire-plugin", ["configuration", "environmentVariables", "JcovGrabberCommandPort"], self.command_port)]
 
     def get_values_to_add(self):
         return JcovTracer.static_values_to_add_to_pom() + [self.get_agent_arg_line()] + self.get_enviroment_variables_values()
 
     def stop_grabber(self):
-        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save",'-command_port', self.command_port]).communicate()
+        Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-save", '-command_port', self.command_port]).communicate()
         Popen(["java", "-jar", JcovTracer.JCOV_JAR_PATH, "grabberManager", "-stop", '-command_port', self.command_port]).communicate()
 
     def execute_jcov_process(self, debug=False):
         Popen(self.template_creator_cmd_line(debug=debug)).communicate()
-        Popen(self.grabber_cmd_line(debug=debug))
+        for path in [self.path_to_classes_file, self.path_to_out_template]:
+            if path:
+                with open(path) as f:
+                    assert f.read(), "{0} is empty".format(path)
+        p = Popen(self.grabber_cmd_line(debug=debug))
+        assert p.poll() is None
+        assert self.check_if_grabber_is_on()

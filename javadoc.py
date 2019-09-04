@@ -68,7 +68,7 @@ class JavaDoc(object):
 
     @staticmethod
     def get_cmd(sources_path, target_path, out_path, packages):
-        return ["javadoc", "-classpath", target_path, "-sourcepath", sources_path, "-docletpath",
+        return ["javadoc", "-classpath", ";".join([target_path, os.path.join(os.path.expanduser("~"), r".m2\repository\junit\junit\3.8.2\junit-3.8.2.jar")]), "-sourcepath", sources_path, "-docletpath",
                 JavaDoc.DOCLET_PATH, "-doclet", "jp.michikusa.chitose.doclet.JsonDoclet", "-source", "'1.6'", "-quiet", "-private",
                 "-encoding", "iso-8859-1", "-charset", "'iso-8859-1'", "-d", out_path] + packages
 
