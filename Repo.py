@@ -52,12 +52,12 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False):
+    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False, tests_to_run=None):
         self.change_surefire_ver()
         inspected_module = self.repo_dir
-        if not module == None:
+        if module is not None:
             inspected_module = module
-        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug)
+        install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug, tests_to_run=tests_to_run)
         build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir)
         return build_report
 
@@ -232,7 +232,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
@@ -241,7 +241,7 @@ class Repo(object):
         os.remove(path_to_template)
         jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
-        self.install(debug=debug)
+        self.install(debug=debug, module=module, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
@@ -438,7 +438,7 @@ class Repo(object):
         return ans
 
     # Returns mvn command string that runns the given tests in the given module
-    def generate_mvn_install_cmd(self, testcases, module=None, debug=False):
+    def generate_mvn_install_cmd(self, testcases, module=None, debug=False, tests_to_run=None):
         testclasses = []
         for testcase in testcases:
             if not testcase.parent in testclasses:
@@ -452,6 +452,9 @@ class Repo(object):
         ans += ' -DfailIfNoTests=false'
         if debug:
             ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
+        if tests_to_run:
+            ans += " -Dtest="
+            ans += ','.join(tests_to_run)
         if len(testcases) > 0:
             ans += ' -Dtest='
             for testclass in testclasses:
@@ -786,9 +789,9 @@ if __name__ == "__main__":
     # # exit()
     # jsons = repo.javadoc_command(r"c:\temp\jsons.json")
     # exit()
-    repo = Repo(r"C:\Temp\commons-beanutils")
+    repo = Repo(r"C:\temp\defects4j-math2")
     # obs = repo.observe_tests()
-    traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True)
+    traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True, tests_to_run=["org.apache.commons.math3.distribution.*"])
     # import networkx
     # for trace in traces:
     #     g = networkx.DiGraph()
