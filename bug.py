@@ -100,7 +100,8 @@ class Bug_data_handler(object):
 
 	# Adds row to the time tanle
 	def add_time(self, issue_key, commit_hexsha, module, time, root_module, desctiption=''):
-		self._time_csv_handler.add_row(issue_key, commit_hexsha, os.path.basename(module), time, classify_report_description(desctiption))
+		self._time_csv_handler.add_row(issue_key, commit_hexsha, os.path.basename(module), time,
+		                               classify_report_description(desctiption))
 		if not desctiption == '':
 			self._store_description(desctiption, issue_key, commit_hexsha, module, root_module)
 
@@ -192,19 +193,27 @@ class Bug_data_handler(object):
 			if not os.path.isdir(path):
 				os.makedirs(path)
 
-		def set_up_class_dirs(path_to_commit_dir):
-			for testclass in testclasses:
-				path_to_testclass_dir = os.path.join(path_to_commit_dir, testclass.id)
-				if not os.path.isdir(path_to_testclass_dir):
-					os.makedirs(path_to_testclass_dir)
-					ans[testclass.id] = path_to_testclass_dir
-
 		path_to_bug_dir = set_up_issue_dir()
 		path_to_commit_dir = set_up_commit_dir(path_to_bug_dir)
 		path_to_pom_dir = set_up_pom_dir(path_to_commit_dir)
 		set_up_module_inspection_dir()
-		set_up_class_dirs(path_to_commit_dir)
+		ans.update(self.set_up_class_dirs(testclasses, path_to_commit_dir))
 		ans[module] = path_to_pom_dir
+		return ans
+
+	def cast_tests(self, issue, commit, testclasses):
+		return self.set_up_class_dirs(
+			testclasses=testclasses,
+			path_to_commit_dir=reduce(lambda acc, curr: os.path.join(acc, curr), [self.path, issue.key, commit.hexsha])
+		)
+
+	def set_up_class_dirs(self, testclasses, path_to_commit_dir):
+		ans = {}
+		for testclass in testclasses:
+			path_to_testclass_dir = os.path.join(path_to_commit_dir, testclass.id)
+			if not os.path.isdir(path_to_testclass_dir):
+				os.makedirs(path_to_testclass_dir)
+				ans[testclass.id] = path_to_testclass_dir
 		return ans
 
 	# Gets all the data from fb_path
@@ -294,7 +303,9 @@ class Bug_data_handler(object):
 		module_inspection_path = os.path.join(self.path, reduce_module_inspection_path(issue_key, commit_hexsha, module,
 		                                                                               root_module))
 		with open(os.path.join(module_inspection_path, 'description.txt'), 'w+') as desc_file:
-				desc_file.write(description)
+			desc_file.write(description)
+			desc_file.write('\n' + traceback.format_exc())
+
 
 class Bug_csv_report_handler(object):
 	def __init__(self, path):
@@ -379,6 +390,11 @@ class BugError(Exception):
 		return repr(self.msg)
 
 
+class NoAssociatedChangedClasses(BugError):
+	def __init__(self, msg):
+		super(NoAssociatedChangedClasses, super).__init__(msg=msg)
+
+
 invalid_comp_error_desc = 'testcase genrated compilation error when patched'
 invalid_rt_error_desc = 'testcase genrated runtime error when tested'
 invalid_passed_desc = 'testcase passed in parent'
@@ -404,7 +420,10 @@ class Description_type(Enum):
 	COMP_ERROR = "Compilation failure"
 	DEPENDENCIES_ERROR = "Dependencies resolution failure"
 	TIMEOUT_ERROR = 'Timeout failure'
+	GENERATED_NO_TESTS_ERROR = 'Generated no tests'
+	NO_ASSOCIATED_CLASS = 'No classes associated to this module'
 	UNEXPECTED = 'Unexpected'
+	GIT_ERROR = 'Git error'
 	SUCESS = 'Success'
 
 	def __str__(self):
@@ -475,8 +494,20 @@ def is_timeout_err(desctiption):
 	return 'MVNTimeoutError' in desctiption or 'TIMEOUT!' in desctiption
 
 
+def is_no_tests_gen_err(desctiption):
+	return 'Generated no tests' in desctiption
+
+
+def is_no_class_associated_err(desctiption):
+	return 'No classes associated this module' in desctiption
+
+
+def is_git_error_err(desctiption):
+	return 'GitCommandError' in desctiption
+
+
 def classify_report_description(desctiption):
-	if desctiption =='':
+	if desctiption == '':
 		return Description_type.SUCESS
 	elif is_comp_err(desctiption):
 		return Description_type.COMP_ERROR
@@ -484,13 +515,19 @@ def classify_report_description(desctiption):
 		return Description_type.DEPENDENCIES_ERROR
 	elif is_timeout_err(desctiption):
 		return Description_type.TIMEOUT_ERROR
+	elif is_no_tests_gen_err(desctiption):
+		return Description_type.GENERATED_NO_TESTS_ERROR
+	elif is_no_class_associated_err(desctiption):
+		return Description_type.NO_ASSOCIATED_CLASS
+	elif is_git_error_err(desctiption):
+		return Description_type.GIT_ERROR
 	else:
 		return Description_type.UNEXPECTED
 
 
 def reduce_module_inspection_path(issue_key, commit_hexsha, module, root_module):
 	return reduce(
-        lambda acc, curr: os.path.join(acc, curr),
-        Path(os.path.relpath(module, root_module)).parts,
-        reduce(lambda acc, curr: os.path.join(acc,curr), [issue_key, commit_hexsha, 'root'])
-    )
+		lambda acc, curr: os.path.join(acc, curr),
+		Path(os.path.relpath(module, root_module)).parts,
+		reduce(lambda acc, curr: os.path.join(acc, curr), [issue_key, commit_hexsha, 'root'])
+	)

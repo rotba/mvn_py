@@ -143,6 +143,8 @@ class TestCase(object):
 		self._report = None
 		self._start_line = self.method.position[0]
 		self._end_line = self.find_end_line(self._start_line)
+		if self._end_line == -1 and self.method.body == None:
+			self._end_line = self._start_line
 		assert self._end_line != -1
 
 	@property
