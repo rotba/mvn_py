@@ -9,6 +9,7 @@ from mvnpy import mvn
 EVOSUITE_SUREFIRE_VERSION = '2.17'
 EVOSUITE_JAVA_VER = '1.8'
 
+
 class EvosuiteFactory(object):
 	@classmethod
 	def create(cls, repo, strategy=None):
@@ -106,14 +107,14 @@ class Evosuite(object):
 	def handle_post_generate(self, build_report, cmd, time_limit):
 		if self.repo.has_weird_error_report(build_report):
 			self.repo.install()
-			build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit)
+			build_report = mvn.wrap_mvn_cmd(cmd, time_limit=time_limit)
 		if self.repo.has_license_error_report(build_report):
-			build_report = mvn.wrap_mvn_cmd(test_cmd + ' -Drat.skip=true', time_limit=time_limit)
+			build_report = mvn.wrap_mvn_cmd(cmd + ' -Drat.skip=true', time_limit=time_limit)
 		if self.generated_no_test(build_report):
 			for i in range(0, 5):
 				if not self.generated_no_test(build_report):
 					break
-				build_report = mvn.wrap_mvn_cmd(test_cmd + ' -X', time_limit=time_limit)
+				build_report = mvn.wrap_mvn_cmd(cmd + ' -X', time_limit=time_limit)
 		return build_report
 
 
@@ -130,8 +131,9 @@ class CMDEvosuite(Evosuite):
 			self.setup_tests_generator(inspected_module)
 		build_report = self.repo.compile(inspected_module)
 		if mvn.has_compilation_error(build_report):
-			raise mvn.MVNError(msg='Proj didnt compile before tests generation', report=build_report)
-		self.repo.copy_depenedencies(inspected_module)
+			raise mvn.MVNError(msg='Project didnt compile before tests generation', report=build_report)
+		build_report += self.repo.copy_depenedencies(inspected_module)
+		build_report += self.repo.unpack_depenedencies(inspected_module)
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
@@ -146,11 +148,10 @@ class CMDEvosuite(Evosuite):
 		pass
 
 	def generate_tests_generation_cmd(self, module, cut):
-		return '{} -projectCP {};{}  -class {} {}'.format(self.generate_evosuite_run_cmd(),
-		                                                  self.generate_dependency_path(module),
-		                                                  self.generate_target_classes_binaries_path(module),
-		                                                  self.generate_target_class_mvn_names(cut),
-		                                                  self.generate_configuration_params(module))
+		return '{} -projectCP {}  -class {} {}'.format(self.generate_evosuite_run_cmd(),
+		                                               self.generate_project_classpath(module),
+		                                               self.generate_target_class_mvn_names(cut),
+		                                               self.generate_configuration_params(module))
 
 	def generate_evosuite_run_cmd(self):
 		return r'java -jar "{}"'.format(mvn.get_evosuite_path(evosuite_ver='1.6'))
@@ -158,6 +159,11 @@ class CMDEvosuite(Evosuite):
 	def generate_target_classes_binaries_path(self, module):
 		return os.path.relpath(
 			reduce(lambda acc, curr: os.path.join(acc, curr), [module, 'target', 'classes'])
+			, self.repo.repo_dir)
+
+	def generate_dependency_path(self, module):
+		return os.path.relpath(
+			reduce(lambda acc, curr: os.path.join(acc, curr), [module, 'target', 'dependency'])
 			, self.repo.repo_dir)
 
 	def generate_target_class_mvn_names(self, cut):
@@ -168,11 +174,10 @@ class CMDEvosuite(Evosuite):
 		       "-criterion BRANCH:EXCEPTION:METHOD " + \
 		       "-Dtest_dir={}".format(self.get_gen_test_dir(module))
 
-	def generate_dependency_path(self, module):
-		return reduce(
-			lambda acc, curr: acc + ';' + curr,
-			map(lambda x: os.path.relpath(os.path.join(self.get_dependecy_dir(module), x), self.repo.repo_dir),
-			    os.listdir(self.get_dependecy_dir(module)))
+	def generate_project_classpath(self, module):
+		return '{};{}'.format(
+			self.generate_target_classes_binaries_path(module),
+			self.generate_dependency_path(module)
 		)
 
 	def get_gen_test_dir(self, module):
@@ -209,7 +214,8 @@ class MAVENEvosuite(Evosuite):
 			path_to_cutsfile = os.path.join(self.repo.repo_dir, "cutsFile.txt")
 			self.gen_cuts_file(classes, path_to_cutsfile)
 			ans += ' '
-			ans += ' -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -DcutsFile="{}"'.format(path_to_cutsfile)
+			ans += ' -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -DcutsFile="{}"'.format(
+				path_to_cutsfile)
 		ans += ' -f ' + inspeced_module
 		return ans
 

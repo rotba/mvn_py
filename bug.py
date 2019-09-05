@@ -4,6 +4,7 @@ import os
 import pickle
 import shutil
 import traceback
+from pathlib import Path
 
 from enum import Enum
 from sfl_diagnoser.Diagnoser import diagnoserUtils
@@ -98,8 +99,10 @@ class Bug_data_handler(object):
 		self._store_bug(bug)
 
 	# Adds row to the time tanle
-	def add_time(self, issue_key, commit_hexsha, module, time, desctiption=''):
-		self._time_csv_handler.add_row(issue_key, commit_hexsha, module, time, desctiption)
+	def add_time(self, issue_key, commit_hexsha, module, time, root_module, desctiption=''):
+		self._time_csv_handler.add_row(issue_key, commit_hexsha, os.path.basename(module), time, classify_report_description(desctiption))
+		if not desctiption == '':
+			self._store_description(desctiption, issue_key, commit_hexsha, module, root_module)
 
 	# Stores bug in it's direcrtory
 	def _store_bug(self, bug):
@@ -153,7 +156,7 @@ class Bug_data_handler(object):
 	# Gets the path to the directory of the testclass in the given commit and issue
 	def get_commit_path(self, issue_key, commit_hexsha):
 		return reduce(
-			lambda acc, curr: os.path.join(acc,curr),
+			lambda acc, curr: os.path.join(acc, curr),
 			[self.path, issue_key, commit_hexsha],
 			[]
 		)
@@ -163,23 +166,45 @@ class Bug_data_handler(object):
 		return os.path.join(self.get_bug_testclass_path(bug), bug.bugged_testcase.method.name + '.pickle')
 
 	# Sets up dirctories for bug results
-	def set_up_bug_dir(self, issue, commit, testclasses, module):
+	def set_up_bug_dir(self, issue, commit, testclasses, module, root_module):
 		ans = {}
-		path_to_bug_dir = os.path.join(self.path, issue.key)
-		if not os.path.isdir(path_to_bug_dir):
-			os.makedirs(path_to_bug_dir)
-		path_to_bug_dir = os.path.join(path_to_bug_dir, commit.hexsha)
-		if not os.path.isdir(path_to_bug_dir):
-			os.makedirs(path_to_bug_dir)
-		path_to_pom_dir = os.path.join(path_to_bug_dir, os.path.basename(module) + '#pom')
-		if not os.path.isdir(path_to_pom_dir):
-			os.makedirs(path_to_pom_dir)
+
+		def set_up_issue_dir():
+			path_to_bug_dir = os.path.join(self.path, issue.key)
+			if not os.path.isdir(path_to_bug_dir):
+				os.makedirs(path_to_bug_dir)
+			return path_to_bug_dir
+
+		def set_up_commit_dir(path_to_bug_dir):
+			path_to_bug_dir = os.path.join(path_to_bug_dir, commit.hexsha)
+			if not os.path.isdir(path_to_bug_dir):
+				os.makedirs(path_to_bug_dir)
+			return path_to_bug_dir
+
+		def set_up_pom_dir(path_to_bug_dir):
+			path_to_pom_dir = os.path.join(path_to_bug_dir, os.path.basename(module) + '#pom')
+			if not os.path.isdir(path_to_pom_dir):
+				os.makedirs(path_to_pom_dir)
+			return path_to_pom_dir
+
+		def set_up_module_inspection_dir():
+			path = os.path.join(self.path, reduce_module_inspection_path(issue.key, commit.hexsha, module, root_module))
+			if not os.path.isdir(path):
+				os.makedirs(path)
+
+		def set_up_class_dirs(path_to_commit_dir):
+			for testclass in testclasses:
+				path_to_testclass_dir = os.path.join(path_to_commit_dir, testclass.id)
+				if not os.path.isdir(path_to_testclass_dir):
+					os.makedirs(path_to_testclass_dir)
+					ans[testclass.id] = path_to_testclass_dir
+
+		path_to_bug_dir = set_up_issue_dir()
+		path_to_commit_dir = set_up_commit_dir(path_to_bug_dir)
+		path_to_pom_dir = set_up_pom_dir(path_to_commit_dir)
+		set_up_module_inspection_dir()
+		set_up_class_dirs(path_to_commit_dir)
 		ans[module] = path_to_pom_dir
-		for testclass in testclasses:
-			path_to_testclass_dir = os.path.join(path_to_bug_dir, testclass.id)
-			if not os.path.isdir(path_to_testclass_dir):
-				os.makedirs(path_to_testclass_dir)
-				ans[testclass.id] = path_to_testclass_dir
 		return ans
 
 	# Gets all the data from fb_path
@@ -260,11 +285,16 @@ class Bug_data_handler(object):
 
 		commit_path = self.get_commit_path(issue_key=bug.issue, commit_hexsha=bug.commit)
 		return reduce(
-			lambda acc, curr: acc+[os.path.join(commit_path,get_pom_patch_path(curr))],
+			lambda acc, curr: acc + [os.path.join(commit_path, get_pom_patch_path(curr))],
 			filter(lambda x: is_pom_path(x), os.listdir(commit_path)),
 			[]
 		)
 
+	def _store_description(self, description, issue_key, commit_hexsha, module, root_module):
+		module_inspection_path = os.path.join(self.path, reduce_module_inspection_path(issue_key, commit_hexsha, module,
+		                                                                               root_module))
+		with open(os.path.join(module_inspection_path, 'description.txt'), 'w+') as desc_file:
+				desc_file.write(description)
 
 class Bug_csv_report_handler(object):
 	def __init__(self, path):
@@ -321,10 +351,10 @@ class Time_csv_report_handler(object):
 				writer.writeheader()
 
 	# Adds bug to the csv file
-	def add_row(self, issue_key, commit_hexsha, module, time, description):
+	def add_row(self, issue_key, commit_hexsha, module, time, description_type):
 		with open(self._path, 'a') as csv_output:
 			writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
-			writer.writerow(self.generate_csv_tupple(issue_key, commit_hexsha, module, time, description))
+			writer.writerow(self.generate_csv_tupple(issue_key, commit_hexsha, module, time, description_type))
 
 	# Generated csv bug tupple
 	def generate_csv_tupple(self, issue_key, commit_hexsha, module, time, description):
@@ -362,6 +392,20 @@ class Bug_type(Enum):
 	DELTA_3 = "Delta^3"
 	REGRESSION = "Regression"
 	GEN = "Auto-generated"
+
+	def __str__(self):
+		return self.value
+
+	def __repr__(self):
+		return self.value
+
+
+class Description_type(Enum):
+	COMP_ERROR = "Compilation failure"
+	DEPENDENCIES_ERROR = "Dependencies resolution failure"
+	TIMEOUT_ERROR = 'Timeout failure'
+	UNEXPECTED = 'Unexpected'
+	SUCESS = 'Success'
 
 	def __str__(self):
 		return self.value
@@ -417,3 +461,36 @@ def determine_type(testcase, delta_testcases, gen_commit_valid_testcases):
 		return Bug_type.DELTA
 	else:
 		return Bug_type.REGRESSION
+
+
+def is_comp_err(desctiption):
+	return 'Compilation failure:' in desctiption or '[ERROR] COMPILATION ERROR :' in desctiption
+
+
+def is_dep_err(desctiption):
+	return 'Could not resolve dependencies' in desctiption
+
+
+def is_timeout_err(desctiption):
+	return 'MVNTimeoutError' in desctiption or 'TIMEOUT!' in desctiption
+
+
+def classify_report_description(desctiption):
+	if desctiption =='':
+		return Description_type.SUCESS
+	elif is_comp_err(desctiption):
+		return Description_type.COMP_ERROR
+	elif is_dep_err(desctiption):
+		return Description_type.DEPENDENCIES_ERROR
+	elif is_timeout_err(desctiption):
+		return Description_type.TIMEOUT_ERROR
+	else:
+		return Description_type.UNEXPECTED
+
+
+def reduce_module_inspection_path(issue_key, commit_hexsha, module, root_module):
+	return reduce(
+        lambda acc, curr: os.path.join(acc, curr),
+        Path(os.path.relpath(module, root_module)).parts,
+        reduce(lambda acc, curr: os.path.join(acc,curr), [issue_key, commit_hexsha, 'root'])
+    )

@@ -766,6 +766,15 @@ class Repo(object):
 		self.set_pom_tag(xquery=set_groupId_xquery, create_if_not_exist=True, module=module, value=groupId)
 		self.set_pom_tag(xquery=set_version_xquery, create_if_not_exist=True, module=module, value=version)
 
+
+	def unpack_depenedencies(self, module=None):
+		inspected_module = self.repo_dir
+		if not module == None:
+			inspected_module = module
+		test_cmd = self.generate_mvn_unpack_depenedencies_cmd(inspected_module)
+		build_report = mvn.wrap_mvn_cmd(test_cmd)
+		return build_report
+
 	def copy_depenedencies(self, module=None):
 		inspected_module = self.repo_dir
 		if not module == None:
@@ -774,6 +783,15 @@ class Repo(object):
 		build_report = mvn.wrap_mvn_cmd(test_cmd)
 		return build_report
 
+
+	def generate_mvn_unpack_depenedencies_cmd(self, module):
+		if module == self.repo_dir:
+			ans = 'mvn dependency:unpack-dependencies -fn'
+		else:
+			ans = 'mvn -pl :{} -am dependency:unpack-dependencies -fn'.format(
+				os.path.basename(module))
+		ans += ' -f ' + self.repo_dir
+		return ans
 	def generate_mvn_copy_depenedencies_cmd(self, module):
 		if module == self.repo_dir:
 			ans = 'mvn dependency:copy-dependencies -fn'
