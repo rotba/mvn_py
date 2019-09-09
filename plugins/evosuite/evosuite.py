@@ -123,7 +123,7 @@ class CMDEvosuite(Evosuite):
 	def __init__(self, repo):
 		super(CMDEvosuite, self).__init__(repo=repo)
 
-	def generate(self, module=None, classes=[], time_limit=sys.maxint):
+	def generate(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo.repo_dir
 		if not module == None:
 			inspected_module = module
@@ -189,7 +189,7 @@ class MAVENEvosuite(Evosuite):
 	def __init__(self, repo):
 		super(MAVENEvosuite, self).__init__(repo=repo)
 
-	def generate(self, module=None, classes=[], time_limit=sys.maxint):
+	def generate(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo.repo_dir if module == None else module
 		if not self.is_tests_generator_setup(inspected_module):
 			self.setup_tests_generator(inspected_module)

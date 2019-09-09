@@ -19,6 +19,7 @@ dict_super_sub_tags = {'dependencies': 'dependency',
                        'licenses': 'license',
                        'developers': 'developer',
                        'plugins': 'plugin'}
+MVN_MAX_PROCCESS_TIME_IN_SEC = 1800
 
 
 
@@ -280,7 +281,7 @@ def parse_tests(tests_dir):
 	return ans
 
 
-def wrap_mvn_cmd(cmd, time_limit=sys.maxint, dir=None):
+def wrap_mvn_cmd(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC, dir=None):
 	output_tmp_files_dir = os.path.join('tmp_files', 'stdout_duplication')
 	if not os.path.isdir(output_tmp_files_dir):
 		os.makedirs(output_tmp_files_dir)
@@ -295,26 +296,26 @@ def wrap_mvn_cmd(cmd, time_limit=sys.maxint, dir=None):
 		build_report = tmp_f.read()
 		if DEBUG:
 			print(build_report)
-	if not time_limit == sys.maxint and not (
+	if not time_limit == MVN_MAX_PROCCESS_TIME_IN_SEC and not (
 			'[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report or '* Computation finished' in build_report):
 		raise MVNTimeoutError('Build took too long', build_report, trace=traceback.format_exc())
 	return build_report.replace('\\n', '\n')
 
 
-def wrap_mvn_cmd_1(cmd, time_limit=sys.maxint):
+def wrap_mvn_cmd_1(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC):
 	proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-	t = Timer(sys.maxint, kill, args=[proc])
+	t = Timer(MVN_MAX_PROCCESS_TIME_IN_SEC, kill, args=[proc])
 	t.start()
 	proc.wait()
 	t.cancel()
 	(out, err) = proc.communicate()
-	if not time_limit == sys.maxint and not (
+	if not time_limit == MVN_MAX_PROCCESS_TIME_IN_SEC and not (
 			'[INFO] BUILD SUCCESS' in build_log or '[INFO] BUILD FAILURE' in build_log):
 		raise MVNError('Build took too long', build_log)
 	return build_log
 
 
-def wrap_mvn_cmd_3(cmd, time_limit=sys.maxint):
+def wrap_mvn_cmd_3(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC):
 	sys.stderr.flush()
 	sys.stdout.flush()
 	olderr, oldout = sys.stderr, sys.stdout
@@ -335,7 +336,7 @@ def wrap_mvn_cmd_3(cmd, time_limit=sys.maxint):
 	finally:
 		sys.stderr = olderr
 		sys.stdout = oldout
-	if not time_limit == sys.maxint and not (
+	if not time_limit == MVN_MAX_PROCCESS_TIME_IN_SEC and not (
 			'[INFO] BUILD SUCCESS' in build_log or '[INFO] BUILD FAILURE' in build_log):
 		raise MVNError('Build took too long', build_log, trace=traceback.format_exc())
 	return build_log

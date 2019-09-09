@@ -394,6 +394,14 @@ class NoAssociatedChangedClasses(BugError):
 	def __init__(self, msg):
 		super(NoAssociatedChangedClasses, super).__init__(msg=msg)
 
+class TooManyClassesToGenerateTestsFor(BugError):
+	def __init__(self, msg, amount):
+		self.amount = amount
+		super(TooManyClassesToGenerateTestsFor, self).__init__(msg=msg)
+
+	def __str__(self):
+		return super(TooManyClassesToGenerateTestsFor, self).__str__()+ '\n'+'Too many classes! \n amount:{}'.format(self.amount)
+
 
 invalid_comp_error_desc = 'testcase genrated compilation error when patched'
 invalid_rt_error_desc = 'testcase genrated runtime error when tested'
@@ -422,6 +430,7 @@ class Description_type(Enum):
 	TIMEOUT_ERROR = 'Timeout failure'
 	GENERATED_NO_TESTS_ERROR = 'Generated no tests'
 	NO_ASSOCIATED_CLASS = 'No classes associated to this module'
+	TOO_MANY_CLASSES_CLASS = 'Too many classes to generate tests for'
 	UNEXPECTED = 'Unexpected'
 	GIT_ERROR = 'Git error'
 	SUCESS = 'Success'
@@ -505,6 +514,9 @@ def is_no_class_associated_err(desctiption):
 def is_git_error_err(desctiption):
 	return 'GitCommandError' in desctiption
 
+def is_too_many_classes_err(desctiption):
+	return 'Too many classes!' in desctiption
+
 
 def classify_report_description(desctiption):
 	if desctiption == '':
@@ -521,6 +533,8 @@ def classify_report_description(desctiption):
 		return Description_type.NO_ASSOCIATED_CLASS
 	elif is_git_error_err(desctiption):
 		return Description_type.GIT_ERROR
+	elif is_too_many_classes_err(desctiption):
+		return Description_type.TOO_MANY_CLASSES_CLASS
 	else:
 		return Description_type.UNEXPECTED
 

@@ -56,7 +56,7 @@ class Repo(object):
 		return self._repo_dir
 
 	# Executes mvn test
-	def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False):
+	def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False):
 		inspected_module = self.repo_dir
 		if not module == None:
 			inspected_module = module
@@ -65,7 +65,7 @@ class Repo(object):
 		return build_report
 
 	# Executes mvn test
-	def test(self, module=None, tests=[], time_limit=sys.maxint):
+	def test(self, module=None, tests=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo_dir
 		if not module == None:
 			inspected_module = module
@@ -74,7 +74,7 @@ class Repo(object):
 		return build_report
 
 	# Generates tests. As for now implemented with evosuite
-	def generate_tests(self, module=None, classes=[], time_limit=sys.maxint, strategy=TestGenerationStrategy.MAVEN):
+	def generate_tests(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, strategy=TestGenerationStrategy.MAVEN):
 		return EvosuiteFactory.create(self, strategy).generate(module, classes, time_limit)
 
 	# Executes mvn clean
@@ -772,7 +772,7 @@ class Repo(object):
 		if not module == None:
 			inspected_module = module
 		test_cmd = self.generate_mvn_unpack_depenedencies_cmd(inspected_module)
-		build_report = mvn.wrap_mvn_cmd(test_cmd)
+		build_report = mvn.wrap_mvn_cmd(test_cmd, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC)
 		return build_report
 
 	def copy_depenedencies(self, module=None):
