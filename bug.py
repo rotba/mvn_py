@@ -12,7 +12,7 @@ from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 class Bug(object):
 	def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc,
-	             traces=[], bugged_components=[]):
+	             traces=[], bugged_components=[], extra_desc = ''):
 		self._issue_key = issue_key
 		self._commit_hexsha = commit_hexsha
 		self._parent_hexsha = parent_hexsha
@@ -21,6 +21,7 @@ class Bug(object):
 		self._module = os.path.basename(bugged_testcase.module)
 		self._type = type
 		self._desc = desc
+		self._extra_desc = extra_desc
 		self._valid = valid
 		self._traces = traces
 		self._bugged_components = bugged_components
@@ -74,9 +75,13 @@ class Bug(object):
 	def module(self):
 		return self._module
 
+	@property
+	def extra_desc(self):
+		return self._extra_desc
+
 	def __str__(self):
 		return 'type: ' + self.type.value + ' ,issue: ' + self.issue + ' ,commit: ' + self._commit_hexsha + ' ,parent: ' + self.parent + ' ,test: ' + self.bugged_testcase.mvn_name + ' description: ' + str(
-			self._desc)
+			self._desc) +' ,extra description: '+str(self._extra_desc)
 
 
 class Bug_data_handler(object):
@@ -312,7 +317,7 @@ class Bug_csv_report_handler(object):
 		self._writer = None
 		self._path = path
 		self._fieldnames = ['valid', 'type', 'issue', 'module', 'commit', 'parent', 'testcase', 'has_test_annotation',
-		                    'description', 'traces', 'bugged_components']
+		                     'traces', 'bugged_components','description', 'extra_description']
 		if not os.path.exists(path):
 			with open(self._path, 'w+') as csv_output:
 				writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
@@ -343,7 +348,8 @@ class Bug_csv_report_handler(object):
 		        'has_test_annotation': bug.has_test_annotation,
 		        'description': bug.desctiption,
 		        'traces': bug.traces,
-		        'bugged_components': bug.bugged_components
+		        'bugged_components': bug.bugged_components,
+		        'extra_description':bug.extra_desc
 		        }
 
 	@property
@@ -394,13 +400,15 @@ class NoAssociatedChangedClasses(BugError):
 	def __init__(self, msg):
 		super(NoAssociatedChangedClasses, super).__init__(msg=msg)
 
+
 class TooManyClassesToGenerateTestsFor(BugError):
 	def __init__(self, msg, amount):
 		self.amount = amount
 		super(TooManyClassesToGenerateTestsFor, self).__init__(msg=msg)
 
 	def __str__(self):
-		return super(TooManyClassesToGenerateTestsFor, self).__str__()+ '\n'+'Too many classes! \n amount:{}'.format(self.amount)
+		return super(TooManyClassesToGenerateTestsFor, self).__str__() + '\n' + 'Too many classes! \n amount:{}'.format(
+			self.amount)
 
 
 invalid_comp_error_desc = 'testcase genrated compilation error when patched'
@@ -450,8 +458,8 @@ def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, b
 	elif testcase.passed and parent_testcase.has_error:
 		return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
 		           fixed_testcase=testcase, bugged_testcase=parent_testcase,
-		           type=type, valid=False, desc=invalid_rt_error_desc + ' ' + parent_testcase.get_error(),
-		           traces=traces, bugged_components=bugged_components)
+		           type=type, valid=False, desc=invalid_rt_error_desc,
+		           traces=traces, bugged_components=bugged_components, extra_desc=parent_testcase.get_error())
 	elif testcase.passed and parent_testcase.passed:
 		return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
 		           fixed_testcase=testcase, bugged_testcase=parent_testcase,
@@ -513,6 +521,7 @@ def is_no_class_associated_err(desctiption):
 
 def is_git_error_err(desctiption):
 	return 'GitCommandError' in desctiption
+
 
 def is_too_many_classes_err(desctiption):
 	return 'Too many classes!' in desctiption
