@@ -697,10 +697,14 @@ class Repo(object):
 		if module == '':
 			module = self.repo_dir
 		pom_singelton = list(
-			filter(lambda f: f == 'pom.xml' or f == 'project.xml', os.listdir(module))
+			filter(lambda f: f == 'pom.xml', os.listdir(module))
 		)
 		if not len(pom_singelton) == 1:
-			return ''
+			pom_singelton = list(
+				filter(lambda f: f == 'project.xml', os.listdir(module))
+			)
+		if not len(pom_singelton) == 1:
+			raise mvn.MVNError(msg="No pom file in module {}".format(module))
 		else:
 			return os.path.join(module, pom_singelton[0])
 

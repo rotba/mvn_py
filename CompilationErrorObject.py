@@ -17,6 +17,8 @@ class CompilationErrorReport(object):
         self._path = ':'.join(path_and_error_address[:-1])
         if self._path.startswith('/') or self._path.startswith('\\'):
             self._path = self._path[1:]
+        if not (self._path.startswith('C:') or self._path.startswith('c:')):
+            self._path = os.path.join('C:', self._path)
         self._path = os.path.realpath(self._path)
 
     @property

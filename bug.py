@@ -2,6 +2,7 @@ import copy
 import csv
 import os
 import pickle
+import re
 import shutil
 import traceback
 from pathlib import Path
@@ -442,6 +443,9 @@ class Description_type(Enum):
 	UNEXPECTED = 'Unexpected'
 	GIT_ERROR = 'Git error'
 	SUCESS = 'Success'
+	NO_POM_FILE = 'No pom file'
+	ANIMAL_SNIFFER_CHECK = 'Failed to execute goal org.codehaus.mojo:animal-sniffer-maven-plugin:1.13:check'
+	NOT_PART_OF_MVN_MODULE = 'Not part of maven module'
 
 	def __str__(self):
 		return self.value
@@ -500,7 +504,7 @@ def determine_type(testcase, delta_testcases, gen_commit_valid_testcases):
 
 
 def is_comp_err(desctiption):
-	return 'Compilation failure:' in desctiption or '[ERROR] COMPILATION ERROR :' in desctiption
+	return 'Compilation failure' in desctiption or '[ERROR] COMPILATION ERROR :' in desctiption
 
 
 def is_dep_err(desctiption):
@@ -527,6 +531,18 @@ def is_too_many_classes_err(desctiption):
 	return 'Too many classes!' in desctiption
 
 
+def is_no_pom_file_err(desctiption):
+	return 'No pom file in module' in desctiption
+
+
+def is_animal_sniffer_check_err(desctiption):
+	return re.match('Failed to execute goal org.codehaus.mojo:animal-sniffer-maven-plugin:.*:check', desctiption)
+
+
+def is_not_part_of_mvn_module_err(desctiption):
+	return 'is not part of a maven module' in desctiption
+
+
 def classify_report_description(desctiption):
 	if desctiption == '':
 		return Description_type.SUCESS
@@ -544,6 +560,12 @@ def classify_report_description(desctiption):
 		return Description_type.GIT_ERROR
 	elif is_too_many_classes_err(desctiption):
 		return Description_type.TOO_MANY_CLASSES_CLASS
+	elif is_no_pom_file_err(desctiption):
+		return Description_type.NO_POM_FILE
+	elif is_animal_sniffer_check_err(desctiption):
+		return Description_type.ANIMAL_SNIFFER_CHECK
+	elif is_not_part_of_mvn_module_err(desctiption):
+		return Description_type.NOT_PART_OF_MVN_MODULE
 	else:
 		return Description_type.UNEXPECTED
 
