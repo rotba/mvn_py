@@ -1,7 +1,12 @@
 import os
+from pathlib import Path
+
+
 
 class CompilationErrorReport(object):
     def __init__(self, compilation_error_report_line):
+        def calc_path(sketch_path):
+            return sketch_path if Path(sketch_path).is_absolute() else os.path.join('C:\\',sketch_path)
         self._path = ''
         self._error_line = ''
         self._error_col = ''
@@ -17,9 +22,7 @@ class CompilationErrorReport(object):
         self._path = ':'.join(path_and_error_address[:-1])
         if self._path.startswith('/') or self._path.startswith('\\'):
             self._path = self._path[1:]
-        if not (self._path.startswith('C:') or self._path.startswith('c:')):
-            self._path = os.path.join('C:', self._path)
-        self._path = os.path.realpath(self._path)
+        self._path = calc_path(self._path)
 
     @property
     def path(self):

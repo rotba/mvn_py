@@ -16,3 +16,7 @@
 [submodule "tracer/java_tracer"]
 	path = tracer/java_tracer
 	url = https://github.com/amir9979/java_tracer
+
+[submodule "tests\\static_files\\commons-lang"]
+	path = tests\\static_files\\commons-lang
+	url = https://github.com/apache/commons-lang
