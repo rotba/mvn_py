@@ -447,6 +447,7 @@ class Description_type(Enum):
 	ANIMAL_SNIFFER_CHECK = 'Failed to execute goal org.codehaus.mojo:animal-sniffer-maven-plugin:1.13:check'
 	NOT_PART_OF_MVN_MODULE = 'Not part of maven module'
 	NO_CHANGED_METHODS = 'No changed methods'
+	OLD_POM_STRUCT = 'Old pom struct'
 
 	def __str__(self):
 		return self.value
@@ -547,6 +548,10 @@ def is_no_changed_methods(desctiption):
 	return 'No changed methods' in desctiption
 
 
+def is_old_pom_struct(desctiption):
+	return 'ExpatError: must not undeclare prefix: line 1, column 0' in desctiption
+
+
 def classify_report_description(desctiption):
 	if desctiption == '':
 		return Description_type.SUCESS
@@ -572,6 +577,8 @@ def classify_report_description(desctiption):
 		return Description_type.NOT_PART_OF_MVN_MODULE
 	elif is_no_changed_methods(desctiption):
 		return Description_type.NO_CHANGED_METHODS
+	elif is_old_pom_struct(desctiption):
+		return Description_type.OLD_POM_STRUCT
 	else:
 		return Description_type.UNEXPECTED
 
