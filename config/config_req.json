@@ -3,5 +3,6 @@
 	"java_home_1.6": "required",
 	"java_home_1.7":"required",
 	"java_home_1.8":"required",
-	"evosuite_1.6": "required"
+	"evosuite_1.6": "required",
+	"evosuite_BM": "required"
 }

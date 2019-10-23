@@ -1,17 +1,18 @@
 import os
-import sys
+import re
 import tempfile
 import xml.etree.ElementTree as ET
 from shutil import copyfile
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-import re
+
+from junitparser.junitparser import Error, Failure
+
 import TestObjects
 import mvn
 from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
-from junitparser.junitparser import Error, Failure
-from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION, EVOSUITE_JAVA_VER
+from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
 
 
@@ -74,8 +75,8 @@ class Repo(object):
 		return build_report
 
 	# Generates tests. As for now implemented with evosuite
-	def generate_tests(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, strategy=TestGenerationStrategy.MAVEN):
-		return EvosuiteFactory.create(self, strategy).generate(module, classes, time_limit)
+	def generate_tests(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC,strategy=TestGenerationStrategy.MAVEN):
+		return EvosuiteFactory.create(self, strategy).generate(module, classes, seed, time_limit)
 
 	# Executes mvn clean
 	def clean(self, module=None):
@@ -106,7 +107,8 @@ class Repo(object):
 
 	def config_for_evosuite(self, module):
 		self.change_surefire_ver(EVOSUITE_SUREFIRE_VERSION)
-		# self.config_compiler_java_home(java_home=mvn.get_jdk_dir(java_ver=EVOSUITE_JAVA_VER),module=module, java_ver=EVOSUITE_JAVA_VER)
+
+	# self.config_compiler_java_home(java_home=mvn.get_jdk_dir(java_ver=EVOSUITE_JAVA_VER),module=module, java_ver=EVOSUITE_JAVA_VER)
 
 	def config(self, module=None):
 		inspected_module = module if module is not None else self.repo_dir
@@ -118,7 +120,7 @@ class Repo(object):
 			return
 		self.config_compiler_java_home(java_home, module)
 
-	def config_compiler_java_home(self, java_home, module, java_ver= None):
+	def config_compiler_java_home(self, java_home, module, java_ver=None):
 		self.set_pom_tag(
 			xquery=reduce(lambda acc, curr: acc + '/' + curr, ['.', 'properties', 'JAVA_HOME']),
 			create_if_not_exist=True, module=module, value=java_home
@@ -156,14 +158,14 @@ class Repo(object):
 		)
 
 	def infer_java_home_dir(self, module):
-		if self.evaluate_compiler_source(module=module) == '1.8': return  None
+		if self.evaluate_compiler_source(module=module) == '1.8': return None
 		return mvn.get_jdk_dir(
 			java_ver=self.evaluate_compiler_source(module=module)
 		)
 
 	def evaluate_compiler_source(self, module):
-		if self.MAVEN_COMPILER_SOURCE != None: return  self.MAVEN_COMPILER_SOURCE
-		self.MAVEN_COMPILER_SOURCE=self.help_evaluate(expression='maven.compiler.source', module=module)
+		if self.MAVEN_COMPILER_SOURCE != None: return self.MAVEN_COMPILER_SOURCE
+		self.MAVEN_COMPILER_SOURCE = self.help_evaluate(expression='maven.compiler.source', module=module)
 		if self.MAVEN_COMPILER_SOURCE != 'null object or invalid expression': return self.MAVEN_COMPILER_SOURCE
 		self.MAVEN_COMPILER_SOURCE = self.help_evaluate(expression='maven.compile.source', module=module)
 		return self.MAVEN_COMPILER_SOURCE
@@ -180,8 +182,6 @@ class Repo(object):
 		return build_report
 
 	def get_test_results(self):
-		from junitparser import JUnitXml
-		from junitparser.junitparser import Error, Failure
 		SURFIRE_DIR_NAME = 'surefire-reports'
 
 		def get_surefire_files():
@@ -770,7 +770,6 @@ class Repo(object):
 		self.set_pom_tag(xquery=set_groupId_xquery, create_if_not_exist=True, module=module, value=groupId)
 		self.set_pom_tag(xquery=set_version_xquery, create_if_not_exist=True, module=module, value=version)
 
-
 	def unpack_depenedencies(self, module=None):
 		inspected_module = self.repo_dir
 		if not module == None:
@@ -787,7 +786,6 @@ class Repo(object):
 		build_report = mvn.wrap_mvn_cmd(test_cmd)
 		return build_report
 
-
 	def generate_mvn_unpack_depenedencies_cmd(self, module):
 		if module == self.repo_dir:
 			ans = 'mvn dependency:unpack-dependencies -fn'
@@ -796,6 +794,7 @@ class Repo(object):
 				os.path.basename(module))
 		ans += ' -f ' + self.repo_dir
 		return ans
+
 	def generate_mvn_copy_depenedencies_cmd(self, module):
 		if module == self.repo_dir:
 			ans = 'mvn dependency:copy-dependencies -fn'

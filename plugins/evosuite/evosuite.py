@@ -1,13 +1,12 @@
-import logging
 import os
-import sys
-import traceback
-import re
+
 from enum import Enum
+
 from mvnpy import mvn
 
 EVOSUITE_SUREFIRE_VERSION = '2.17'
 EVOSUITE_JAVA_VER = '1.8'
+EVOSUITE_VER = '1.6'
 
 
 class EvosuiteFactory(object):
@@ -19,6 +18,8 @@ class EvosuiteFactory(object):
 			return MAVENEvosuite(repo=repo)
 		if strategy == TestGenerationStrategy.CMD:
 			return CMDEvosuite(repo=repo)
+		if strategy == TestGenerationStrategy.CMD_BM:
+			return CMDEvosuite(repo=repo, ver='BM')
 
 
 class Evosuite(object):
@@ -120,10 +121,11 @@ class Evosuite(object):
 
 class CMDEvosuite(Evosuite):
 
-	def __init__(self, repo):
+	def __init__(self, repo, ver=EVOSUITE_VER):
 		super(CMDEvosuite, self).__init__(repo=repo)
+		self.ver = ver
 
-	def generate(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
+	def generate(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo.repo_dir
 		if not module == None:
 			inspected_module = module
@@ -135,7 +137,7 @@ class CMDEvosuite(Evosuite):
 		build_report += self.repo.copy_depenedencies(inspected_module)
 		build_report += self.repo.unpack_depenedencies(inspected_module)
 		for cut in classes:
-			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut)
+			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut, seed=seed)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
 			build_report += self.handle_post_generate(build_report, test_cmd, time_limit)
 		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
@@ -147,14 +149,16 @@ class CMDEvosuite(Evosuite):
 	def export(self):
 		pass
 
-	def generate_tests_generation_cmd(self, module, cut):
-		return '{} -projectCP {}  -class {} {}'.format(self.generate_evosuite_run_cmd(),
-		                                               self.generate_project_classpath(module),
-		                                               self.generate_target_class_mvn_names(cut),
-		                                               self.generate_configuration_params(module))
+	def generate_tests_generation_cmd(self, module, cut, seed=None):
+		return '{} -projectCP {} -class {} {}'.format(
+			self.generate_evosuite_run_cmd(),
+			self.generate_project_classpath(module),
+			self.generate_target_class_mvn_names(cut),
+			self.generate_configuration_params(module, seed)
+		)
 
 	def generate_evosuite_run_cmd(self):
-		return r'java -jar "{}"'.format(mvn.get_evosuite_path(evosuite_ver='1.6'))
+		return r'java -jar "{}"'.format(mvn.get_evosuite_path(evosuite_ver=self.ver))
 
 	def generate_target_classes_binaries_path(self, module):
 		return os.path.relpath(
@@ -163,16 +167,27 @@ class CMDEvosuite(Evosuite):
 
 	def generate_dependency_path(self, module):
 		return os.path.relpath(
-			reduce(lambda acc, curr: os.path.join(acc, curr), [module, 'target', 'dependency'])
-			, self.repo.repo_dir)
+			reduce(
+				lambda acc, curr: os.path.join(acc, curr),
+				[module, 'target', 'dependency']
+			),
+			self.repo.repo_dir
+		)
 
 	def generate_target_class_mvn_names(self, cut):
 		return cut
 
-	def generate_configuration_params(self, module):
-		return "-Dassertion_strategy=ALL " + \
-		       "-criterion BRANCH:EXCEPTION:METHOD " + \
-		       "-Dtest_dir={}".format(self.get_gen_test_dir(module))
+	def generate_configuration_params(self, module, seed=None):
+		return reduce(
+			lambda acc, curr: acc + " " + curr,
+			[
+				"-Dassertion_strategy=ALL",
+				"-criterion BRANCH:EXCEPTION:METHOD",
+				"-Dtest_dir={}".format(self.get_gen_test_dir(module)),
+				"-seed = {}".format(str(seed)) if seed is not None else ""
+			]
+		)
+
 
 	def generate_project_classpath(self, module):
 		return '{};{}'.format(
@@ -180,8 +195,12 @@ class CMDEvosuite(Evosuite):
 			self.generate_dependency_path(module)
 		)
 
+
 	def get_gen_test_dir(self, module):
-		return reduce(lambda acc, curr: os.path.join(acc, curr), [module, '.evosuite', 'best-tests'])
+		return reduce(
+			lambda acc, curr: os.path.join(acc, curr),
+			[module, '.evosuite', 'best-tests']
+		)
 
 
 class MAVENEvosuite(Evosuite):
@@ -189,7 +208,7 @@ class MAVENEvosuite(Evosuite):
 	def __init__(self, repo):
 		super(MAVENEvosuite, self).__init__(repo=repo)
 
-	def generate(self, module=None, classes=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
+	def generate(self, module=None, classes=[],seed = None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo.repo_dir if module == None else module
 		if not self.is_tests_generator_setup(inspected_module):
 			self.setup_tests_generator(inspected_module)
@@ -223,6 +242,7 @@ class MAVENEvosuite(Evosuite):
 class TestGenerationStrategy(Enum):
 	MAVEN = 1
 	CMD = 2
+	CMD_BM = 3
 
 
 class TestsGenerationError(mvn.MVNError):
