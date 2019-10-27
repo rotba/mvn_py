@@ -184,7 +184,7 @@ class CMDEvosuite(Evosuite):
 				"-Dassertion_strategy=ALL",
 				"-criterion BRANCH:EXCEPTION:METHOD",
 				"-Dtest_dir={}".format(self.get_gen_test_dir(module)),
-				"-seed = {}".format(str(seed)) if seed is not None else ""
+				"-seed={}".format(str(seed)) if seed is not None else ""
 			]
 		)
 
