@@ -11,7 +11,7 @@ EVOSUITE_VER = '1.6'
 
 class EvosuiteFactory(object):
 	@classmethod
-	def create(cls, repo, strategy=None):
+	def create(cls, repo, strategy=None, regression_repo=None):
 		if strategy == None:
 			return Evosuite(repo=repo)
 		if strategy == TestGenerationStrategy.MAVEN:
@@ -20,6 +20,8 @@ class EvosuiteFactory(object):
 			return CMDEvosuite(repo=repo)
 		if strategy == TestGenerationStrategy.CMD_BM:
 			return CMDEvosuite(repo=repo, ver='BM')
+		if strategy == TestGenerationStrategy.EVOSUITER:
+			return Evosuiter(repo=repo, regression_repo=regression_repo)
 
 
 class Evosuite(object):
@@ -126,16 +128,8 @@ class CMDEvosuite(Evosuite):
 		self.ver = ver
 
 	def generate(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
-		inspected_module = self.repo.repo_dir
-		if not module == None:
-			inspected_module = module
-		if not self.is_tests_generator_setup(inspected_module):
-			self.setup_tests_generator(inspected_module)
-		build_report = self.repo.compile(inspected_module)
-		if mvn.has_compilation_error(build_report):
-			raise mvn.MVNError(msg='Project didnt compile before tests generation', report=build_report)
-		build_report += self.repo.copy_depenedencies(inspected_module)
-		build_report += self.repo.unpack_depenedencies(inspected_module)
+		inspected_module = self.repo.repo_dir if module is None else module
+		build_report = self.prepare_repo(self.repo, module)
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut, seed=seed)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
@@ -144,6 +138,17 @@ class CMDEvosuite(Evosuite):
 		build_report += mvn.wrap_mvn_cmd(export_cmd, time_limit=time_limit)
 		if os.path.exists(os.path.join(self.repo.repo_dir, 'cutsFile.txt')):
 			os.remove(os.path.join(self.repo.repo_dir, 'cutsFile.txt'))
+		return build_report
+
+	def prepare_repo(self, repo, module=None):
+		inspected_module = repo.repo_dir if module is None else module
+		if not self.is_tests_generator_setup(inspected_module):
+			self.setup_tests_generator(inspected_module)
+		build_report = repo.compile(inspected_module)
+		if mvn.has_compilation_error(build_report):
+			raise mvn.MVNError(msg='Project didnt compile before tests generation', report=build_report)
+		build_report += repo.copy_depenedencies(inspected_module)
+		build_report += repo.unpack_depenedencies(inspected_module)
 		return build_report
 
 	def export(self):
@@ -188,13 +193,11 @@ class CMDEvosuite(Evosuite):
 			]
 		)
 
-
 	def generate_project_classpath(self, module):
 		return '{};{}'.format(
 			self.generate_target_classes_binaries_path(module),
 			self.generate_dependency_path(module)
 		)
-
 
 	def get_gen_test_dir(self, module):
 		return reduce(
@@ -203,12 +206,42 @@ class CMDEvosuite(Evosuite):
 		)
 
 
+class Evosuiter(CMDEvosuite):
+	def __init__(self, repo, regression_repo):
+		super(Evosuiter, self).__init__(repo=repo)
+		self.reg_repo = regression_repo
+
+	def generate(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
+		inspected_module = self.reg_repo.repo_dir if module is None else self.map_to_reg(module)
+		build_report = self.prepare_repo(self.reg_repo, inspected_module)
+		build_report += super(Evosuiter, self).generate(
+			module=module, classes=classes, seed=seed, time_limit=time_limit
+		)
+		return build_report
+
+	def generate_tests_generation_cmd(self, module, cut, seed=None):
+		return super(Evosuiter, self).generate_tests_generation_cmd(
+			module=module, cut=cut, seed=seed
+		) + ' -regressionSuite -Dregressioncp={}'.format(
+			self.generate_project_classpath(self.map_to_reg(module))
+		)
+
+	def map_to_reg(self, module):
+		return os.path.realpath(
+			os.path.join(
+				self.reg_repo.repo_dir,
+				os.path.relpath(module, self.repo.repo_dir)
+			)
+		)
+
+
+
 class MAVENEvosuite(Evosuite):
 
 	def __init__(self, repo):
 		super(MAVENEvosuite, self).__init__(repo=repo)
 
-	def generate(self, module=None, classes=[],seed = None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
+	def generate(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC):
 		inspected_module = self.repo.repo_dir if module == None else module
 		if not self.is_tests_generator_setup(inspected_module):
 			self.setup_tests_generator(inspected_module)
@@ -243,6 +276,7 @@ class TestGenerationStrategy(Enum):
 	MAVEN = 1
 	CMD = 2
 	CMD_BM = 3
+	EVOSUITER = 4
 
 
 class TestsGenerationError(mvn.MVNError):

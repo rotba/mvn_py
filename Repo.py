@@ -75,8 +75,11 @@ class Repo(object):
 		return build_report
 
 	# Generates tests. As for now implemented with evosuite
-	def generate_tests(self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC,strategy=TestGenerationStrategy.MAVEN):
-		return EvosuiteFactory.create(self, strategy).generate(module, classes, seed, time_limit)
+	def generate_tests(
+			self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC,
+			strategy=TestGenerationStrategy.MAVEN, regression_repo=None
+	):
+		return EvosuiteFactory.create(self, strategy, regression_repo).generate(module, classes, seed, time_limit)
 
 	# Executes mvn clean
 	def clean(self, module=None):
