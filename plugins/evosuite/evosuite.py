@@ -222,8 +222,9 @@ class Evosuiter(CMDEvosuite):
 	def generate_tests_generation_cmd(self, module, cut, seed=None):
 		return super(Evosuiter, self).generate_tests_generation_cmd(
 			module=module, cut=cut, seed=seed
-		) + ' -regressionSuite -Dregressioncp={}'.format(
-			self.generate_project_classpath(self.map_to_reg(module))
+		) + ' -regressionSuite -Dregressioncp={} -Dregression_fitness={}'.format(
+			self.generate_project_classpath(self.map_to_reg(module)),
+			self.pick_regression_fitness()
 		)
 
 	def map_to_reg(self, module):
@@ -234,6 +235,8 @@ class Evosuiter(CMDEvosuite):
 			)
 		)
 
+	def pick_regression_fitness(self):
+		return 'ALL_MEASURES'
 
 
 class MAVENEvosuite(Evosuite):
