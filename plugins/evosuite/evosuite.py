@@ -132,6 +132,7 @@ class CMDEvosuite(Evosuite):
 		build_report = self.prepare_repo(self.repo, module)
 		for cut in classes:
 			test_cmd = self.generate_tests_generation_cmd(module=inspected_module, cut=cut, seed=seed)
+			build_report += '\ncmd = {}\n\n'.format(test_cmd)
 			build_report += mvn.wrap_mvn_cmd(test_cmd, time_limit=time_limit, dir=self.repo.repo_dir)
 			build_report += self.handle_post_generate(build_report, test_cmd, time_limit)
 		export_cmd = self.generate_generate_tests_export_cmd(module=inspected_module, classes=classes)
