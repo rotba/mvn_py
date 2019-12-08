@@ -227,6 +227,17 @@ class Evosuiter(CMDEvosuite):
 			self.generate_project_classpath(self.map_to_reg(module)),
 			self.pick_regression_fitness()
 		)
+	def generate_target_classes_binaries_path(self, module):
+		return reduce(
+			lambda acc, curr: os.path.join(acc, curr),
+			[module, 'target', 'classes']
+		)
+
+	def generate_dependency_path(self, module):
+		return reduce(
+			lambda acc, curr: os.path.join(acc, curr),
+			[module, 'target', 'dependency']
+		)
 
 	def map_to_reg(self, module):
 		return os.path.realpath(
