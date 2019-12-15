@@ -248,7 +248,7 @@ class Evosuiter(CMDEvosuite):
 		)
 
 	def pick_regression_fitness(self):
-		return 'ALL_MEASURES'
+		return 'RANDOM'
 
 
 class MAVENEvosuite(Evosuite):
