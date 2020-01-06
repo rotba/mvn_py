@@ -2,7 +2,7 @@ import os
 import subprocess
 from threading import Timer
 from cStringIO import StringIO
-from bug  import BugError
+#from bug  import BugError
 import TestObjects
 import CompilationErrorObject
 import sys

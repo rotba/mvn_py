@@ -245,7 +245,7 @@ class Repo(object):
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        return JcovParser(target_dir, short_type).parse()
+        return JcovParser(target_dir, instrument_only_methods, short_type).parse()
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):
@@ -789,9 +789,21 @@ if __name__ == "__main__":
     # # exit()
     # jsons = repo.javadoc_command(r"c:\temp\jsons.json")
     # exit()
-    repo = Repo(r"C:\temp\defects4j-math2")
+    import os
+    repos_dir = r"Z:\ev_repos"
+    traces_dir = r"Z:\ev_traces"
+    skip = ["math", "ABDERA".lower()]
+    for d in os.listdir(repos_dir):
+        if d.lower() in skip:
+            continue
+        try:
+            repo = Repo(os.path.join(repos_dir, d))
+            if not os.path.exists(os.path.join(traces_dir, d)):
+                os.mkdir(os.path.join(traces_dir, d))
+            traces = repo.run_under_jcov(os.path.join(traces_dir, d), False, instrument_only_methods=False)
+        except:
+            pass
     # obs = repo.observe_tests()
-    traces = repo.run_under_jcov(r"C:\temp\traces", False, instrument_only_methods=True, tests_to_run=["org.apache.commons.math3.distribution.*"])
     # import networkx
     # for trace in traces:
     #     g = networkx.DiGraph()
