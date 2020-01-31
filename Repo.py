@@ -5,9 +5,9 @@ import xml.etree.ElementTree as ET
 from shutil import copyfile
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-
+import psutil
 from junitparser.junitparser import Error, Failure
-
+import time
 import TestObjects
 import mvn
 from jcov_parser import JcovParser
@@ -89,6 +89,21 @@ class Repo(object):
 		test_cmd = self.generate_mvn_clean_cmd(inspected_module)
 		build_report = mvn.wrap_mvn_cmd(test_cmd)
 		return build_report
+
+	# Executes mvn clean
+	def hard_clean(self, module=None):
+		build_report = ""
+		try:
+			for proc in psutil.process_iter():
+				if (time.time() - proc.create_time()) < 10 * 60 * 1:
+					proc.kill()
+		except Exception as e:
+			build_report+=str(e)
+		return "{}\n{}".format(
+			build_report,
+			self.clean(module=module)
+		)
+
 
 	# Executes mvn compile
 	def test_compile(self, module=None):
