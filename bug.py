@@ -5,7 +5,7 @@ import shutil
 from enum import Enum
 import csv
 import traceback
-from sfl_diagnoser.Diagnoser import diagnoserUtils
+#from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
 class Bug(object):
