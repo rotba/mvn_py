@@ -46,6 +46,7 @@ class Repo(object):
         self.DEFAULT_ES_VERSION = '1.0.6'
         self.DEFAULT_SUREFIRE_VERSION = '2.17'
         self.DEFAULT_JUNIT_VERSION = '4.12'
+        self.build_report = None
 
     @property
     def repo_dir(self):
@@ -241,7 +242,7 @@ class Repo(object):
         os.remove(path_to_template)
         jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
-        self.install(debug=debug, module=module, tests_to_run=tests_to_run)
+        self.build_report = self.install(debug=debug, module=module, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
