@@ -6,6 +6,8 @@ from cStringIO import StringIO
 from threading import Timer
 import json
 import CompilationErrorObject
+from cStringIO import StringIO
+#from bug  import BugError
 import TestObjects
 
 CONFIG_FILE =reduce( lambda acc,curr: os.path.join(acc,curr), [os.path.dirname(os.path.realpath(__file__)), 'config', 'config.json'])

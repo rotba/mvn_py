@@ -8,7 +8,9 @@ import traceback
 from pathlib import Path
 
 from enum import Enum
-# from sfl_diagnoser.Diagnoser import diagnoserUtils
+import csv
+import traceback
+#from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
 class Bug(object):

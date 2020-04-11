@@ -1,93 +1,9 @@
-import csv
 import functools
 import os
+import gc
 import xml.etree.cElementTree as et
 
-import csv
-import functools
-import os
-import xml.etree.cElementTree as et
-import re
-
-
-class PrimitiveTypes(object):
-    PRIMITIVES = {'Z': "boolean", 'V': "void", 'I': "int", 'J': "long", 'C': "char", 'B': "byte", 'D': "double",
-                  'S': "short", 'F': "float"}
-
-    @staticmethod
-    def get_primitive_type(primitive):
-        return PrimitiveTypes.PRIMITIVES[primitive]
-
-
-class Signature(object):
-    MATCHER = re.compile("\\(([^\\)]*)\\)(.*)")
-
-    def __init__(self, vmsig):
-        self.vmsig = vmsig
-        m = Signature.MATCHER.match(self.vmsig)
-        self.return_value = Signature.convert_vm_type(m.group(2))
-        self.args = Signature.get_args(m.group(1))
-
-    @staticmethod
-    def convert_vm_type(vm_type):
-        return Signature.get_type_name(vm_type.replace('/', '.'))
-
-    @staticmethod
-    def get_type_name(vm_type):
-        dims = 0
-        while vm_type[dims] == '[':
-            dims += 1
-        type = ''
-        if vm_type[dims] == 'L':
-            type = vm_type[dims + 1: len(vm_type) - 1]
-        else:
-            type = PrimitiveTypes.get_primitive_type(vm_type[dims])
-        return type + "[]" * dims
-
-    @staticmethod
-    def get_args(descr):
-        if descr == "":
-            return descr
-        pos = 0
-        last_pos = len(descr)
-        args = ''
-        dims = 0
-        while pos < last_pos:
-            ch = descr[pos]
-            if ch == 'L':
-                delimPos = descr.find(';', pos)
-                if delimPos == -1:
-                    delimPos = last_pos
-                type = Signature.convert_vm_type(descr[pos: delimPos + 1])
-                pos = delimPos + 1
-            elif ch == '[':
-                dims += 1
-                pos += 1
-                continue
-            else:
-                type = PrimitiveTypes.get_primitive_type(ch)
-                pos += 1
-            args += type + "[]" * dims
-            dims = 0
-            if pos < last_pos:
-                args += ';'
-        return args
-
-
-class Trace(object):
-    def __init__(self, test_name, trace):
-        self.test_name = test_name
-        self.trace = map(lambda t: t.lower(), trace)
-
-    def files_trace(self):
-        return list(set(map(lambda x: ".".join((x.split("(")[0].split(".")[:-1])), self.trace)))
-
-    def get_trace(self, trace_granularity="Method"):
-        if trace_granularity == "Method":
-            return list(set(self.trace))
-        elif trace_granularity == "File":
-            return self.files_trace()
-        assert False, "granularity is {0}".format(trace_granularity)
+from trace_information import Signature, TraceElement, Trace
 
 
 class JcovParser(object):
@@ -96,32 +12,40 @@ class JcovParser(object):
     METHENTER = "<meth"
     CSV_HEADER = ["component", "hit_count"]
 
-    def __init__(self, xml_folder_dir, instrument_only_methods=True):
+    def __init__(self, xml_folder_dir, instrument_only_methods=True, short_type=True):
         self.jcov_files = map(lambda name: os.path.join(xml_folder_dir, name),
                               filter(lambda name: name.endswith('.xml'), os.listdir(xml_folder_dir)))
         self.instrument_only_methods = instrument_only_methods
-        self.ids = self._get_method_ids()
+        self.prefixes = set()
+        if self.instrument_only_methods:
+            self.prefixes.add(JcovParser.METH)
+        self.method_name_by_id = self._get_method_ids(short_type)
         self.lines_to_read = self._get_methods_lines()
 
     def parse(self):
-        traces = {}
         for jcov_file in self.jcov_files:
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
-            traces[test_name] = self._parse_jcov_file(jcov_file, test_name)
-        return traces
+            yield self._parse_jcov_file(jcov_file, test_name)
 
     def _parse_jcov_file(self, jcov_file, test_name):
-        counts = self._get_methenter_ids_counts(jcov_file)
-        return Trace(test_name, map(lambda id: self.ids[id], counts))
+        gc.collect()
+        trace = self._get_trace_for_file(jcov_file)
+        method_name_by_extra_slot = dict(map(lambda e: (e.extra_slot, self.method_name_by_id[e.id]),filter(lambda e: hasattr(e,'extra_slot'),trace.values())))
+        method_name_by_extra_slot[-1] = 'None'
+        map(lambda element: element.set_previous_method(method_name_by_extra_slot), trace.values())
+        return Trace(test_name, trace)
 
-    def _get_methenter_ids_counts(self, jcov_file):
-        counts = {}
+    def _get_trace_for_file(self, jcov_file):
+        trace = {}
         for method in self._get_lines_by_inds(jcov_file):
+            prefix = filter(lambda prefix: method.startswith(prefix), self.prefixes)[0]
             data = dict(map(lambda val: val.split('='),
-                            method[len(JcovParser.METHENTER) + 1:-len(JcovParser.CLOSER)].replace('"', "").split()))
-            if data.has_key('count') and data.has_key('id') and int(data.get('count')):
-                counts[data["id"]] = data.get('count')
-        return counts
+                            method[len(prefix) + 1:-len(JcovParser.CLOSER)].replace('"', "").split()))
+            trace_element = TraceElement(data, self.method_name_by_id)
+            if trace_element.have_count():
+                assert trace_element.id not in trace
+                trace[trace_element.id] = trace_element
+        return trace
 
     def _get_lines_by_inds(self, file_path):
         with open(file_path) as f:
@@ -132,13 +56,8 @@ class JcovParser(object):
                 yield next(f).strip()
 
     def _get_methods_lines(self):
-        method_prefix =  JcovParser.METH
-        if not self.instrument_only_methods:
-            method_prefix = JcovParser.METHENTER
         with open(self.jcov_files[0]) as f:
-            return map(lambda line: line[0],
-                       filter(lambda line: method_prefix in line[1] and JcovParser.CLOSER in line[1],
-                              enumerate(f.readlines())))
+            return map(lambda line: line[0], filter(lambda line: any(map(lambda prefix: prefix in line[1], self.prefixes)), filter(lambda line: JcovParser.CLOSER in line[1], enumerate(f.readlines()))))
 
     @staticmethod
     def get_children_by_name(element, name):
@@ -153,24 +72,75 @@ class JcovParser(object):
                                                    JcovParser.get_children_by_name(elem[1], name)), elements), [])
         return elements
 
-    def _get_method_ids(self):
+    def _get_method_ids(self, short_type):
         root = et.parse(self.jcov_files[0]).getroot()
         method_ids = {}
         for method_path, method in JcovParser.get_elements_by_path(root, ['package', 'class', 'meth']):
             package_name, class_name, method_name = map(lambda elem: elem.attrib['name'], method_path)
             if method_name == '<init>':
                 method_name = class_name
-            method_name = ".".join([package_name, class_name, method_name]) + "({0})".format(Signature(method.attrib['vmsig']).args)
+            elif method_name == '<clinit>':
+                method_name = class_name + "_" + "init"
+            method_name = ".".join([package_name, class_name, method_name]) + "({0})".format(
+                Signature(method.attrib['vmsig'], short_type).args)
             id = 0
+            extra_slot = 0
             if self.instrument_only_methods:
                 id = method.attrib['id']
+                extra_slot = method.attrib['extra_slots']
+                method_ids[int(id)] = method_name
             else:
-                id = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['id']
-            method_ids[id] = method_name
+                # id = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['id']
+                # extra_slot = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['extra_slots']
+                method_ids.update(self._get_method_blocks_ids(method, method_name))
+
         return method_ids
+
+    def _get_method_blocks_ids(self, method_et, method_name):
+        ids = {}
+        for et in method_et.getchildren():
+            id = et.attrib.get("id")
+            if id:
+                prefix = et.tag.split("}")[1]
+                self.prefixes.add("<" + prefix)
+                ids[int(id)] = method_name + "." + prefix
+            else:
+                ids.update(self._get_method_blocks_ids(et, method_name))
+        return ids
 
 
 if __name__ == "__main__":
-    traces = JcovParser(r"C:\Users\deanc\Desktop\workspaces\java\subjects\commons-math\dbguer\traces").parse()
-    print traces
+    import json
+    import networkx
+    parser = JcovParser(r"Z:\ev_traces\DOXIA", False)
+    traces = parser.parse()
+    g = networkx.DiGraph()
+    for method in parser.method_name_by_id:
+        splitted = parser.method_name_by_id[method].split(".")
+        package_name = ".".join(splitted[:-4])
+        class_name = ".".join(splitted[:-3])
+        function_name = ".".join(splitted[:-2])
+        block_name = ".".join(splitted[:-1])
+        g.add_node(package_name, type="package")
+        g.add_node(class_name, type="class")
+        g.add_node(function_name, type="function")
+        g.add_node(block_name, type="block")
+        g.add_edge(package_name, class_name)
+        g.add_edge(class_name, function_name)
+        g.add_edge(function_name, block_name)
+    networkx.write_gexf(g, r"z:\temp\ids.gexf")
+    with open(r"z:\temp\ids.json", "wb") as f:
+        json.dump(parser.method_name_by_id, f)
+
+    with open(r"z:\temp\traces.json", "wb") as f:
+        json.dump(dict(map(lambda trace: (trace.test_name, trace.get_trace()), traces)), f)
+    exit()
+    for trace in traces:
+        g = networkx.DiGraph()
+        g.add_edges_from(traces[trace].get_execution_edges())
+        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_execution.gexf"))
+        g = networkx.DiGraph()
+        g.add_edges_from(traces[trace].get_call_graph_edges())
+        networkx.write_gexf(g, os.path.join(r"C:\Temp\trace_grpahs", trace + "_call_graph.gexf"))
+        pass
     pass
