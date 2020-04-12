@@ -53,6 +53,7 @@ class Repo(object):
         self.DEFAULT_XERCES_VERSION = '2.11.0'
         self.MAVEN_COMPILER_SOURCE = None
         self.build_report = None
+        self.traces = None
 
     @property
     def repo_dir(self):
@@ -363,7 +364,8 @@ class Repo(object):
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        return JcovParser(target_dir, instrument_only_methods, short_type).parse()
+        self.traces = list(JcovParser(target_dir, instrument_only_methods, short_type).parse())
+        return self.traces
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):
