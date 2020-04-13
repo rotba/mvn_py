@@ -15,7 +15,7 @@ import traceback
 
 class Bug(object):
     def __init__(self, issue_key, commit_hexsha, parent_hexsha, fixed_testcase, bugged_testcase, type, valid, desc,
-                 traces=[], bugged_components=[], extra_desc = ''):
+                 traces=[], bugged_components=[], extra_desc = '', blamed_components=None, diff=None):
         self._issue_key = issue_key
         self._commit_hexsha = commit_hexsha
         self._parent_hexsha = parent_hexsha
@@ -28,6 +28,8 @@ class Bug(object):
         self._valid = valid
         self._traces = traces
         self._bugged_components = bugged_components
+        self.blamed_components = blamed_components if blamed_components else []
+        self.diff = diff if diff else ''
         self._has_annotations = 'Test' in list(map(lambda a: a.name, self._bugged_testcase.method.annotations))
 
     @property
@@ -320,7 +322,7 @@ class Bug_csv_report_handler(object):
         self._writer = None
         self._path = path
         self._fieldnames = ['valid', 'type', 'issue', 'module', 'commit', 'parent', 'testcase', 'has_test_annotation',
-                             'traces', 'bugged_components','description', 'extra_description']
+                             'traces', 'bugged_components','description', 'extra_description', 'blamed_components', 'diff']
         if not os.path.exists(path):
             with open(self._path, 'w+') as csv_output:
                 writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
@@ -351,8 +353,10 @@ class Bug_csv_report_handler(object):
                 'has_test_annotation': bug.has_test_annotation,
                 'description': bug.desctiption,
                 'traces': bug.traces,
-                'bugged_components': bug.bugged_components,
-                'extra_description':bug.extra_desc
+                'bugged_components': "@".join(bug.bugged_components),
+                'extra_description': bug.extra_desc,
+                'blamed_components': "@".join(bug.blamed_components),
+                'diff' : bug.diff
                 }
 
     @property
@@ -458,11 +462,17 @@ class Description_type(Enum):
         return self.value
 
 
-def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components):
-    if testcase.passed and parent_testcase.failed:
+def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components, blamed_components=None, diff=None, check_trace=False):
+    trace = True
+    if check_trace:
+        if blamed_components:
+           trace = True
+        else:
+            trace = False
+    if testcase.passed and parent_testcase.failed and trace:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase, type=type, valid=True, desc='',
-                   traces=traces, bugged_components=bugged_components)
+                   traces=traces, bugged_components=bugged_components, blamed_components=blamed_components, diff=diff)
     elif testcase.passed and parent_testcase.has_error:
         return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,

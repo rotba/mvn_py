@@ -2,7 +2,7 @@ import os
 import re
 import tempfile
 import xml.etree.ElementTree as ET
-from shutil import copyfile
+from shutil import copyfile, rmtree
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
 import psutil
@@ -62,7 +62,7 @@ class Repo(object):
     # Executes mvn test
     #def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False, tests_to_run=None):
 
-    def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False):
+    def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False, tests_to_run=None):
         self.change_surefire_ver()
         inspected_module = self.repo_dir
         if module is not None:
@@ -351,20 +351,26 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, testcases=None):
+    def run_under_jcov(self, target_dir=None, debug=False, instrument_only_methods=True, short_type=True, module=None, testcases=None, tests_to_run=None):
         self.test_compile()
+        if target_dir is None:
+            target = tempfile.mkdtemp()
+        else:
+            target = target_dir
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         f, path_to_template = tempfile.mkstemp()
         os.close(f)
         os.remove(path_to_template)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
-        self.build_report = self.install(debug=debug, module=module, testcases=testcases)
+        self.build_report = self.install(debug=debug, module=module, testcases=testcases, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        self.traces = list(JcovParser(target_dir, instrument_only_methods, short_type).parse())
+        self.traces = list(JcovParser(target, instrument_only_methods, short_type).parse())
+        if target_dir is None:
+            rmtree(target)
         return self.traces
 
     # Changes all the pom files in a module recursively
