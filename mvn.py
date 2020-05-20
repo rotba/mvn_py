@@ -266,13 +266,16 @@ def parse_tests(tests_dir):
     return ans
 
 
-def wrap_mvn_cmd(cmd, time_limit = sys.maxint, dir=None):
+def wrap_mvn_cmd(cmd, time_limit = sys.maxint, dir=None, env=None):
     output_tmp_files_dir = os.path.join('tmp_files','stdout_duplication')
     if not os.path.isdir(output_tmp_files_dir):
         os.makedirs(output_tmp_files_dir)
     tmp_file_path = os.path.join(output_tmp_files_dir,'tmp_file.txt')
     with open(tmp_file_path, 'w+') as tmp_f:
-        proc = subprocess.Popen(cmd, shell=True,stdout=tmp_f, cwd=dir)
+        my_env = os.environ.copy()
+        if env:
+            my_env.update(env)
+        proc = subprocess.Popen(cmd, shell=True,stdout=tmp_f, cwd=dir, env=my_env)
         t = Timer(time_limit, kill, args=[proc])
         t.start()
         proc.wait()

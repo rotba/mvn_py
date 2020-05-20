@@ -42,7 +42,8 @@ class PomPlugin(object):
     @staticmethod
     def get_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        return filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugins(pom))
+        ans = filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom))
+        return ans
 
     @staticmethod
     def get_report_plugin_by_name(pom, plugin_name):

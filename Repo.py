@@ -52,13 +52,13 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False, tests_to_run=None):
+    def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False, tests_to_run=None, env=None):
         self.change_surefire_ver()
         inspected_module = self.repo_dir
         if module is not None:
             inspected_module = module
         install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug, tests_to_run=tests_to_run)
-        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir)
+        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir, env=env)
         return build_report
 
     # Executes mvn test
@@ -241,7 +241,7 @@ class Repo(object):
         os.remove(path_to_template)
         jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
-        self.install(debug=debug, module=module, tests_to_run=tests_to_run)
+        self.install(debug=debug, module=module, tests_to_run=tests_to_run, env=jcov.env)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
@@ -728,6 +728,9 @@ class Repo(object):
 
 
 if __name__ == "__main__":
+    repo = Repo(r"Z:\component_importance\COMPRESS\clones\187")
+    repo.run_under_jcov(r"c:\temp\trace")
+    exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()
     # pass
