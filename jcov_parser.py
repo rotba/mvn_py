@@ -57,7 +57,7 @@ class JcovParser(object):
 
     def _get_methods_lines(self):
         with open(self.jcov_files[0]) as f:
-            return map(lambda line: line[0], filter(lambda line: any(map(lambda prefix: prefix in line[1], self.prefixes)), filter(lambda line: JcovParser.CLOSER in line[1], enumerate(f.readlines()))))
+            return list(map(lambda line: line[0], filter(lambda line: any(map(lambda prefix: prefix in line[1], self.prefixes)), filter(lambda line: JcovParser.CLOSER in line[1], enumerate(f.readlines())))))
 
     @staticmethod
     def get_children_by_name(element, name):

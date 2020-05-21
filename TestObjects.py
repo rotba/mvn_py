@@ -137,7 +137,7 @@ class TestCase(object):
     def __init__(self, method, class_decl, parent):
         self._parent = parent
         self._method = method
-        self._mvn_name = self.parent.mvn_name + '#' + self.method.name
+        self._mvn_name = self.parent.mvn_name + '.' + self.method.name
         self.class_decl = class_decl
         self._id = self.generate_id()
         self._report = None
@@ -297,10 +297,11 @@ class TestCase(object):
 
 
 class TestClassReport(object):
-    def __init__(self, xml_doc_path, modlue_path):
+    def __init__(self, xml_doc_path, modlue_path, observed_tests=None):
         if not os.path.isfile(xml_doc_path):
             raise TestParserException('No such report file :' + xml_doc_path)
         self.xml_path = xml_doc_path
+        self.observed_tests = observed_tests
         self.success_testcases = []
         self.failed_testcases = []
         self._testcases = []
@@ -312,7 +313,7 @@ class TestClassReport(object):
         self._name = root.get('name')
         self._src_file_path = self.parse_src_path()
         for testcase in root.findall('testcase'):
-            m_test = TestCaseReport(testcase, self)
+            m_test = TestCaseReport(testcase, self, self.observed_tests)
             if m_test.passed:
                 self.success_testcases.append(m_test)
             else:
@@ -376,12 +377,13 @@ class TestClassReport(object):
 
 
 class TestCaseReport(object):
-    def __init__(self, testcase, parent):
+    def __init__(self, testcase, parent, observed_tests=None):
         self._parent = parent
         self.testcase_tag = testcase
-        self._name = self.parent.name + '#' + self.testcase_tag.get('name')
-        self._time = float(re.sub('[,]', '', self.testcase_tag.get('time')))
-        self._passed = False
+        self._name = self.parent.name + '.' + self.testcase_tag.get('name')
+        self.test_result = list(filter(lambda x: x.full_name == self.parent.name + '.' + self.testcase_tag.get('name'), observed_tests))[0]
+        self._time = self.test_result.time
+        self._passed = self.test_result.is_passed()
         self._failed = False
         self._has_error = False
         failure = self.testcase_tag.find('failure')

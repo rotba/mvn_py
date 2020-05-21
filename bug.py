@@ -126,13 +126,13 @@ class Bug_data_handler(object):
         if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
             try:
                 matrix_path = os.path.join(path_to_bug_testclass, 'Matrix_' + bug.bugged_testcase.method.name + '.txt')
-                diagnoserUtils.write_planning_file(
-                    out_path=matrix_path,
-                    bugs=bug.bugged_components,
-                    tests_details=[(bug.bugged_testcase.mvn_name, bug.traces, int(bug.bugged_testcase.passed))]
-                )
+                # diagnoserUtils.write_planning_file(
+                #     out_path=matrix_path,
+                #     bugs=bug.bugged_components,
+                #     tests_details=[(bug.bugged_testcase.mvn_name, bug.traces, int(bug.bugged_testcase.passed))]
+                # )
             except Exception as e:
-                raise BugError(msg='Failed to create the matrix. Error:\n' + e.msg + '\n' + traceback.format_exc())
+                raise BugError(msg='Failed to create the matrix. Error:\n' + e.message + '\n' + traceback.format_exc())
 
     # Adds bugs to the csv file
     def add_bugs(self, bugs):
@@ -151,7 +151,7 @@ class Bug_data_handler(object):
             if not testcase.parent in testclasses:
                 testclasses.append(testcase.parent)
         for testclass in testclasses:
-            testclass_path = self.get_testclass_path(issue.key, commit.hexsha, testclass.id)
+            testclass_path = self.get_testclass_path(issue, commit.hexsha, testclass.id)
             report_copy_path = os.path.join(testclass_path, os.path.basename(testclass.get_report_path()))
             os.system(
                 'copy ' + testclass.get_report_path().replace('/', '\\') + ' ' + report_copy_path.replace('/', '\\'))
@@ -181,7 +181,7 @@ class Bug_data_handler(object):
         ans = {}
 
         def set_up_issue_dir():
-            path_to_bug_dir = os.path.join(self.path, issue.key)
+            path_to_bug_dir = os.path.join(self.path, issue)
             if not os.path.isdir(path_to_bug_dir):
                 os.makedirs(path_to_bug_dir)
             return path_to_bug_dir
@@ -199,7 +199,7 @@ class Bug_data_handler(object):
             return path_to_pom_dir
 
         def set_up_module_inspection_dir():
-            path = os.path.join(self.path, reduce_module_inspection_path(issue.key, commit.hexsha, module, root_module))
+            path = os.path.join(self.path, reduce_module_inspection_path(issue, commit.hexsha, module, root_module))
             if not os.path.isdir(path):
                 os.makedirs(path)
 
@@ -214,7 +214,7 @@ class Bug_data_handler(object):
     def cast_tests(self, issue, commit, testclasses):
         return self.set_up_class_dirs(
             testclasses=testclasses,
-            path_to_commit_dir=reduce(lambda acc, curr: os.path.join(acc, curr), [self.path, issue.key, commit.hexsha])
+            path_to_commit_dir=reduce(lambda acc, curr: os.path.join(acc, curr), [self.path, issue, commit.hexsha])
         )
 
     def set_up_class_dirs(self, testclasses, path_to_commit_dir):
@@ -469,26 +469,26 @@ def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, b
            trace = True
         else:
             trace = False
-    if testcase.passed and parent_testcase.failed and trace:
-        return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
-                   fixed_testcase=testcase, bugged_testcase=parent_testcase, type=type, valid=True, desc='',
+    if testcase.passed and parent_testcase.failed:
+        return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
+                   fixed_testcase=testcase, bugged_testcase=parent_testcase, type=type, valid=trace, desc='',
                    traces=traces, bugged_components=bugged_components, blamed_components=blamed_components, diff=diff)
     elif testcase.passed and parent_testcase.has_error:
-        return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
+        return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
                    type=type, valid=False, desc=invalid_rt_error_desc,
                    traces=traces, bugged_components=bugged_components, extra_desc=parent_testcase.get_error())
     elif testcase.passed and parent_testcase.passed:
-        return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
+        return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
                    type=type, valid=False, desc=invalid_passed_desc, traces=traces, bugged_components=bugged_components)
     elif testcase.failed:
-        return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
+        return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
                    type=type, valid=False, desc=invalid_not_fixed_failed_desc, traces=traces,
                    bugged_components=bugged_components)
     elif testcase.has_error:
-        return Bug(issue_key=issue.key, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
+        return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
                    type=type, valid=False, desc=invalid_not_fixed__error_desc + ' ' + testcase.get_error(),
                    traces=traces, bugged_components=bugged_components)

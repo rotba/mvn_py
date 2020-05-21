@@ -17,12 +17,13 @@ from pom_file import Pom
 
 
 class TestResult(object):
-    def __init__(self, junit_test, suite_name=None):
+    def __init__(self, junit_test, suite_name=None, report_file=None):
         self.junit_test = junit_test
         self.classname = junit_test.classname or suite_name
         self.name = junit_test.name
         self.time = junit_test.time
         self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name)
+        self.report_file = report_file
         result = 'pass'
         if type(junit_test.result) is Error:
             result = 'error'
@@ -700,16 +701,16 @@ class Repo(object):
 
     def observe_tests(self):
         from junitparser import JUnitXml
-        outcomes = {}
+        self.test_results = {}
         for report in self.get_surefire_files():
             try:
                 suite = JUnitXml.fromfile(report)
                 for case in suite:
-                    test = TestResult(case, suite.name)
-                    outcomes[test.full_name.lower()] = test
+                    test = TestResult(case, suite.name, report)
+                    self.test_results[test.full_name.lower()] = test
             except Exception as e:
                 pass
-        return outcomes
+        return self.test_results
 
     def get_surefire_files(self):
         SURFIRE_DIR_NAME = 'surefire-reports'
@@ -722,6 +723,7 @@ class Repo(object):
 
     # Returns the dictionary that map testcase string to its traces strings
     def get_traces(self, testcase_name=''):
+        return self.traces
         ans = {}
         debugger_tests_dir = os.path.relpath(os.path.join(self.repo_dir, r'../../DebuggerTests'))
         if not os.path.isdir(debugger_tests_dir):
@@ -741,6 +743,7 @@ class Repo(object):
 
     # Returns the dictionary that map testcase string to its traces strings
     def get_trace(self, testcase_name):
+        return filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces)[0]
         ans = []
         dict = self.get_traces(testcase_name=testcase_name)
         if not len(dict) == 1:
