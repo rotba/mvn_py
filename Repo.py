@@ -350,6 +350,13 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
+    def has_surefire(self):
+        for pom_file in self.get_all_pom_paths(self._repo_dir):
+            pom = Pom(pom_file)
+            if pom.has_surefire():
+                return True
+        return False
+
     def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None):
         self.test_compile()
         if target_dir is None:
