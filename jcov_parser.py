@@ -109,6 +109,14 @@ class JcovParser(object):
         return ids
 
 
+def block_to_comps(block):
+    splitted = block.split(".")
+    package_name = ".".join(splitted[:-3])
+    class_name = ".".join(splitted[:-2])
+    function_name = ".".join(splitted[:-1])
+    block_name = ".".join(splitted)
+    return [package_name, class_name, function_name, block_name]
+
 if __name__ == "__main__":
     import json
     import networkx
@@ -117,10 +125,10 @@ if __name__ == "__main__":
     g = networkx.DiGraph()
     for method in parser.method_name_by_id:
         splitted = parser.method_name_by_id[method].split(".")
-        package_name = ".".join(splitted[:-4])
-        class_name = ".".join(splitted[:-3])
-        function_name = ".".join(splitted[:-2])
-        block_name = ".".join(splitted[:-1])
+        package_name = ".".join(splitted[:-3])
+        class_name = ".".join(splitted[:-2])
+        function_name = ".".join(splitted[:-1])
+        block_name = ".".join(splitted)
         g.add_node(package_name, type="package")
         g.add_node(class_name, type="class")
         g.add_node(function_name, type="function")
@@ -133,7 +141,7 @@ if __name__ == "__main__":
         json.dump(parser.method_name_by_id, f)
 
     with open(r"z:\temp\traces.json", "wb") as f:
-        json.dump(dict(map(lambda trace: (trace.test_name, trace.get_trace()), traces)), f)
+        json.dump(dict(map(lambda trace: (trace.test_name, list(set(reduce(list.__add__, map(block_to_comps, trace.get_trace()), [])))), traces)), f)
     exit()
     for trace in traces:
         g = networkx.DiGraph()

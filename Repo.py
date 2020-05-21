@@ -61,15 +61,13 @@ class Repo(object):
         return self._repo_dir
 
     # Executes mvn test
-    #def install(self, module=None, testcases=[], time_limit=sys.maxint, debug=False, tests_to_run=None):
-
-    def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False, tests_to_run=None):
+    def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False, tests_to_run=None, env=None):
         self.change_surefire_ver()
         inspected_module = self.repo_dir
         if module is not None:
             inspected_module = module
         install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug, tests_to_run=tests_to_run)
-        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir)
+        build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir, env=env)
         return build_report
 
     # Executes mvn test
@@ -352,7 +350,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def run_under_jcov(self, target_dir=None, debug=False, instrument_only_methods=True, short_type=True, module=None, testcases=None, tests_to_run=None):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None):
         self.test_compile()
         if target_dir is None:
             target = tempfile.mkdtemp()
@@ -894,6 +892,9 @@ class Repo(object):
 
 
 if __name__ == "__main__":
+    repo = Repo(r"Z:\component_importance\WAGON\clones\217")
+    repo.run_under_jcov(r"c:\temp\trace")
+    exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()
     # pass

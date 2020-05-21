@@ -42,6 +42,7 @@ class JcovTracer(object):
         self.instrument_only_methods = instrument_only_methods
         self.agent_port = str(self.get_open_port())
         self.command_port = str(self.get_open_port())
+        self.env = {"JcovGrabberCommandPort": self.command_port}
         assert os.environ['JAVA_HOME'], "java home is not configured"
 
     def get_open_port(self):

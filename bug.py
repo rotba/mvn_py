@@ -10,7 +10,7 @@ from pathlib import Path
 from enum import Enum
 import csv
 import traceback
-#from sfl_diagnoser.Diagnoser import diagnoserUtils
+# from sfl_diagnoser.Diagnoser import diagnoserUtils
 
 
 class Bug(object):
@@ -246,6 +246,28 @@ class Bug_data_handler(object):
                 ans += self.get_testclass_bugs(full_file_path)
         return ans
 
+    def get_all_bugs(self):
+        import glob
+        class BugRep(object):
+            def __init__(self, issue, commit, patch):
+                self.issue, self.commit, self.patch = issue, commit, patch
+        for issue_key in os.listdir(self.path):
+            issue_dir = os.path.join(self.path, issue_key)
+            if not os.path.isdir(issue_dir):
+                continue
+            for commit_hexsha in os.listdir(issue_dir):
+                commit_dir = os.path.join(issue_dir, commit_hexsha)
+                if not os.path.isdir(commit_dir):
+                    continue
+                for filename in os.listdir(commit_dir):
+                    full_file_path = os.path.join(commit_dir, filename)
+                    if os.path.isdir(full_file_path):
+                        x = self.get_testclass_bugs(full_file_path)
+                        if x:
+                            for y in x:
+                                yield y
+                        # ans.append(BugRep(issue_dir, commit_hexsha, glob.glob(os.path.join(full_file_path, "*.patch"))))
+
     # Returns all teh bugs in testcalss path
     def get_testclass_bugs(self, testclass_path):
         ans = []
@@ -253,7 +275,7 @@ class Bug_data_handler(object):
             if filename.endswith(".pickle"):
                 full_path = os.path.join(testclass_path, filename)
                 with open(full_path, 'rb') as bug_file:
-                    ans.append(pickle.load(bug_file))
+                    ans.append(pickle.loads(bug_file.read().replace("mvnpy.", "")))
         return ans
 
     # Gets the patch applying bug
@@ -430,8 +452,8 @@ class Bug_type(Enum):
     DELTA_2 = "Delta^2"
     DELTA_3 = "Delta^3"
     REGRESSION = "Regression"
-    GEN = "Auto-generated"
-
+    GEN = "gen"
+    A = "Auto-generated"
     def __str__(self):
         return self.value
 
