@@ -749,12 +749,6 @@ class Repo(object):
     # Returns the dictionary that map testcase string to its traces strings
     def get_trace(self, testcase_name):
         return filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces)[0]
-        ans = []
-        dict = self.get_traces(testcase_name=testcase_name)
-        if not len(dict) == 1:
-            return ans
-        ans = dict[dict.keys()[0]]
-        return ans
 
     # Returns the pom path associated with the given module
     def get_pom(self, module):
