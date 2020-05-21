@@ -233,6 +233,14 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
+    def has_surefire(self):
+        has_surefire = False
+        for pom_file in self.get_all_pom_paths(self._repo_dir):
+            pom = Pom(pom_file)
+            if pom.has_surefire():
+                return True
+            return False
+
     def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None):
         self.test_compile()
         f, path_to_classes_file = tempfile.mkstemp()
@@ -729,7 +737,7 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"Z:\component_importance\COMPRESS\clones\187")
+    repo = Repo(r"Z:\component_importance\WAGON\clones\217")
     repo.run_under_jcov(r"c:\temp\trace")
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")

@@ -42,7 +42,7 @@ class PomPlugin(object):
     @staticmethod
     def get_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        ans = filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom))
+        ans = list(filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom)))
         return ans
 
     @staticmethod
@@ -158,3 +158,6 @@ class Pom(object):
 
     def save(self):
         self.element_tree.write(self.pom_path, xml_declaration=True)
+
+    def has_surefire(self):
+        return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) > 0
