@@ -285,14 +285,11 @@ def parse_tests(tests_dir):
 
 
 def wrap_mvn_cmd(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC, dir=None, env=None):
-    output_tmp_files_dir = os.path.join('tmp_files', 'stdout_duplication')
+    output_tmp_files_dir = os.path.abspath(os.path.join('tmp_files', 'stdout_duplication'))
     if not os.path.isdir(output_tmp_files_dir):
         os.makedirs(output_tmp_files_dir)
     tmp_file_path = os.path.join(output_tmp_files_dir, 'tmp_file.txt')
     with open(tmp_file_path, 'w+') as tmp_f:
-        build_report = tmp_f.read()
-        if DEBUG:
-            print(build_report)
         my_env = os.environ.copy()
         if env:
             my_env.update(env)
@@ -301,6 +298,10 @@ def wrap_mvn_cmd(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC, dir=None, env=Non
         t.start()
         proc.wait()
         t.cancel()
+        tmp_f.seek(0)
+        build_report = tmp_f.read()
+        if DEBUG:
+            print(build_report)
     if not time_limit == MVN_MAX_PROCCESS_TIME_IN_SEC and not (
             '[INFO] BUILD SUCCESS' in build_report or '[INFO] BUILD FAILURE' in build_report or '* Computation finished' in build_report):
         raise MVNTimeoutError('Build took too long', build_report, trace=traceback.format_exc())

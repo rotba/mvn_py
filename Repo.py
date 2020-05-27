@@ -358,7 +358,9 @@ class Repo(object):
         return False
 
     def run_under_jcov(self, target_dir=None, debug=False, instrument_only_methods=True, short_type=True, module=None, testcases=None, tests_to_run=None):
-        self.test_compile()
+        self.build_report = self.test_compile()
+        if (mvn.has_compilation_error(self.build_report)):
+            return self.traces
         if target_dir is None:
             target = tempfile.mkdtemp()
         else:

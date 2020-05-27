@@ -10,19 +10,24 @@ from pathlib import Path
 
 
 class TestClass(object):
-    def __init__(self, file_path):
+    def __init__(self, file_path, repo_path):
         self._path = os.path.realpath(file_path)
-        self._module = self.find_module(self._path)
+        self._module = self.find_module(self._path, repo_path)
         self._mvn_name = self.generate_mvn_name()
         self._testcases = []
         self._report = None
         self._id = '#'.join([os.path.basename(self.module), self.mvn_name])
         with open(self._path, 'r') as src_file:
             try:
-                self._tree = javalang.parse.parse(src_file.read())
+                tokens = list(javalang.tokenizer.tokenize(src_file.read()))
+                parser = javalang.parser.Parser(tokens)
+                self._tree = parser.parse()
             except UnicodeDecodeError as e:
                 raise TestParserException('Java file parsing problem:' + '\n' + str(e))
             except JavaSyntaxError as e:
+                logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
+                self._tree = javalang.parse.parse('')
+            except Exception as e:
                 logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
                 self._tree = javalang.parse.parse('')
         class_decls = [class_dec for _, class_dec in self.tree.filter(javalang.tree.ClassDeclaration)]
@@ -96,15 +101,15 @@ class TestClass(object):
         for t in self.testcases:
             t.clear_report()
 
-    def find_module(self, file_path):
-        parent_dir = os.path.abspath(os.path.join(file_path, os.pardir))
+    def find_module(self, file_path, repo_path):
+        parent_dir = os.path.dirname(file_path)
         is_root = False
         while not is_root:
-            if os.path.isfile(parent_dir + '//pom.xml') or os.path.isfile(parent_dir + '//project.xml'):
+            if os.path.isfile(os.path.join(parent_dir, 'pom.xml')) or os.path.isfile(os.path.join(parent_dir, 'project.xml')):
                 return parent_dir
             else:
-                tmp = os.path.abspath(os.path.join(parent_dir, os.pardir))
-                is_root = tmp == parent_dir
+                tmp = os.path.dirname(parent_dir)
+                is_root = tmp == os.path.dirname(repo_path)
                 parent_dir = tmp
         raise TestParserException(file_path + ' is not part of a maven module')
 
@@ -298,8 +303,6 @@ class TestCase(object):
 
 class TestClassReport(object):
     def __init__(self, xml_doc_path, modlue_path, observed_tests=None):
-        if not os.path.isfile(xml_doc_path):
-            raise TestParserException('No such report file :' + xml_doc_path)
         self.xml_path = xml_doc_path
         self.observed_tests = observed_tests
         self.success_testcases = []
@@ -310,21 +313,21 @@ class TestClassReport(object):
         self._module_path = modlue_path
         tree = ET.parse(self.xml_path)
         root = tree.getroot()
-        self._name = root.get('name')
+        self._name = observed_tests[0].classname
         self._src_file_path = self.parse_src_path()
-        for testcase in root.findall('testcase'):
-            m_test = TestCaseReport(testcase, self, self.observed_tests)
+        for testcase in observed_tests:
+            m_test = TestCaseReport(testcase, self)
             if m_test.passed:
                 self.success_testcases.append(m_test)
             else:
                 self.failed_testcases.append(m_test)
             self._testcases.append(m_test)
             self._time += m_test.time
-        properties_root = root.find('properties')
-        properties = properties_root.findall('property')
-        for property in properties:
-            if property.get('name') == 'maven.multiModuleProjectDirectory':
-                self.maven_multiModuleProjectDirectory = property.get('value')
+        # properties_root = root.find('properties')
+        # properties = properties_root.findall('property')
+        # for property in properties:
+        #     if property.get('name') == 'maven.multiModuleProjectDirectory':
+        #         self.maven_multiModuleProjectDirectory = property.get('value')
 
     @property
     def time(self):
@@ -377,22 +380,17 @@ class TestClassReport(object):
 
 
 class TestCaseReport(object):
-    def __init__(self, testcase, parent, observed_tests=None):
+    def __init__(self, testcase, parent):
         self._parent = parent
         self.testcase_tag = testcase
-        self._name = self.parent.name + '.' + self.testcase_tag.get('name')
-        self.test_result = list(filter(lambda x: x.full_name == self.parent.name + '.' + self.testcase_tag.get('name'), observed_tests))[0]
+        self._name = self.testcase_tag.full_name
+        self.test_result = testcase
         self._time = self.test_result.time
         self._passed = self.test_result.is_passed()
         self._failed = False
         self._has_error = False
-        failure = self.testcase_tag.find('failure')
-        if not failure is None:
-            self._failed = True
-        self.error = self.testcase_tag.find('error')
-        if not self.error is None:
-            self._has_error = True
-        self._passed = not self._failed and not self._has_error
+        self._failed = self.testcase_tag.result = 'failure'
+        self._has_error = self.testcase_tag.result = 'error'
 
     @property
     def time(self):

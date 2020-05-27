@@ -147,7 +147,7 @@ class CMDEvosuite(Evosuite):
             self.setup_tests_generator(inspected_module)
         build_report = repo.compile(inspected_module)
         if mvn.has_compilation_error(build_report):
-            raise mvn.MVNError(msg='Project didnt compile before tests generation', report=build_report)
+            raise mvn.MVNError(msg='Project didnt compile before tests generation',  report=repr(build_report.split("\n")))
         build_report += repo.copy_depenedencies(inspected_module)
         build_report += repo.unpack_depenedencies(inspected_module)
         return build_report
@@ -296,4 +296,4 @@ class TestGenerationStrategy(Enum):
 
 class TestsGenerationError(mvn.MVNError):
     def __init__(self, msg='', report='', trace=''):
-        super(TestsGenerationError, self).__init__(msg=msg, report=report, trace=trace)
+        super(TestsGenerationError, self).__init__(msg=msg, report=repr(report.split("\n")), trace=trace)
