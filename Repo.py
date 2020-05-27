@@ -107,8 +107,8 @@ class Repo(object):
         if not module == None:
             inspected_module = module
         test_cmd = self.generate_mvn_test_compile_cmd(inspected_module)
-        build_report = mvn.wrap_mvn_cmd(test_cmd)
-        return build_report
+        self.build_report = mvn.wrap_mvn_cmd(test_cmd)
+        return self.build_report
 
     def get_test_results(self):
         from junitparser import JUnitXml
@@ -240,8 +240,10 @@ class Repo(object):
                 return True
         return False
 
-    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None):
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None, check_comp_error=True, classes_to_trace=None):
         self.test_compile()
+        if check_comp_error and mvn.has_compilation_error(self.build_report):
+            return []
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         f, path_to_template = tempfile.mkstemp()
@@ -249,6 +251,9 @@ class Repo(object):
         os.remove(path_to_template)
         jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
+        if classes_to_trace:
+            with open(path_to_classes_file, "wb") as f:
+                f.writelines(classes_to_trace)
         self.build_report = self.install(debug=debug, module=module, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
@@ -737,7 +742,7 @@ class Repo(object):
 
 if __name__ == "__main__":
     repo = Repo(r"Z:\component_importance\WAGON\clones\217")
-    repo.run_under_jcov(r"c:\temp\trace")
+    t = list(repo.run_under_jcov(r"c:\temp\trace"))
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()
