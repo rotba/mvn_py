@@ -118,8 +118,8 @@ class Repo(object):
         if not module == None:
             inspected_module = module
         test_cmd = self.generate_mvn_test_compile_cmd(inspected_module)
-        build_report = mvn.wrap_mvn_cmd(test_cmd)
-        return build_report
+        self.build_report = mvn.wrap_mvn_cmd(test_cmd)
+        return self.build_report
 
     # Executes mvn clean
     def site(self, module=None):
@@ -357,29 +357,25 @@ class Repo(object):
                 return True
         return False
 
-    def run_under_jcov(self, target_dir=None, debug=False, instrument_only_methods=True, short_type=True, module=None, testcases=None, tests_to_run=None):
-        self.build_report = self.test_compile()
-        if (mvn.has_compilation_error(self.build_report)):
-            return self.traces
-        if target_dir is None:
-            target = tempfile.mkdtemp()
-        else:
-            target = target_dir
+    def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None, check_comp_error=True, classes_to_trace=None):
+        self.test_compile()
+        if check_comp_error and mvn.has_compilation_error(self.build_report):
+            return []
         f, path_to_classes_file = tempfile.mkstemp()
         os.close(f)
         f, path_to_template = tempfile.mkstemp()
         os.close(f)
         os.remove(path_to_template)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
         jcov.execute_jcov_process(debug=debug)
-        self.build_report = self.install(debug=debug, module=module, testcases=testcases, tests_to_run=tests_to_run)
+        if classes_to_trace:
+            with open(path_to_classes_file, "wb") as f:
+                f.writelines(classes_to_trace)
+        self.build_report = self.install(debug=debug, module=module, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        self.traces = list(JcovParser(target, instrument_only_methods, short_type).parse())
-        if target_dir is None:
-            rmtree(target)
-        return self.traces
+        return JcovParser(target_dir, instrument_only_methods, short_type).parse()
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):
