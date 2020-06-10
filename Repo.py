@@ -12,7 +12,7 @@ import TestObjects
 import mvn
 from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
-from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
+# from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
 import shutil
 
@@ -68,6 +68,7 @@ class Repo(object):
         if module is not None:
             inspected_module = module
         install_cmd = self.generate_mvn_install_cmd(module=inspected_module, testcases=testcases, debug=debug, tests_to_run=tests_to_run)
+        print(install_cmd)
         build_report = mvn.wrap_mvn_cmd(install_cmd, time_limit=time_limit, dir=self._repo_dir, env=env)
         return build_report
 
@@ -81,11 +82,11 @@ class Repo(object):
         return build_report
 
     # Generates tests. As for now implemented with evosuite
-    def generate_tests(
-            self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC,
-            strategy=TestGenerationStrategy.MAVEN, regression_repo=None
-    ):
-        return EvosuiteFactory.create(self, strategy, regression_repo).generate(module, classes, seed, time_limit)
+    # def generate_tests(
+    #         self, module=None, classes=[], seed=None, time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC,
+    #         strategy=TestGenerationStrategy.MAVEN, regression_repo=None
+    # ):
+    #     return EvosuiteFactory.create(self, strategy, regression_repo).generate(module, classes, seed, time_limit)
 
     # Executes mvn clean
     def clean(self, module=None):
@@ -402,7 +403,7 @@ class Repo(object):
         return ans
 
     # Changes surefire version in a pom
-    def change_surefire_ver(self, version="2.18.1", module=None):
+    def change_surefire_ver(self, version="2.22.0", module=None):
         ans = []
         inspected_module = self.repo_dir
         if module is not None:
@@ -895,8 +896,16 @@ class Repo(object):
 
 
 if __name__ == "__main__":
-    repo = Repo(r"Z:\component_importance\WAGON\clones\217")
-    repo.run_under_jcov(r"c:\temp\trace")
+    # 560e91a176ca5ff1adfc3ff1c1f63e32ec4e928a
+    repo = Repo(r"z:\temp\tika")
+    tests_to_run = [u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testParse', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testOverrideDetector', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testExtendedMetadata', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testAccept', u'org.apache.tika.parser.mbox.MboxParserTest.testSimple', u'org.apache.tika.parser.mbox.MboxParserTest.testHeaders', u'org.apache.tika.parser.mbox.MboxParserTest.testComplex', u'org.apache.tika.parser.mbox.MboxParserTest.testMultilineHeader', u'org.apache.tika.parser.mbox.MboxParserTest.testQuoted', u'org.apache.tika.parser.mbox.MboxParserTest.testOverrideDetector']
+
+    changed_classes_diffs = [u'org.apache.tika.parser.mbox.MboxParser']
+    repo.run_under_jcov(target_dir=None, module=r"z:\temp\tika\tika-parsers", tests_to_run=tests_to_run, classes_to_trace=changed_classes_diffs)
+    # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers", tests_to_run=tests_to_run)
+    # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers")
+    repo.observe_tests()
+    print repo.test_results.values()
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()
