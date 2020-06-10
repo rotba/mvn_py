@@ -115,7 +115,7 @@ class JcovTracer(object):
         return [PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "name"], "listener"),
                 PomValue("maven-surefire-plugin", ["configuration", "properties", "property", "value"], JcovTracer.LISTENER_CLASS),
                 PomValue("maven-surefire-plugin", ["configuration", "additionalClasspathElements", "additionalClasspathElement"], JcovTracer.LISTENER_JAR_PATH),
-                PomValue("maven-surefire-plugin", ["version"], "3.0.0", should_append=False),
+                PomValue("maven-surefire-plugin", ["version"], "2.22.0", should_append=False),
                 #PomValue("maven-surefire-plugin", ["configuration", "forkMode"], "once", should_append=False),
                 #PomValue("maven-surefire-plugin", ["configuration", "forkedProcessTimeoutInSeconds"], "600", should_append=False),
                 PomValue("maven-surefire-plugin", ["configuration", "forkCount"], "1", should_append=False),
