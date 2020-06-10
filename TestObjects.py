@@ -115,8 +115,11 @@ class TestClass(object):
         raise TestParserException(file_path + ' is not part of a maven module')
 
     def is_valid_testcase(self, method):
-        return method.method_name.lower() != 'setup' and method.method_name.lower() != 'teardown' and \
-               len(method.parameters) == 0 and hasattr(method, 'return_type') and getattr(method, 'return_type') == None
+        returntype = True
+        if hasattr(method, 'return_type'):
+            returntype = getattr(method, 'return_type') is None
+        return method.method_decl.name.lower() != 'setup' and method.method_decl.name.lower() != 'teardown' and \
+               len(method.parameters) == 0 and returntype
 
     def generate_mvn_name(self):
         relpath = self.get_testclass_rel_path()
@@ -143,7 +146,7 @@ class TestCase(object):
     def __init__(self, method, parent):
         self._parent = parent
         self._method = method
-        self._mvn_name = self.parent.mvn_name + '.' + self.method.method_name
+        self._mvn_name = self.method.method_name
         self._id = self._method.id
         self._report = None
         self._start_line = self.method.start_line
