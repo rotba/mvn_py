@@ -33,13 +33,14 @@ class JcovTracer(object):
     LISTENER_CLASS = "com.sun.tdk.listener.JUnitExecutionListener"
     DEBUG_CMD = ["-Xdebug", "-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y"]
 
-    def __init__(self, classes_dir, path_to_out_template=None, path_to_classes_file=None, path_to_result_file=None, class_path=None, instrument_only_methods=True):
+    def __init__(self, classes_dir, path_to_out_template=None, path_to_classes_file=None, path_to_result_file=None, class_path=None, instrument_only_methods=True, classes_to_trace=None):
         self.classes_dir = classes_dir
         self.path_to_out_template = path_to_out_template
         self.path_to_classes_file = path_to_classes_file
         self.path_to_result_file = path_to_result_file
         self.class_path = class_path
         self.instrument_only_methods = instrument_only_methods
+        self.classes_to_trace = classes_to_trace
         self.agent_port = str(self.get_open_port())
         self.command_port = str(self.get_open_port())
         self.env = {"JcovGrabberCommandPort": self.command_port}
@@ -75,6 +76,9 @@ class JcovTracer(object):
                 cmd_line.extend(['-c', self.path_to_classes_file])
         if self.instrument_only_methods:
             cmd_line.extend(['-type', 'method'])
+        if self.classes_to_trace:
+            for c in self.classes_to_trace:
+                cmd_line.extend(['-i', c])
         cmd_line.extend(self.get_classes_path())
         return cmd_line
 
@@ -137,6 +141,9 @@ class JcovTracer(object):
             if path:
                 with open(path) as f:
                     assert f.read(), "{0} is empty".format(path)
+        if self.classes_to_trace:
+            with open(self.path_to_classes_file, "wb") as f:
+                f.write("\n".join(self.classes_to_trace))
         p = Popen(self.grabber_cmd_line(debug=debug))
         assert p.poll() is None
         assert self.check_if_grabber_is_on()

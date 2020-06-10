@@ -30,7 +30,7 @@ class Bug(object):
         self._bugged_components = bugged_components
         self.blamed_components = blamed_components if blamed_components else []
         self.diff = diff if diff else ''
-        self._has_annotations = 'Test' in list(map(lambda a: a.name, self._bugged_testcase.method.annotations))
+        self._has_annotations = False
 
     @property
     def issue(self):
@@ -106,7 +106,7 @@ class Bug_data_handler(object):
             self._valid_bugs_csv_handler.add_bug(bug)
         else:
             self._invalid_bugs_csv_handler.add_bug(bug)
-        self._store_bug(bug)
+        # self._store_bug(bug)
 
     # Adds row to the time tanle
     def add_time(self, issue_key, commit_hexsha, module, time, root_module, desctiption=''):
@@ -174,7 +174,7 @@ class Bug_data_handler(object):
 
     # Gets the path to the directory of the testclass in the given commit and issue
     def get_bug_path(self, bug):
-        return os.path.join(self.get_bug_testclass_path(bug), bug.bugged_testcase.method.name + '.pickle')
+        return os.path.join(self.get_bug_testclass_path(bug), bug.bugged_testcase.method.method_name + '.pickle')
 
     # Sets up dirctories for bug results
     def set_up_bug_dir(self, issue, commit, testclasses, module, root_module):

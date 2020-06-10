@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 
 from javalang.parser import JavaSyntaxError
 from pathlib import Path
+import javadiff
 
 
 class TestClass(object):
@@ -19,9 +20,14 @@ class TestClass(object):
         self._id = '#'.join([os.path.basename(self.module), self.mvn_name])
         with open(self._path, 'r') as src_file:
             try:
-                tokens = list(javalang.tokenizer.tokenize(src_file.read()))
+                contents = src_file.read()
+                tokens = list(javalang.tokenizer.tokenize(contents))
                 parser = javalang.parser.Parser(tokens)
                 self._tree = parser.parse()
+                self.source_file = javadiff.SourceFile.SourceFile(contents, self._path, analyze_source_lines=False)
+                for method in self.source_file.methods.values():
+                    if self.is_valid_testcase(method):
+                        self._testcases.append(TestCase(method, self))
             except UnicodeDecodeError as e:
                 raise TestParserException('Java file parsing problem:' + '\n' + str(e))
             except JavaSyntaxError as e:
@@ -30,11 +36,6 @@ class TestClass(object):
             except Exception as e:
                 logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
                 self._tree = javalang.parse.parse('')
-        class_decls = [class_dec for _, class_dec in self.tree.filter(javalang.tree.ClassDeclaration)]
-        for class_decl in class_decls:
-            for method in class_decl.methods:
-                if self.is_valid_testcase(method):
-                    self._testcases.append(TestCase(method, class_decl, self))
 
     @property
     def mvn_name(self):
@@ -114,8 +115,8 @@ class TestClass(object):
         raise TestParserException(file_path + ' is not part of a maven module')
 
     def is_valid_testcase(self, method):
-        return method.name.lower() != 'setup' and method.name.lower() != 'teardown' and \
-               len(method.parameters) == 0 and method.return_type == None
+        return method.method_name.lower() != 'setup' and method.method_name.lower() != 'teardown' and \
+               len(method.parameters) == 0 and hasattr(method, 'return_type') and getattr(method, 'return_type') == None
 
     def generate_mvn_name(self):
         relpath = self.get_testclass_rel_path()
@@ -139,18 +140,14 @@ class TestClass(object):
 
 
 class TestCase(object):
-    def __init__(self, method, class_decl, parent):
+    def __init__(self, method, parent):
         self._parent = parent
         self._method = method
-        self._mvn_name = self.parent.mvn_name + '.' + self.method.name
-        self.class_decl = class_decl
-        self._id = self.generate_id()
+        self._mvn_name = self.parent.mvn_name + '.' + self.method.method_name
+        self._id = self._method.id
         self._report = None
-        self._start_line = self.method.position[0]
-        self._end_line = self.find_end_line(self._start_line)
-        if self._end_line == -1 and self.method.body == None:
-            self._end_line = self._start_line
-        assert self._end_line != -1
+        self._start_line = self.method.start_line
+        self._end_line = self.method.end_line
 
     @property
     def mvn_name(self):
@@ -242,8 +239,7 @@ class TestCase(object):
         return (lower_position, self.end_line)
 
     def contains_line(self, line):
-        range = self.get_lines_range()
-        return range[0] <= line <= range[1]
+        return line in self.method.method_used_lines
 
     def find_end_line(self, line_num):
         brackets_stack = []

@@ -13,6 +13,7 @@ class JcovParser(object):
     CSV_HEADER = ["component", "hit_count"]
 
     def __init__(self, xml_folder_dir, instrument_only_methods=True, short_type=True):
+        self.target_dir = xml_folder_dir
         self.jcov_files = map(lambda name: os.path.join(xml_folder_dir, name),
                               filter(lambda name: name.endswith('.xml'), os.listdir(xml_folder_dir)))
         self.instrument_only_methods = instrument_only_methods
@@ -22,10 +23,13 @@ class JcovParser(object):
         self.method_name_by_id = self._get_method_ids(short_type)
         self.lines_to_read = self._get_methods_lines()
 
-    def parse(self):
+    def parse(self, delete_dir_when_finished=False):
         for jcov_file in self.jcov_files:
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             yield self._parse_jcov_file(jcov_file, test_name)
+        if delete_dir_when_finished:
+            import shutil
+            shutil.rmtree(self.target_dir)
 
     def _parse_jcov_file(self, jcov_file, test_name):
         gc.collect()

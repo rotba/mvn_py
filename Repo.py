@@ -14,6 +14,7 @@ from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
+import shutil
 
 
 class TestResult(object):
@@ -338,12 +339,12 @@ class Repo(object):
         return os.path.join(os.environ['USERPROFILE'], '.m2\\repository')
 
     def setup_jcov_tracer(self, path_to_classes_file=None, path_to_out_template=None, target_dir=None, class_path=None,
-                          instrument_only_methods=True):
+                          instrument_only_methods=True, classes_to_trace=None):
         result_file = "result.xml"
         if target_dir:
             result_file = os.path.join(target_dir, result_file)
         jcov = JcovTracer(self.repo_dir, path_to_out_template, path_to_classes_file, result_file, class_path=class_path,
-                          instrument_only_methods=instrument_only_methods)
+                          instrument_only_methods=instrument_only_methods, classes_to_trace=classes_to_trace)
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             for value in jcov.get_values_to_add():
@@ -366,16 +367,20 @@ class Repo(object):
         f, path_to_template = tempfile.mkstemp()
         os.close(f)
         os.remove(path_to_template)
-        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target_dir, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods)
+        target = target_dir
+        if target is None:
+            target = tempfile.mkdtemp()
+        jcov = self.setup_jcov_tracer(path_to_classes_file, path_to_template, target_dir=target, class_path=Repo.get_mvn_repo(), instrument_only_methods=instrument_only_methods, classes_to_trace=classes_to_trace)
         jcov.execute_jcov_process(debug=debug)
-        if classes_to_trace:
-            with open(path_to_classes_file, "wb") as f:
-                f.writelines(classes_to_trace)
         self.build_report = self.install(debug=debug, module=module, tests_to_run=tests_to_run)
         jcov.stop_grabber()
         os.remove(path_to_classes_file)
         os.remove(path_to_template)
-        return JcovParser(target_dir, instrument_only_methods, short_type).parse()
+        delete_dir_when_finished = False
+        if target_dir is None:
+            delete_dir_when_finished = True
+        traces = JcovParser(target, instrument_only_methods, short_type).parse(delete_dir_when_finished)
+        return traces
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):
@@ -568,7 +573,7 @@ class Repo(object):
             ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if tests_to_run:
             ans += " -Dtest="
-            ans += ','.join(tests_to_run)
+            ans += ','.join(map(lambda test: '#'.join(test.rsplit('.', 1)), tests_to_run))
         if len(testcases) > 0:
             ans += ' -Dtest='
             for testclass in testclasses:
@@ -716,11 +721,10 @@ class Repo(object):
         return self.test_results
 
     def get_surefire_files(self):
-        SURFIRE_DIR_NAME = 'surefire-reports'
         surefire_files = []
         for root, _, files in os.walk(self.repo_dir):
             for name in files:
-                if name.endswith('.xml') and os.path.basename(root) == SURFIRE_DIR_NAME:
+                if name.endswith('.xml') and os.path.basename(root) in ['failsafe-reports', 'surefire-reports']:
                     surefire_files.append(os.path.join(root, name))
         return surefire_files
 
