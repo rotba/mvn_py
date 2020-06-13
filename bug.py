@@ -138,11 +138,6 @@ class Bug_data_handler(object):
     def add_bugs(self, bugs):
         self._valid_bugs_csv_handler.add_bugs(list(filter(lambda b: b.valid, bugs)))
         self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
-        # for bug in bugs:
-        #     try:
-        #         self._store_bug(bug)
-        #     except BugError as e:
-        #         raise e
 
     # Attach reports to the testclasses directories
     def attach_reports(self, issue, commit, testcases):
