@@ -104,8 +104,8 @@ class Bug_data_handler(object):
     def add_bug(self, bug):
         if bug.valid:
             self._valid_bugs_csv_handler.add_bug(bug)
-        else:
-            self._invalid_bugs_csv_handler.add_bug(bug)
+        # else:
+        #     self._invalid_bugs_csv_handler.add_bug(bug)
         # self._store_bug(bug)
 
     # Adds row to the time tanle
@@ -136,8 +136,10 @@ class Bug_data_handler(object):
 
     # Adds bugs to the csv file
     def add_bugs(self, bugs):
-        self._valid_bugs_csv_handler.add_bugs(list(filter(lambda b: b.valid, bugs)))
-        self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
+        valid_bugs = list(filter(lambda b: b.valid, bugs))
+        if valid_bugs:
+            self._valid_bugs_csv_handler.add_bugs(valid_bugs)
+        # self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
 
     # Attach reports to the testclasses directories
     def attach_reports(self, issue, commit, testcases):
@@ -289,12 +291,12 @@ class Bug_data_handler(object):
         return ans
 
     # Gets invalid_bugs_tuiplles
-    def get_invalid_bugs(self):
-        ans = []
-        with open(self._invalid_bugs_csv_handler.path, 'r') as f:
-            reader = csv.reader(f)
-            ans = list(reader)
-        return ans
+    # def get_invalid_bugs(self):
+    #     ans = []
+    #     with open(self._invalid_bugs_csv_handler.path, 'r') as f:
+    #         reader = csv.reader(f)
+    #         ans = list(reader)
+    #     return ans
 
     # Gets invalid_bugs_tuiplles
     def get_times(self):
@@ -340,19 +342,23 @@ class Bug_csv_report_handler(object):
         self._path = path
         self._fieldnames = ['valid', 'type', 'issue', 'module', 'commit', 'parent', 'testcase', 'has_test_annotation',
                              'traces', 'bugged_components','description', 'extra_description', 'blamed_components', 'diff']
-        if not os.path.exists(path):
-            with open(self._path, 'w+') as csv_output:
-                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
-                writer.writeheader()
 
     # Adds bug to the csv file
     def add_bug(self, bug):
+        if not os.path.exists(self._path):
+            with open(self._path, 'w+') as csv_output:
+                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
+                writer.writeheader()
         with open(self._path, 'a') as csv_output:
             writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
             writer.writerow(self.generate_csv_tupple(bug))
 
     # Adds bugs to the csv file
     def add_bugs(self, bugs):
+        if not os.path.exists(self._path):
+            with open(self._path, 'w+') as csv_output:
+                writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
+                writer.writeheader()
         with open(self._path, 'a') as csv_output:
             writer = csv.DictWriter(csv_output, fieldnames=self._fieldnames, lineterminator='\n')
             for bug in bugs:
