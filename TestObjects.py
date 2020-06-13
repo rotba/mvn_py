@@ -21,21 +21,16 @@ class TestClass(object):
         with open(self._path, 'r') as src_file:
             try:
                 contents = src_file.read()
-                tokens = list(javalang.tokenizer.tokenize(contents))
-                parser = javalang.parser.Parser(tokens)
-                self._tree = parser.parse()
-                self.source_file = javadiff.SourceFile.SourceFile(contents, self._path, analyze_source_lines=False)
-                for method in self.source_file.methods.values():
+                source_file = javadiff.SourceFile.SourceFile(contents, self._path, analyze_source_lines=False)
+                for method in source_file.methods.values():
                     if self.is_valid_testcase(method):
                         self._testcases.append(TestCase(method, self))
             except UnicodeDecodeError as e:
                 raise TestParserException('Java file parsing problem:' + '\n' + str(e))
             except JavaSyntaxError as e:
                 logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
-                self._tree = javalang.parse.parse('')
             except Exception as e:
                 logging.info(str(e) + " java parsing problem in file {}".format(src_file.name))
-                self._tree = javalang.parse.parse('')
 
     @property
     def mvn_name(self):
@@ -61,9 +56,9 @@ class TestClass(object):
     def report(self, report):
         self._report = report
 
-    @property
-    def tree(self):
-        return self._tree
+    # @property
+    # def tree(self):
+    #     return self._tree
 
     @property
     def id(self):
@@ -118,8 +113,7 @@ class TestClass(object):
         returntype = True
         if hasattr(method, 'return_type'):
             returntype = getattr(method, 'return_type') is None
-        return method.method_decl.name.lower() != 'setup' and method.method_decl.name.lower() != 'teardown' and \
-               len(method.parameters) == 0 and returntype
+        return 'setup' not in method.method_decl.name.lower() and  'teardown' not in method.method_decl.name.lower() and returntype
 
     def generate_mvn_name(self):
         relpath = self.get_testclass_rel_path()
@@ -235,11 +229,7 @@ class TestCase(object):
         return self.parent.src_path + '#' + self.class_decl.name + '#' + ret_type + '_' + self.method.name + parameters
 
     def get_lines_range(self):
-        lower_position = self.method.position[0]
-        for annotation in self.method.annotations:
-            if annotation.position[0] < lower_position:
-                lower_position = annotation.position[0]
-        return (lower_position, self.end_line)
+        return (self.method.start_line, self.end_line)
 
     def contains_line(self, line):
         return line in self.method.method_used_lines

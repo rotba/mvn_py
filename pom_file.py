@@ -3,17 +3,11 @@ et.register_namespace('', "http://maven.apache.org/POM/4.0.0")
 et.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
 
-def is_surefire_plugin(plugin):
-    return filter(lambda x: x.text == PomPlugin.SUREFIRE_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
-
-def is_junit_plugin(plugin):
-    return filter(lambda x: x.text == PomPlugin.JUNIT_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
-
-def is_javadoc_plugin(plugin):
-    return filter(lambda x: x.text == PomPlugin.JAVADOC_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
-
-def is_maven_site_plugin(plugin):
-    return filter(lambda x: x.text == PomPlugin.SITE_ARTIFACT_ID, Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
+def is_plugin(artifact):
+    def check(plugin):
+        return filter(lambda x: x.text == artifact,
+                      Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
+    return check
 
 
 class PomPlugin(object):
@@ -21,11 +15,12 @@ class PomPlugin(object):
     PLUGINS_MANAGEMENT_PATH = ['build', 'pluginManagement', 'plugins', 'plugin']
     REPORTING_PATH = ['reporting', 'plugins', 'plugin']
     SUREFIRE_ARTIFACT_ID = "maven-surefire-plugin"
+    FAILSAFE_ARTIFACT_ID = "maven-failsafe-plugin"
     JUNIT_ARTIFACT_ID = "junit"
     JAVADOC_ARTIFACT_ID = "maven-javadoc-plugin"
     SITE_ARTIFACT_ID = "maven-site-plugin"
     ARTIFACT_ID_NAME = "artifactId"
-    PLUGINS = {"maven-surefire-plugin": is_surefire_plugin, "maven-javadoc-plugin": is_javadoc_plugin, "maven-site-plugin": is_maven_site_plugin}
+    PLUGINS = {"maven-surefire-plugin": is_plugin, "maven-javadoc-plugin": is_plugin, "maven-site-plugin": is_plugin, "maven-failsafe-plugin": is_plugin}
 
     @staticmethod
     def get_plugins(pom):
@@ -42,18 +37,18 @@ class PomPlugin(object):
     @staticmethod
     def get_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        ans = list(filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom)))
+        ans = list(filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom)))
         return ans
 
     @staticmethod
     def get_report_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        return filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_report_plugin(pom))
+        return filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_report_plugin(pom))
 
     @staticmethod
     def get_plugin_management_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        return filter(PomPlugin.PLUGINS[plugin_name], PomPlugin.get_plugin_management(pom))
+        return filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_plugin_management(pom))
 
 
 class PomValue(object):
@@ -143,14 +138,14 @@ class Pom(object):
         self.save()
 
     def set_junit_version(self, version='4.11'):
-        junit_dependencies = filter(is_junit_plugin, self.get_elements_by_path(['dependencies', 'dependency']))
+        junit_dependencies = filter(is_plugin(PomPlugin.JUNIT_ARTIFACT_ID), self.get_elements_by_path(['dependencies', 'dependency']))
         for dependency in junit_dependencies:
             created_element = Pom.get_or_create_by_path(dependency, ['version'])
             created_element.text = version
         self.save()
 
     def set_site_version(self, version='3.3'):
-        dependencies = filter(is_maven_site_plugin, self.get_elements_by_path(['build', 'pluginManagement', 'plugins', 'plugin']))
+        dependencies = filter(is_plugin(PomPlugin.SITE_ARTIFACT_ID), self.get_elements_by_path(['build', 'pluginManagement', 'plugins', 'plugin']))
         for dependency in dependencies:
             created_element = Pom.get_or_create_by_path(dependency, ['version'])
             created_element.text = version
@@ -160,4 +155,4 @@ class Pom(object):
         self.element_tree.write(self.pom_path, xml_declaration=True)
 
     def has_surefire(self):
-        return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) > 0
+        return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) + len(PomPlugin.get_plugin_by_name(self, PomPlugin.FAILSAFE_ARTIFACT_ID)) > 0
