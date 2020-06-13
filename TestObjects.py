@@ -7,7 +7,10 @@ import xml.etree.ElementTree as ET
 
 from javalang.parser import JavaSyntaxError
 from pathlib import Path
-import javadiff
+try:
+    import javadiff
+except:
+    import javadiff.javadiff as javadiff
 
 
 class TestClass(object):
