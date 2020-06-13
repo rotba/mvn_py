@@ -5,7 +5,6 @@ import xml.etree.ElementTree as ET
 from shutil import copyfile, rmtree
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-import psutil
 from junitparser.junitparser import Error, Failure
 import time
 import TestObjects
@@ -99,6 +98,7 @@ class Repo(object):
 
     # Executes mvn clean
     def hard_clean(self, module=None):
+        import psutil
         build_report = ""
         try:
             for proc in psutil.process_iter():
