@@ -8,9 +8,9 @@ import xml.etree.ElementTree as ET
 from javalang.parser import JavaSyntaxError
 from pathlib import Path
 try:
-    import javadiff
+    from javadiff.SourceFile import SourceFile
 except:
-    import javadiff.javadiff as javadiff
+    from javadiff.javadiff.SourceFile import SourceFile
 
 
 class TestClass(object):
@@ -24,7 +24,7 @@ class TestClass(object):
         with open(self._path, 'r') as src_file:
             try:
                 contents = src_file.read()
-                source_file = javadiff.SourceFile.SourceFile(contents, self._path, analyze_source_lines=False)
+                source_file = SourceFile(contents, self._path, analyze_source_lines=False)
                 for method in source_file.methods.values():
                     if self.is_valid_testcase(method):
                         self._testcases.append(TestCase(method, self))
