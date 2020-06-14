@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5a2f62db-cc7b-41a8-8544-18268948c73e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jcov_tracer.py" beforeDir="false" afterPath="$PROJECT_DIR$/jcov_tracer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,8 +177,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Test" />
       <item itemvalue="Python.Repo" />
+      <item itemvalue="Python.Test" />
       <item itemvalue="Python.jcov_parser" />
       <item itemvalue="Python.trace_information" />
     </list>
@@ -288,10 +286,10 @@
     </state>
     <state x="380" y="101" width="606" height="526" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1591784025570" />
     <state x="534" y="144" width="852" height="752" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591828206669" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1590016478139">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1591865090803">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1590016478139" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1591865090803" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -303,32 +301,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Repo.py</url>
-          <line>743</line>
+          <line>744</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/jcov_parser.py</url>
-          <line>145</line>
+          <line>157</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Repo.py</url>
-          <line>920</line>
+          <line>923</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/jcov_parser.py</url>
-          <line>138</line>
+          <line>150</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Repo.py</url>
-          <line>908</line>
+          <line>911</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Repo.py</url>
-          <line>906</line>
+          <line>907</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
       </breakpoints>
