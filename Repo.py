@@ -380,8 +380,8 @@ class Repo(object):
         delete_dir_when_finished = False
         if target_dir is None:
             delete_dir_when_finished = True
-        traces = JcovParser(target, instrument_only_methods, short_type).parse(delete_dir_when_finished)
-        return traces
+        self.traces = list(JcovParser(target, instrument_only_methods, short_type).parse(delete_dir_when_finished))
+        return self.traces
 
     # Changes all the pom files in a module recursively
     def get_all_pom_paths(self, module=None):
