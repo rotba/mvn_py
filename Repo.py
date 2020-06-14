@@ -897,14 +897,16 @@ class Repo(object):
 
 if __name__ == "__main__":
     # 560e91a176ca5ff1adfc3ff1c1f63e32ec4e928a
-    repo = Repo(r"z:\temp\tika")
-    tests_to_run = [u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testParse', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testOverrideDetector', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testExtendedMetadata', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testAccept', u'org.apache.tika.parser.mbox.MboxParserTest.testSimple', u'org.apache.tika.parser.mbox.MboxParserTest.testHeaders', u'org.apache.tika.parser.mbox.MboxParserTest.testComplex', u'org.apache.tika.parser.mbox.MboxParserTest.testMultilineHeader', u'org.apache.tika.parser.mbox.MboxParserTest.testQuoted', u'org.apache.tika.parser.mbox.MboxParserTest.testOverrideDetector']
+    repo = Repo(r"C:\temp\tika")
+    # tests_to_run = [u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testParse', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testOverrideDetector', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testExtendedMetadata', u'org.apache.tika.parser.mbox.OutlookPSTParserTest.testAccept', u'org.apache.tika.parser.mbox.MboxParserTest.testSimple', u'org.apache.tika.parser.mbox.MboxParserTest.testHeaders', u'org.apache.tika.parser.mbox.MboxParserTest.testComplex', u'org.apache.tika.parser.mbox.MboxParserTest.testMultilineHeader', u'org.apache.tika.parser.mbox.MboxParserTest.testQuoted', u'org.apache.tika.parser.mbox.MboxParserTest.testOverrideDetector']
 
-    changed_classes_diffs = [u'org.apache.tika.parser.mbox.MboxParser']
-    repo.run_under_jcov(target_dir=None, module=r"z:\temp\tika\tika-parsers", tests_to_run=tests_to_run, classes_to_trace=changed_classes_diffs)
-    # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers", tests_to_run=tests_to_run)
+    # changed_classes_diffs = [u'org.apache.tika.parser.mbox.MboxParser']
+    t = repo.run_under_jcov(target_dir=None)
+    # repo.install(debug=False)
     # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers")
     repo.observe_tests()
+    print repo.build_report
+    print repo.traces
     print repo.test_results.values()
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")

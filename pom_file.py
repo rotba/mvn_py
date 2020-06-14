@@ -37,7 +37,7 @@ class PomPlugin(object):
     @staticmethod
     def get_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        ans = list(filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom)))
+        ans = list(filter(is_plugin(plugin_name), PomPlugin.get_plugins(pom) + PomPlugin.get_plugin_management(pom)))
         return ans
 
     @staticmethod
@@ -69,6 +69,8 @@ class Pom(object):
         self.pom_path = pom_path
         self.element_tree = et.parse(self.pom_path)
         self.set_junit_version()
+        if not self.has_surefire():
+            self.add_surefire()
 
     @staticmethod
     def get_children_by_name(element, name):
@@ -111,8 +113,6 @@ class Pom(object):
         return len(self.get_elements_by_path(['build'])) > 0
 
     def add_pom_value(self, pom_value, create_plugin_if_not_exists=False):
-        # if len(self.get_elements_by_path([pom_value.path_to_create[0]])) == 0:
-        #     return
         if pom_value.plugin_version:
             management_path = PomPlugin.get_plugin_management_by_name(self, pom_value.plugin_name)
             if len(management_path) == 0:
@@ -155,4 +155,7 @@ class Pom(object):
         self.element_tree.write(self.pom_path, xml_declaration=True)
 
     def has_surefire(self):
+        return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) + len(PomPlugin.get_plugin_by_name(self, PomPlugin.FAILSAFE_ARTIFACT_ID)) > 0
+
+    def add_surefire(self):
         return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) + len(PomPlugin.get_plugin_by_name(self, PomPlugin.FAILSAFE_ARTIFACT_ID)) > 0
