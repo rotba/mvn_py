@@ -381,8 +381,8 @@ class TestCaseReport(object):
         self._passed = self.test_result.is_passed()
         self._failed = False
         self._has_error = False
-        self._failed = self.testcase_tag.result = 'failure'
-        self._has_error = self.testcase_tag.result = 'error'
+        self._failed = self.testcase_tag.outcome == 'failure'
+        self._has_error = self.testcase_tag.outcome == 'error'
 
     @property
     def time(self):
