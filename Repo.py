@@ -62,7 +62,7 @@ class Repo(object):
 
     # Executes mvn test
     def install(self, module=None, testcases=[], time_limit=mvn.MVN_MAX_PROCCESS_TIME_IN_SEC, debug=False, tests_to_run=None, env=None):
-        self.change_surefire_ver()
+        # self.change_surefire_ver()
         inspected_module = self.repo_dir
         if module is not None:
             inspected_module = module
@@ -360,6 +360,7 @@ class Repo(object):
         return False
 
     def run_under_jcov(self, target_dir, debug=False, instrument_only_methods=True, short_type=True, module=None, tests_to_run=None, check_comp_error=True, classes_to_trace=None):
+        self.change_surefire_ver()
         self.test_compile()
         if check_comp_error and mvn.has_compilation_error(self.build_report):
             return []
