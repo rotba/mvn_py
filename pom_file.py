@@ -138,7 +138,7 @@ class Pom(object):
         self.save()
 
     def set_junit_version(self, version='4.11'):
-        junit_dependencies = filter(is_plugin(PomPlugin.JUNIT_ARTIFACT_ID), self.get_elements_by_path(['dependencies', 'dependency']))
+        junit_dependencies = filter(is_plugin(PomPlugin.JUNIT_ARTIFACT_ID), self.get_elements_by_path(['dependencies', 'dependency']) + self.get_elements_by_path(['dependencyManagement', 'dependencies', 'dependency']))
         for dependency in junit_dependencies:
             created_element = Pom.get_or_create_by_path(dependency, ['version'])
             created_element.text = version
