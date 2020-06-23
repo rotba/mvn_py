@@ -59,21 +59,9 @@ class TestClass(object):
     def report(self, report):
         self._report = report
 
-    # @property
-    # def tree(self):
-    #     return self._tree
-
     @property
     def id(self):
         return self._id
-
-    def parse_src_path(self):
-        ans = self.module
-        ans += '\\src\\test\\java'
-        packages = self.name.split('.')
-        for p in packages:
-            ans += '\\' + p
-        return ans + '.java'
 
     def get_report_path(self):
         return self.module + '\\target\\surefire-reports\\' + 'TEST-' + self.mvn_name + '.xml'
@@ -84,16 +72,6 @@ class TestClass(object):
         except TestParserException as e:
             self.report = None
             raise e
-
-    # Looking for report, and if finds one, attach it to the self and al it's testcases
-    def look_for_report(self):
-        try:
-            self.report = TestClassReport(self.get_report_path(), self.module)
-            for t in self.testcases:
-                self.attach_report_to_testcase(t)
-            return True
-        except TestParserException:
-            return False
 
     def clear_report(self):
         self.report = None
@@ -295,7 +273,6 @@ class TestCase(object):
 
 class TestClassReport(object):
     def __init__(self, xml_doc_path, modlue_path, observed_tests=None):
-        self.xml_path = xml_doc_path
         self.observed_tests = observed_tests
         self.success_testcases = []
         self.failed_testcases = []
@@ -303,10 +280,10 @@ class TestClassReport(object):
         self._time = 0.0
         self.maven_multiModuleProjectDirectory = ''
         self._module_path = modlue_path
-        tree = ET.parse(self.xml_path)
+        tree = ET.parse(xml_doc_path)
         root = tree.getroot()
         self._name = observed_tests[0].classname
-        self._src_file_path = self.parse_src_path()
+        self._src_file_path = self.parse_src_path(xml_doc_path)
         for testcase in observed_tests:
             m_test = TestCaseReport(testcase, self)
             if m_test.passed:
@@ -315,11 +292,6 @@ class TestClassReport(object):
                 self.failed_testcases.append(m_test)
             self._testcases.append(m_test)
             self._time += m_test.time
-        # properties_root = root.find('properties')
-        # properties = properties_root.findall('property')
-        # for property in properties:
-        #     if property.get('name') == 'maven.multiModuleProjectDirectory':
-        #         self.maven_multiModuleProjectDirectory = property.get('value')
 
     @property
     def time(self):
@@ -358,8 +330,8 @@ class TestClassReport(object):
     def __repr__(self):
         return str(self.name)
 
-    def parse_src_path(self):
-        test_name = os.path.basename(self.xml_path).replace('TEST-', '').replace('.java', '').replace('.xml', '')
+    def parse_src_path(self, xml_path):
+        test_name = os.path.basename(xml_path).replace('TEST-', '').replace('.java', '').replace('.xml', '')
         test_name = test_name.replace('.', '\\')
         test_name += '.java'
         return self.module + '\\src\\test\\java\\' + test_name

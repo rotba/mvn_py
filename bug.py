@@ -478,7 +478,7 @@ class Description_type(Enum):
         return self.value
 
 
-def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components, blamed_components=None, diff=None, check_trace=False):
+def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, bugged_components=None, blamed_components=None, diff=None, check_trace=False):
     trace = True
     if check_trace:
         if blamed_components:
