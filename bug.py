@@ -93,6 +93,7 @@ class Bug_data_handler(object):
     def __init__(self, path):
         self._path = path
         self._valid_bugs_csv_handler = Bug_csv_report_handler(os.path.join(self._path, 'valid_bugs.csv'))
+        self._valid_bugs = Bug_csv_report_handler(self._path + 'csv')
         self._invalid_bugs_csv_handler = Bug_csv_report_handler(os.path.join(self._path, 'invalid_bugs.csv'))
         self._time_csv_handler = Time_csv_report_handler(os.path.join(self._path, 'times.csv'))
 
@@ -104,8 +105,9 @@ class Bug_data_handler(object):
     def add_bug(self, bug):
         if bug.valid:
             self._valid_bugs_csv_handler.add_bug(bug)
-        # else:
-        #     self._invalid_bugs_csv_handler.add_bug(bug)
+            self._valid_bugs.add_bug(bug)
+        else:
+            self._invalid_bugs_csv_handler.add_bug(bug)
         # self._store_bug(bug)
 
     # Adds row to the time tanle
@@ -139,7 +141,8 @@ class Bug_data_handler(object):
         valid_bugs = list(filter(lambda b: b.valid, bugs))
         if valid_bugs:
             self._valid_bugs_csv_handler.add_bugs(valid_bugs)
-        # self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
+            self._valid_bugs.add_bugs(valid_bugs)
+        self._invalid_bugs_csv_handler.add_bugs(list(filter(lambda b: not b.valid, bugs)))
 
     # Attach reports to the testclasses directories
     def attach_reports(self, issue, commit, testcases):
@@ -174,7 +177,7 @@ class Bug_data_handler(object):
         return os.path.join(self.get_bug_testclass_path(bug), bug.bugged_testcase.method.method_name + '.pickle')
 
     # Sets up dirctories for bug results
-    def set_up_bug_dir(self, issue, commit, testclasses, module, root_module):
+    def set_up_bug_dir(self, issue, commit, module, root_module):
         ans = {}
 
         def set_up_issue_dir():
@@ -204,7 +207,7 @@ class Bug_data_handler(object):
         path_to_commit_dir = set_up_commit_dir(path_to_bug_dir)
         path_to_pom_dir = set_up_pom_dir(path_to_commit_dir)
         set_up_module_inspection_dir()
-        ans.update(self.set_up_class_dirs(testclasses, path_to_commit_dir))
+        # ans.update(self.set_up_class_dirs(testclasses, path_to_commit_dir))
         ans[module] = path_to_pom_dir
         return ans
 
@@ -289,14 +292,6 @@ class Bug_data_handler(object):
             reader = csv.reader(f)
             ans = list(reader)
         return ans
-
-    # Gets invalid_bugs_tuiplles
-    # def get_invalid_bugs(self):
-    #     ans = []
-    #     with open(self._invalid_bugs_csv_handler.path, 'r') as f:
-    #         reader = csv.reader(f)
-    #         ans = list(reader)
-    #     return ans
 
     # Gets invalid_bugs_tuiplles
     def get_times(self):
@@ -500,7 +495,7 @@ def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, b
         return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
                    type=type, valid=False, desc=invalid_rt_error_desc,
-                   traces=traces, bugged_components=bugged_components, extra_desc=parent_testcase.get_error())
+                   traces=traces, bugged_components=bugged_components)
     elif testcase.passed and parent_testcase.passed:
         return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
@@ -513,7 +508,7 @@ def create_bug(issue, commit, parent, testcase, parent_testcase, type, traces, b
     elif testcase.has_error:
         return Bug(issue_key=issue, commit_hexsha=commit.hexsha, parent_hexsha=parent.hexsha,
                    fixed_testcase=testcase, bugged_testcase=parent_testcase,
-                   type=type, valid=False, desc=invalid_not_fixed__error_desc + ' ' + testcase.get_error(),
+                   type=type, valid=False, desc=invalid_not_fixed__error_desc,
                    traces=traces, bugged_components=bugged_components)
     else:
         assert 0 == 1

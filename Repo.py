@@ -14,7 +14,7 @@ from jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
 import shutil
-
+from collections import Counter
 
 class TestResult(object):
     def __init__(self, junit_test, suite_name=None, report_file=None):
@@ -569,20 +569,26 @@ class Repo(object):
         else:
             ans = 'mvn -pl :{} -am install -Drat.skip=true -Dossindex.fail=false -Denforcer.skip=true -Drat.ignoreErrors=true -Drat.numUnapprovedLicenses=10000 -Djacoco.skip=true -fn'.format(
                 os.path.basename(module))
-        # ans = 'mvn test surefire:test -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest='
         ans += ' -DfailIfNoTests=false'
         if debug:
             ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if tests_to_run:
             ans += " -Dtest="
-            ans += ','.join(map(lambda test: '#'.join(test.rsplit('.', 1)), tests_to_run))
+            tests_names = map(lambda test: '#'.join(test.rsplit('.', 1)).split(".")[-1], tests_to_run)
+            tests_dict = dict()
+            map(lambda x: tests_dict.setdefault(x.split('#')[0], []).append(x), tests_names)
+            tests_to_add = set()
+            for t in tests_dict:
+                if len(tests_dict[t]) < 5:
+                    tests_to_add.union(set(tests_dict[t]))
+                tests_to_add.add(t + "#*")
+            ans += ','.join(tests_to_add)
         if len(testcases) > 0:
             ans += ' -Dtest='
             for testclass in testclasses:
                 if not ans.endswith('='):
                     ans += ','
                 ans += testclass.mvn_name
-        # ans += ' -f ' + self.repo_dir
         return ans
 
     # Returns mvn command string that compiles the given the given module
