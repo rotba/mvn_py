@@ -114,8 +114,6 @@ class Bug_data_handler(object):
     def add_time(self, issue_key, commit_hexsha, module, time, root_module, desctiption=''):
         self._time_csv_handler.add_row(issue_key, commit_hexsha, os.path.basename(module), time,
                                        classify_report_description(desctiption))
-        if not desctiption == '':
-            self._store_description(desctiption, issue_key, commit_hexsha, module, root_module)
 
     # Stores bug in it's direcrtory
     def _store_bug(self, bug):
