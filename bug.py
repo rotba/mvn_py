@@ -93,7 +93,7 @@ class Bug_data_handler(object):
     def __init__(self, path):
         self._path = path
         self._valid_bugs_csv_handler = Bug_csv_report_handler(os.path.join(self._path, 'valid_bugs.csv'))
-        self._valid_bugs = Bug_csv_report_handler(self._path + 'csv')
+        self._valid_bugs = Bug_csv_report_handler(self._path + '.csv')
         self._invalid_bugs_csv_handler = Bug_csv_report_handler(os.path.join(self._path, 'invalid_bugs.csv'))
         self._time_csv_handler = Time_csv_report_handler(os.path.join(self._path, 'times.csv'))
 
