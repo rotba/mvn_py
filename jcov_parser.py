@@ -15,9 +15,8 @@ class JcovParser(object):
 
     def __init__(self, xml_folder_dir, instrument_only_methods=True, short_type=True):
         self.target_dir = xml_folder_dir
-        self.jcov_files = list(map(lambda name: os.path.join(self.target_dir, name),
-                              filter(lambda name: name.endswith('.xml'), os.listdir(self.target_dir))))
-        assert all(map(os.path.exists, self.jcov_files))
+        self.jcov_files = list(filter(os.path.exists, map(lambda name: os.path.join(self.target_dir, name),
+                              filter(lambda name: name.endswith('.xml'), os.listdir(self.target_dir)))))
         self.instrument_only_methods = instrument_only_methods
         self.prefixes = set()
         if self.instrument_only_methods:
@@ -27,7 +26,6 @@ class JcovParser(object):
 
     def parse(self, delete_dir_when_finished=False):
         for jcov_file in self.jcov_files:
-            assert os.path.exists(jcov_file)
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             yield self._parse_jcov_file(jcov_file, test_name)
         if delete_dir_when_finished:
