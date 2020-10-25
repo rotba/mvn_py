@@ -1,6 +1,7 @@
 import functools
 import os
 import gc
+import shutil
 import xml.etree.cElementTree as et
 
 from trace_information import Signature, TraceElement, Trace
@@ -14,8 +15,9 @@ class JcovParser(object):
 
     def __init__(self, xml_folder_dir, instrument_only_methods=True, short_type=True):
         self.target_dir = xml_folder_dir
-        self.jcov_files = map(lambda name: os.path.join(xml_folder_dir, name),
-                              filter(lambda name: name.endswith('.xml'), os.listdir(xml_folder_dir)))
+        self.jcov_files = list(map(lambda name: os.path.join(self.target_dir, name),
+                              filter(lambda name: name.endswith('.xml'), os.listdir(self.target_dir))))
+        assert all(map(os.path.exists, self.jcov_files))
         self.instrument_only_methods = instrument_only_methods
         self.prefixes = set()
         if self.instrument_only_methods:
@@ -25,10 +27,10 @@ class JcovParser(object):
 
     def parse(self, delete_dir_when_finished=False):
         for jcov_file in self.jcov_files:
+            assert os.path.exists(jcov_file)
             test_name = os.path.splitext(os.path.basename(jcov_file))[0].lower()
             yield self._parse_jcov_file(jcov_file, test_name)
         if delete_dir_when_finished:
-            import shutil
             shutil.rmtree(self.target_dir)
 
     def _parse_jcov_file(self, jcov_file, test_name):
@@ -124,8 +126,11 @@ def block_to_comps(block):
 if __name__ == "__main__":
     import json
     import networkx
-    parser = JcovParser(r"Z:\ev_traces\DOXIA", False)
-    traces = parser.parse()
+    traces = list(JcovParser(r"C:\Users\User\Downloads\traces\43a6189c381c64f6c4308b4b19f5f05ab42c257d", True, True).parse(False))
+    traces = list(JcovParser(r"C:\Users\User\Downloads\traces\6641cc08d9568fcd6a291cab8cb0a7c4860e43b6", True, True).parse(False))
+    traces = list(JcovParser(r"C:\Users\User\Downloads\traces\b3654dbd3f21b6d7863eb491faf33a02bbcc9100", True, True).parse(False))
+    traces = list(JcovParser(r"C:\Users\User\Downloads\traces\c2efa4a80ff5bdc422999e3cba6843935aded1a0", True, True).parse(False))
+    exit()
     g = networkx.DiGraph()
     for method in parser.method_name_by_id:
         splitted = parser.method_name_by_id[method].split(".")
