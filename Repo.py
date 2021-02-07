@@ -730,7 +730,7 @@ class Repo(object):
                 print(e)
         if save_to:
             with open(save_to, "wb") as f:
-                json.dump(self.test_results, f)
+                json.dump(list(map(lambda x: self.test_results[x].as_dict(), self.test_results)), f)
         return self.test_results
 
     def get_surefire_files(self):
