@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from shutil import copyfile, rmtree
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-from junitparser.junitparser import Error, Failure
+from junitparser.junitparser import Error, Failure, Skipped
 from junitparser import JUnitXml
 import time
 import TestObjects
@@ -28,10 +28,13 @@ class TestResult(object):
         self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name)
         self.report_file = report_file
         result = 'pass'
+        print(junit_test.result)
         if type(junit_test.result) is Error:
             result = 'error'
-        if type(junit_test.result) is Failure:
+        elif type(junit_test.result) is Failure:
             result = 'failure'
+        elif type(junit_test.result) is Skipped:
+            result = 'skipped'
         self.outcome = result
 
     def __repr__(self):
@@ -44,7 +47,7 @@ class TestResult(object):
         return 0 if self.is_passed() else 1
 
     def as_dict(self):
-        return {'_tast_name': self.full_name, '_outcome': self.outcome}
+        return {'_test_name': self.full_name, '_outcome': self.outcome}
 
 
 class Repo(object):
