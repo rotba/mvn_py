@@ -6,6 +6,7 @@ from shutil import copyfile, rmtree
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
 from junitparser.junitparser import Error, Failure
+from junitparser import JUnitXml
 import time
 import TestObjects
 import mvn
@@ -13,8 +14,10 @@ from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
+import json
 import shutil
 from collections import Counter
+
 
 class TestResult(object):
     def __init__(self, junit_test, suite_name=None, report_file=None):
@@ -715,8 +718,7 @@ class Repo(object):
                 if not (all(c == ' ' for c in line) or all(c == '\t' for c in line)):
                     f.write(line + '\n')
 
-    def observe_tests(self):
-        from junitparser import JUnitXml
+    def observe_tests(self, save_to=None):
         self.test_results = {}
         for report in self.get_surefire_files():
             try:
@@ -725,7 +727,10 @@ class Repo(object):
                     test = TestResult(case, suite.name, report)
                     self.test_results[test.full_name.lower()] = test
             except Exception as e:
-                pass
+                print(e)
+        if save_to:
+            with open(save_to, "wb") as f:
+                json.dump(self.test_results, f)
         return self.test_results
 
     def get_surefire_files(self):
