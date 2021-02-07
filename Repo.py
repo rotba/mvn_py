@@ -27,14 +27,16 @@ class TestResult(object):
         self.time = junit_test.time
         self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name)
         self.report_file = report_file
-        result = 'pass'
-        print(junit_test.result)
-        if type(junit_test.result) is Error:
+        if junit_test.result is None:
+            result = 'pass'
+        elif isinstance(junit_test.result, Error):
             result = 'error'
-        elif type(junit_test.result) is Failure:
+        elif isinstance(junit_test.result, Failure):
             result = 'failure'
-        elif type(junit_test.result) is Skipped:
+        elif isinstance(junit_test.result, Skipped):
             result = 'skipped'
+        else:
+            raise Exception("result is not set")
         self.outcome = result
 
     def __repr__(self):
