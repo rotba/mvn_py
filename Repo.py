@@ -5,7 +5,8 @@ import xml.etree.ElementTree as ET
 from shutil import copyfile, rmtree
 from xml.dom.minidom import parse
 from xml.dom.minidom import parseString
-from junitparser.junitparser import Error, Failure
+from junitparser.junitparser import Error, Failure, Skipped
+from junitparser import JUnitXml
 import time
 import TestObjects
 import mvn
@@ -13,8 +14,10 @@ from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from pom_file import Pom
+import json
 import shutil
 from collections import Counter
+
 
 class TestResult(object):
     def __init__(self, junit_test, suite_name=None, report_file=None):
@@ -24,12 +27,9 @@ class TestResult(object):
         self.time = junit_test.time
         self.full_name = "{classname}.{name}".format(classname=self.classname, name=self.name)
         self.report_file = report_file
-        result = 'pass'
-        if type(junit_test.result) is Error:
-            result = 'error'
-        if type(junit_test.result) is Failure:
-            result = 'failure'
-        self.outcome = result
+        self.outcome = 'pass'
+        if junit_test.result:
+            self.outcome = junit_test.result[0]._tag
 
     def __repr__(self):
         return "{full_name}: {outcome}".format(full_name=self.full_name, outcome=self.outcome)
@@ -41,7 +41,7 @@ class TestResult(object):
         return 0 if self.is_passed() else 1
 
     def as_dict(self):
-        return {'_tast_name': self.full_name, '_outcome': self.outcome}
+        return {'_test_name': self.full_name, '_outcome': self.outcome}
 
 
 class Repo(object):
@@ -381,7 +381,7 @@ class Repo(object):
         delete_dir_when_finished = False
         if target_dir is None:
             delete_dir_when_finished = True
-        self.traces = list(JcovParser(target, instrument_only_methods, short_type).parse(False))
+        self.traces = list(JcovParser(target, instrument_only_methods, short_type).parse(delete_dir_when_finished))
         return self.traces
 
     # Changes all the pom files in a module recursively
@@ -715,8 +715,7 @@ class Repo(object):
                 if not (all(c == ' ' for c in line) or all(c == '\t' for c in line)):
                     f.write(line + '\n')
 
-    def observe_tests(self):
-        from junitparser import JUnitXml
+    def observe_tests(self, save_to=None):
         self.test_results = {}
         for report in self.get_surefire_files():
             try:
@@ -725,7 +724,10 @@ class Repo(object):
                     test = TestResult(case, suite.name, report)
                     self.test_results[test.full_name.lower()] = test
             except Exception as e:
-                pass
+                print(e)
+        if save_to:
+            with open(save_to, "wb") as f:
+                json.dump(list(map(lambda x: self.test_results[x].as_dict(), self.test_results)), f)
         return self.test_results
 
     def get_surefire_files(self):

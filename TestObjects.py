@@ -176,6 +176,10 @@ class TestCase(object):
         return self.report.failed
 
     @property
+    def skipped(self):
+        return self.report.skipped
+
+    @property
     def has_error(self):
         return self.report.has_error
 
@@ -353,8 +357,9 @@ class TestCaseReport(object):
         self._passed = self.test_result.is_passed()
         self._failed = False
         self._has_error = False
-        self._failed = self.testcase_tag.outcome == 'failure'
-        self._has_error = self.testcase_tag.outcome == 'error'
+        self._failed = str(self.testcase_tag.outcome) == 'failure'
+        self._has_error = str(self.testcase_tag.outcome) == 'error'
+        self._skipped = str(self.testcase_tag.outcome) == 'skipped'
 
     @property
     def time(self):
@@ -367,6 +372,10 @@ class TestCaseReport(object):
     @property
     def passed(self):
         return self._passed
+
+    @property
+    def skipped(self):
+        return self._skipped
 
     @property
     def failed(self):
