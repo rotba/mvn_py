@@ -104,7 +104,7 @@ class Repo(object):
             for proc in psutil.process_iter():
                 if (time.time() - proc.create_time()) < 10 * 60 * 1:
                     if 'java' in proc.name():
-                        if any(map(lambda x: 'surefire' in x,proc.cmdline())):
+                        if any(list(map(lambda x: 'surefire' in x,proc.cmdline()))_:
                             proc.kill()
         except Exception as e:
             build_report+=str(e)
@@ -529,7 +529,7 @@ class Repo(object):
         path = ['build', 'plugins', 'plugin']
         elements = et.getroot()
         for name in path:
-            elements = reduce(list.__add__, map(lambda elem: get_children_by_name(elem, name), elements), [])
+            elements = reduce(list.__add__, list(map(lambda elem: get_children_by_name(elem, name), elements)), [])
         surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
                                                        get_children_by_name(plugin, "artifactId")),
                                  filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
@@ -537,7 +537,7 @@ class Repo(object):
         pass
 
     def run_function_on_poms_by_filter(self, pom_filter, function, *args, **kwargs):
-        map(lambda pom: function(pom, *args, **kwargs), filter(pom_filter, self.get_all_pom_paths(self._repo_dir)))
+        list(map(lambda pom: function(pom, *args, **kwargs), filter(pom_filter, self.get_all_pom_paths(self._repo_dir))))
 
     # Returns mvn command string that runns the given tests in the given module
     def generate_mvn_test_cmd(self, tests, module=None):
@@ -574,9 +574,9 @@ class Repo(object):
             ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if tests_to_run:
             ans += " -Dtest="
-            tests_names = map(lambda test: '#'.join(test.rsplit('.', 1)).split(".")[-1], tests_to_run)
+            tests_names = list(map(lambda test: '#'.join(test.rsplit('.', 1)).split(".")[-1], tests_to_run))
             tests_dict = dict()
-            map(lambda x: tests_dict.setdefault(x.split('#')[0], []).append(x), tests_names)
+            list(map(lambda x: tests_dict.setdefault(x.split('#')[0], []).append(x), tests_names))
             tests_to_add = set()
             for t in tests_dict:
                 if len(tests_dict[t]) < 5:
@@ -808,7 +808,7 @@ class Repo(object):
         if not os.path.isdir(generated_tests_dir):
             return self.find_all_evosuite_tests(module)
         generated_test_classes = mvn.parse_tests(generated_tests_dir)
-        generated_test_classes_mvn_names = map(lambda x: x.mvn_name, generated_test_classes)
+        generated_test_classes_mvn_names = list(map(lambda x: x.mvn_name, generated_test_classes))
         all_tests = self.get_tests()
         exported_tests = filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests)
         return mvn.get_testcases(test_classes=exported_tests)

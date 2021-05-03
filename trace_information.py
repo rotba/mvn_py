@@ -81,7 +81,7 @@ class HitInformation(object):
 
     @staticmethod
     def read_hit_information_string(str, method_name):
-        return map(lambda lst: HitInformation(method_name, lst), eval(str))
+        return list(map(lambda lst: HitInformation(method_name, lst), eval(str)))
 
 
 class TraceElement(object):
@@ -99,7 +99,7 @@ class TraceElement(object):
             # assert sum(map(lambda x: x.count, self.hits_information)) == self.count, "{0}-{1}, {2}".format(self.id, self.method_name, self.count)
 
     def set_previous_method(self, method_name_by_id):
-        map(lambda hit: hit.set_previous_method(method_name_by_id), self.hits_information)
+        list(map(lambda hit: hit.set_previous_method(method_name_by_id), self.hits_information))
 
     def have_count(self):
         return self.count != 0
@@ -112,10 +112,10 @@ class TraceElement(object):
         assert False
 
     def get_execution_edges(self):
-        return map(lambda hit: hit.execution_edge, self.hits_information)
+        return list(map(lambda hit: hit.execution_edge, self.hits_information))
 
     def get_call_graph_edges(self):
-        return map(lambda hit: hit.call_graph_edge, self.hits_information)
+        return list(map(lambda hit: hit.call_graph_edge, self.hits_information))
 
 
 class Trace(object):
@@ -127,7 +127,7 @@ class Trace(object):
         return list(set(map(lambda t: self.trace[t].get_trace(trace_granularity), self.trace)))
 
     def get_execution_edges(self):
-        return reduce(list.__add__, map(lambda element: element.get_execution_edges(), self.trace.values()), [])
+        return reduce(list.__add__, list(map(lambda element: element.get_execution_edges(), self.trace.values())), [])
 
     def get_call_graph_edges(self):
-        return reduce(list.__add__, map(lambda element: element.get_call_graph_edges(), self.trace.values()), [])
+        return reduce(list.__add__, list(map(lambda element: element.get_call_graph_edges(), self.trace.values())), [])

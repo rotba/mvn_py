@@ -45,7 +45,7 @@ class JavaDoc(object):
     def get_pom_values():
         configuration_items = [("encoding", "UTF-8"), ("quiet", "true"), ("failOnError", "false"), ("author", "false")
             , ("show", "private"), ('docletPath', JavaDoc.DOCLET_PATH), ('doclet', "jp.michikusa.chitose.doclet.JsonDoclet")]
-        return map(lambda x: PomValue(JavaDoc.PLUGIN_NAME, ["configuration", x[0]], x[1], plugin_version="3.1", reporting=True), configuration_items)
+        return list(map(lambda x: PomValue(JavaDoc.PLUGIN_NAME, ["configuration", x[0]], x[1], plugin_version="3.1", reporting=True), configuration_items))
 
     @staticmethod
     def get_javadoc_data(base_dir):
@@ -58,7 +58,7 @@ class JavaDoc(object):
             for root, dirs, files in os.walk(base_dir):
                 if not dirs:
                     continue
-                if not any(map(lambda x: x.endswith('.java'), files)):
+                if not any(list(map(lambda x: x.endswith('.java'), files))):
                     continue
                 if sources_path in root:
                     sources, package = root.split(sources_path)

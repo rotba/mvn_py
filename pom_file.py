@@ -97,7 +97,7 @@ class Pom(object):
     def get_elements_by_path(self, path):
         elements = [self.element_tree.getroot()]
         for name in path:
-            elements = reduce(list.__add__, map(lambda elem: Pom.get_children_by_name(elem, name), elements), [])
+            elements = reduce(list.__add__, list(map(lambda elem: Pom.get_children_by_name(elem, name), elements)), [])
         return elements
 
     def create_plugin_artifact(self, path, pom_value):
@@ -120,7 +120,7 @@ class Pom(object):
             else:
                 management_path = management_path[0]
             versions = Pom.get_children_by_name(management_path, "version")
-            map(lambda version: setattr(version, "text", pom_value.plugin_version), versions)
+            list(map(lambda version: setattr(version, "text", pom_value.plugin_version), versions))
 
         additions = [(PomPlugin.get_plugin_by_name(self, pom_value.plugin_name), PomPlugin.PLUGINS_PATH)]
         if pom_value.reporting:
