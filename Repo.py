@@ -10,8 +10,8 @@ from junitparser import JUnitXml
 import time
 import mvnpy.TestObjects as TestObjects
 import mvnpy.mvn as mvn
-from jcov_parser import JcovParser
-from jcov_tracer import JcovTracer
+from .jcov_parser import JcovParser
+from .jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
 from .pom_file import Pom
 import json
