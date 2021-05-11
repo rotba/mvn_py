@@ -4,7 +4,7 @@ import gc
 import shutil
 import xml.etree.cElementTree as et
 
-from trace_information import Signature, TraceElement, Trace
+from .trace_information import Signature, TraceElement, Trace
 
 
 class JcovParser(object):

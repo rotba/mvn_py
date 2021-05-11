@@ -1,32 +1,10 @@
 import os
-from pom_file import PomValue
+from .pom_file import PomValue
 from subprocess import Popen
 import socket
 
 
 class JcovTracer(object):
-    """
-               <artifactId>maven-surefire-plugin</artifactId>
-           <version>2.18.1</version>
-           <configuration>
--            <argLine>-Xmx2048m</argLine>
--          </configuration>
-+            <argLine>"-javaagent:C:\Users\User\Documents\GitHub\jcov\JCOV_BUILD\jcov_3.0\jcov.jar=grabber,include_list=C:\Users\User\Documents\GitHub\jcov\classes_file.txt"</argLine>
-+                                 <additionalClasspathElements>
-+            <additionalClasspathElement>C:\Users\User\Documents\GitHub\jcov\JCOV_BUILD\jcov_3.0\listener.jar</additionalClasspathElement>
-+          </additionalClasspathElements>
-+
-+          <properties>
-+                       <property>
-+                       <name>listener</name>
-+                       <value>com.sun.tdk.listener.JUnitExecutionListener</value>
-+                       </property>
-+                       </properties>
-+                 </configuration>
-         </plugin>
-         <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-    """
 
     JCOV_JAR_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "externals", "jcov.jar")
     LISTENER_JAR_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "externals", "listener.jar")

@@ -8,12 +8,12 @@ from xml.dom.minidom import parseString
 from junitparser.junitparser import Error, Failure, Skipped
 from junitparser import JUnitXml
 import time
-import TestObjects
-import mvn
+import mvnpy.TestObjects as TestObjects
+import mvnpy.mvn as mvn
 from jcov_parser import JcovParser
 from jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
-from pom_file import Pom
+from .pom_file import Pom
 import json
 import shutil
 from collections import Counter
