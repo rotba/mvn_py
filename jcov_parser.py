@@ -42,7 +42,7 @@ class JcovParser(object):
     def _get_trace_for_file(self, jcov_file):
         trace = {}
         for method in self._get_lines_by_inds(jcov_file):
-            prefix = filter(lambda prefix: method.startswith(prefix), self.prefixes)[0]
+            prefix = list(filter(lambda prefix: method.startswith(prefix), self.prefixes))[0]
             data = dict(list(map(lambda val: val.split('='),
                             method[len(prefix) + 1:-len(JcovParser.CLOSER)].replace('"', "").split())))
             trace_element = TraceElement(data, self.method_name_by_id)
@@ -65,7 +65,7 @@ class JcovParser(object):
 
     @staticmethod
     def get_children_by_name(element, name):
-        return filter(lambda e: e.tag.endswith(name), element.getchildren())
+        return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
     @staticmethod
     def get_elements_by_path(root, path):

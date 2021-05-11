@@ -516,7 +516,7 @@ class Repo(object):
         xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
         def get_children_by_name(element, name):
-            return filter(lambda e: e.tag.endswith(name), element.getchildren())
+            return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
         def get_or_create_child(element, name):
             child = get_children_by_name(element, name)
@@ -530,9 +530,9 @@ class Repo(object):
         elements = et.getroot()
         for name in path:
             elements = reduce(list.__add__, list(map(lambda elem: get_children_by_name(elem, name), elements)), [])
-        surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
+        surfire_plugins = list(filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
                                                        get_children_by_name(plugin, "artifactId")),
-                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
+                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter())))
 
         pass
 
@@ -760,7 +760,7 @@ class Repo(object):
 
     # Returns the dictionary that map testcase string to its traces strings
     def get_trace(self, testcase_name):
-        return filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces)[0]
+        return list(filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces))[0]
 
     # Returns the pom path associated with the given module
     def get_pom(self, module):
@@ -812,12 +812,12 @@ class Repo(object):
         generated_test_classes = mvn.parse_tests(generated_tests_dir)
         generated_test_classes_mvn_names = list(map(lambda x: x.mvn_name, generated_test_classes))
         all_tests = self.get_tests()
-        exported_tests = filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests)
+        exported_tests = list(filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests))
         return mvn.get_testcases(test_classes=exported_tests)
 
     def find_all_evosuite_tests(self, module):
         all_testcases = mvn.get_testcases(self.get_tests(module))
-        return filter(lambda x: TestObjects.is_evosuite_test_class(x.parent.src_path), all_testcases)
+        return list(filter(lambda x: TestObjects.is_evosuite_test_class(x.parent.src_path), all_testcases))
 
     def get_generated_testcases_dir(self, module=None):
         module_path = self.repo_dir if module == None else module

@@ -94,7 +94,7 @@ class AmirTracer(Tracer):
         xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
         def get_children_by_name(element, name):
-            return filter(lambda e: e.tag.endswith(name), element.getchildren())
+            return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
         def get_or_create_child(element, name):
             child = get_children_by_name(element, name)
@@ -104,9 +104,9 @@ class AmirTracer(Tracer):
                 return child[0]
 
         et = xml.etree.ElementTree.parse(pom_path)
-        surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
+        surfire_plugins = list(filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
                                                        get_children_by_name(plugin, "artifactId")),
-                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
+                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter())))
         trace_text = self.get_tracer_arg_line()
         for plugin in surfire_plugins:
             configuration = get_or_create_child(plugin, 'configuration')
@@ -210,4 +210,4 @@ if __name__ == "__main__":
     components = set(components_priors.keys())
     tests_details = list(map(lambda test_name: (test_name, list(set(tr.tracer.traces[test_name].files_trace()) & components), tr.observations[test_name].get_observation()),
                         tests))
-    write_planning_file(matrix_path, [], filter(lambda test: len(test[1]) > 0, tests_details), priors=components_priors)
+    write_planning_file(matrix_path, [], list(filter(lambda test: len(test[1]) > 0, tests_details)), priors=components_priors)

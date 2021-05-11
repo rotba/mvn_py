@@ -317,7 +317,7 @@ class Bug_data_handler(object):
         commit_path = self.get_commit_path(issue_key=bug.issue, commit_hexsha=bug.commit)
         return reduce(
             lambda acc, curr: acc + [os.path.join(commit_path, get_pom_patch_path(curr))],
-            filter(lambda x: is_pom_path(x), os.listdir(commit_path)),
+            list(filter(lambda x: is_pom_path(x), os.listdir(commit_path))),
             []
         )
 
