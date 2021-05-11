@@ -886,7 +886,7 @@ class Repo(object):
     def setup_tests_generator(self, module):
         EvosuiteFactory.create(repo=self).setup_tests_generator(module)
     def add_javadoc(self):
-        from javadoc import JavaDoc
+        from .javadoc import JavaDoc
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             pom.set_site_version()
@@ -895,7 +895,7 @@ class Repo(object):
             pom.save()
 
     def javadoc_command(self, dump_path=None):
-        from javadoc import JavaDoc
+        from .javadoc import JavaDoc
         import json
         jsons = JavaDoc.get_dir_javadoc(self._repo_dir)
         if dump_path:
