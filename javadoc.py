@@ -1,5 +1,5 @@
 import os
-from pom_file import PomValue
+from .pom_file import PomValue
 from subprocess import Popen, PIPE
 import json
 import shutil
