@@ -104,7 +104,7 @@ class Repo(object):
             for proc in psutil.process_iter():
                 if (time.time() - proc.create_time()) < 10 * 60 * 1:
                     if 'java' in proc.name():
-                        if any(list(map(lambda x: 'surefire' in x,proc.cmdline()))_:
+                        if any(list(map(lambda x: 'surefire' in x,proc.cmdline()))):
                             proc.kill()
         except Exception as e:
             build_report+=str(e)
