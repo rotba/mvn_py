@@ -55,7 +55,7 @@ class JcovParser(object):
         with open(file_path) as f:
             enumerator_next_ind = 0
             for ind in self.lines_to_read:
-                list(map(functools.partial(next, f), xrange(enumerator_next_ind, ind)))
+                list(map(functools.partial(next, f), range(enumerator_next_ind, ind)))
                 enumerator_next_ind = ind + 1
                 yield next(f).strip()
 
