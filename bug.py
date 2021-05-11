@@ -6,7 +6,7 @@ import re
 import shutil
 import traceback
 from pathlib import Path
-
+from functools import reduce
 from enum import Enum
 import csv
 import traceback

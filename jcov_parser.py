@@ -3,7 +3,7 @@ import os
 import gc
 import shutil
 import xml.etree.cElementTree as et
-
+from functools import reduce
 from .trace_information import Signature, TraceElement, Trace
 
 

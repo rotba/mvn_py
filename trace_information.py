@@ -1,5 +1,5 @@
 import re
-
+from functools import reduce
 
 class PrimitiveTypes(object):
     PRIMITIVES = {'Z': "boolean", 'V': "void", 'I': "int", 'J': "long", 'C': "char", 'B': "byte", 'D': "double",

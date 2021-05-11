@@ -1,4 +1,5 @@
 import xml.etree.cElementTree as et
+from functools import reduce
 et.register_namespace('', "http://maven.apache.org/POM/4.0.0")
 et.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 

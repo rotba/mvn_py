@@ -17,7 +17,7 @@ from .pom_file import Pom
 import json
 import shutil
 from collections import Counter
-
+from functools import reduce
 
 class TestResult(object):
     def __init__(self, junit_test, suite_name=None, report_file=None):

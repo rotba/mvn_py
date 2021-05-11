@@ -9,7 +9,7 @@ import shutil
 import xml.etree.ElementTree
 import tempfile
 from contextlib import contextmanager
-
+from functools import reduce
 SURFIRE_DIR_NAME = 'surefire-reports'
 OBSERVE_PATH = r"c:\temp\observe"
 
