@@ -914,9 +914,9 @@ if __name__ == "__main__":
     # repo.install(debug=False)
     # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers")
     repo.observe_tests()
-    print repo.build_report
-    print repo.traces
-    print repo.test_results.values()
+    print(repo.build_report)
+    print(repo.traces)
+    print(repo.test_results.values())
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()

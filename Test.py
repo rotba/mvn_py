@@ -19,7 +19,7 @@ class Test_mvnpy(unittest.TestCase):
                                                              os.getcwd() + r'\static_files\MavenProj\sub_mod_2')
         except TestObjects.TestParserException as e:
             print("Unexpected state of the test driver. Caused excpetion:")
-            print (e.msg)
+            print(e.msg)
             #resetEnvritonment()
 
         self.test_1 = TestObjects.TestClass(
