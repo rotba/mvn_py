@@ -144,10 +144,10 @@ if __name__ == "__main__":
         g.add_edge(class_name, function_name)
         g.add_edge(function_name, block_name)
     networkx.write_gexf(g, r"z:\temp\ids.gexf")
-    with open(r"z:\temp\ids.json", "wb") as f:
+    with open(r"z:\temp\ids.json", "w") as f:
         json.dump(parser.method_name_by_id, f)
 
-    with open(r"z:\temp\traces.json", "wb") as f:
+    with open(r"z:\temp\traces.json", "w") as f:
         json.dump(dict(list(map(lambda trace: (trace.test_name, list(set(reduce(list.__add__, list(map(block_to_comps, trace.get_trace())), [])))), traces))), f)
     exit()
     for trace in traces:

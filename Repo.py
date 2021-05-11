@@ -726,7 +726,7 @@ class Repo(object):
             except Exception as e:
                 print(e)
         if save_to:
-            with open(save_to, "wb") as f:
+            with open(save_to, "w") as f:
                 json.dump(list(map(lambda x: self.test_results[x].as_dict(), self.test_results)), f)
         return self.test_results
 
@@ -899,7 +899,7 @@ class Repo(object):
         import json
         jsons = JavaDoc.get_dir_javadoc(self._repo_dir)
         if dump_path:
-            with open(dump_path, "wb") as f:
+            with open(dump_path, "w") as f:
                 json.dump(jsons, f)
         return jsons
 
@@ -934,7 +934,7 @@ if __name__ == "__main__":
     #     return path
     #
     # def dump(obj, file_name):
-    #     with open(file_name+".json", "wb") as f:
+    #     with open(file_name+".json", "w") as f:
     #         json.dump(obj, f)
     #
     # base_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\clones")

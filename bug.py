@@ -121,7 +121,7 @@ class Bug_data_handler(object):
         if not os.path.exists(path_to_bug_testclass):
             os.makedirs(path_to_bug_testclass)
         bug_path = self.get_bug_path(bug)
-        with open(bug_path, 'wb') as bug_file:
+        with open(bug_path, 'w') as bug_file:
             pickle.dump(bug, bug_file, protocol=2)
         if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
             try:

@@ -120,7 +120,7 @@ class JcovTracer(object):
                 with open(path) as f:
                     assert f.read(), "{0} is empty".format(path)
         if self.classes_to_trace:
-            with open(self.path_to_classes_file, "wb") as f:
+            with open(self.path_to_classes_file, "w") as f:
                 f.write("\n".join(self.classes_to_trace))
         p = Popen(self.grabber_cmd_line(debug=debug))
         assert p.poll() is None

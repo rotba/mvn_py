@@ -116,7 +116,7 @@ class AmirTracer(Tracer):
 
     def get_tracer_arg_line(self):
         paths = [os.path.expandvars(r'%USERPROFILE%\.m2\repository'), self.git_path]
-        with open(self.paths_file, 'wb') as paths_file:
+        with open(self.paths_file, 'w') as paths_file:
             paths_file.write("\n".join(paths))
         return ' -Xms8g -Xmx20048m  -javaagent:{0}={1} '.format(self.tracer_path, self.paths_file)
 
