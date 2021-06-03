@@ -276,7 +276,7 @@ class TestCase(object):
 
 
 class TestClassReport(object):
-    def __init__(self, xml_doc_path, modlue_path, observed_tests=None):
+    def __init__(self, xml_doc_path, modlue_path, observed_tests):
         self.observed_tests = observed_tests
         self.success_testcases = []
         self.failed_testcases = []

@@ -277,17 +277,6 @@ class Repo(object):
                 pass
         return outcomes
 
-    # Returns tests reports objects currently exists in this repo in path_to_reports
-    def parse_tests_reports(self, path_to_reports, module=None):
-        inspected_module = self.repo_dir
-        if not module == None:
-            inspected_module = module
-        ans = []
-        for filename in os.listdir(path_to_reports):
-            if filename.endswith(".xml"):
-                ans.append(TestObjects.TestClassReport(os.path.join(path_to_reports, filename), inspected_module))
-        return ans
-
     # Gets path to tests object in repo, or in a cpsecifc module if specified
     def get_tests(self, module=None):
         ans = []
@@ -304,22 +293,6 @@ class Repo(object):
             if os.path.isdir(file_abs_path):
                 if not (filename == 'src' or filename == '.git'):
                     ans.extend(self.get_tests(file_abs_path))
-        return ans
-
-    # Gets all the reports in the given module if given, else in the given module
-    def get_tests_reports(self, module=None):
-        ans = []
-        inspected_module = self.repo_dir
-        if not module == None:
-            inspected_module = module
-        path_to_reports = os.path.join(inspected_module, 'target\\surefire-reports')
-        if os.path.isdir(path_to_reports):
-            ans.extend(self.parse_tests_reports(path_to_reports, inspected_module))
-        for filename in os.listdir(inspected_module):
-            file_abs_path = os.path.join(inspected_module, filename)
-            if os.path.isdir(file_abs_path):
-                if not (filename == 'src' or filename == '.git'):
-                    ans.extend(self.get_tests_reports(file_abs_path))
         return ans
 
     # Adds Tracer agent to surefire. Outpur of tracer goes to target
