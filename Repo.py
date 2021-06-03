@@ -8,16 +8,16 @@ from xml.dom.minidom import parseString
 from junitparser.junitparser import Error, Failure, Skipped
 from junitparser import JUnitXml
 import time
-import TestObjects
-import mvn
-from jcov_parser import JcovParser
-from jcov_tracer import JcovTracer
+import mvnpy.TestObjects as TestObjects
+import mvnpy.mvn as mvn
+from .jcov_parser import JcovParser
+from .jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
-from pom_file import Pom
+from .pom_file import Pom
 import json
 import shutil
 from collections import Counter
-
+from functools import reduce
 
 class TestResult(object):
     def __init__(self, junit_test, suite_name=None, report_file=None):
@@ -104,7 +104,7 @@ class Repo(object):
             for proc in psutil.process_iter():
                 if (time.time() - proc.create_time()) < 10 * 60 * 1:
                     if 'java' in proc.name():
-                        if any(map(lambda x: 'surefire' in x,proc.cmdline())):
+                        if any(list(map(lambda x: 'surefire' in x,proc.cmdline()))):
                             proc.kill()
         except Exception as e:
             build_report+=str(e)
@@ -516,7 +516,7 @@ class Repo(object):
         xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
         def get_children_by_name(element, name):
-            return filter(lambda e: e.tag.endswith(name), element.getchildren())
+            return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
         def get_or_create_child(element, name):
             child = get_children_by_name(element, name)
@@ -529,15 +529,15 @@ class Repo(object):
         path = ['build', 'plugins', 'plugin']
         elements = et.getroot()
         for name in path:
-            elements = reduce(list.__add__, map(lambda elem: get_children_by_name(elem, name), elements), [])
-        surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
+            elements = reduce(list.__add__, list(map(lambda elem: get_children_by_name(elem, name), elements)), [])
+        surfire_plugins = list(filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
                                                        get_children_by_name(plugin, "artifactId")),
-                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
+                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter())))
 
         pass
 
     def run_function_on_poms_by_filter(self, pom_filter, function, *args, **kwargs):
-        map(lambda pom: function(pom, *args, **kwargs), filter(pom_filter, self.get_all_pom_paths(self._repo_dir)))
+        list(map(lambda pom: function(pom, *args, **kwargs), filter(pom_filter, self.get_all_pom_paths(self._repo_dir))))
 
     # Returns mvn command string that runns the given tests in the given module
     def generate_mvn_test_cmd(self, tests, module=None):
@@ -574,9 +574,9 @@ class Repo(object):
             ans += ' -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -Xnoagent -Djava.compiler=NONE"'
         if tests_to_run:
             ans += " -Dtest="
-            tests_names = map(lambda test: '#'.join(test.rsplit('.', 1)).split(".")[-1], tests_to_run)
+            tests_names = list(map(lambda test: '#'.join(test.rsplit('.', 1)).split(".")[-1], tests_to_run))
             tests_dict = dict()
-            map(lambda x: tests_dict.setdefault(x.split('#')[0], []).append(x), tests_names)
+            list(map(lambda x: tests_dict.setdefault(x.split('#')[0], []).append(x), tests_names))
             tests_to_add = set()
             for t in tests_dict:
                 if len(tests_dict[t]) < 5:
@@ -726,7 +726,7 @@ class Repo(object):
             except Exception as e:
                 print(e)
         if save_to:
-            with open(save_to, "wb") as f:
+            with open(save_to, "w") as f:
                 json.dump(list(map(lambda x: self.test_results[x].as_dict(), self.test_results)), f)
         return self.test_results
 
@@ -760,7 +760,7 @@ class Repo(object):
 
     # Returns the dictionary that map testcase string to its traces strings
     def get_trace(self, testcase_name):
-        return filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces)[0]
+        return list(filter(lambda x: x.test_name.lower() == testcase_name.lower(), self.traces))[0]
 
     # Returns the pom path associated with the given module
     def get_pom(self, module):
@@ -810,14 +810,14 @@ class Repo(object):
         if not os.path.isdir(generated_tests_dir):
             return self.find_all_evosuite_tests(module)
         generated_test_classes = mvn.parse_tests(generated_tests_dir)
-        generated_test_classes_mvn_names = map(lambda x: x.mvn_name, generated_test_classes)
+        generated_test_classes_mvn_names = list(map(lambda x: x.mvn_name, generated_test_classes))
         all_tests = self.get_tests()
-        exported_tests = filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests)
+        exported_tests = list(filter(lambda x: x.mvn_name in generated_test_classes_mvn_names, all_tests))
         return mvn.get_testcases(test_classes=exported_tests)
 
     def find_all_evosuite_tests(self, module):
         all_testcases = mvn.get_testcases(self.get_tests(module))
-        return filter(lambda x: TestObjects.is_evosuite_test_class(x.parent.src_path), all_testcases)
+        return list(filter(lambda x: TestObjects.is_evosuite_test_class(x.parent.src_path), all_testcases))
 
     def get_generated_testcases_dir(self, module=None):
         module_path = self.repo_dir if module == None else module
@@ -886,7 +886,7 @@ class Repo(object):
     def setup_tests_generator(self, module):
         EvosuiteFactory.create(repo=self).setup_tests_generator(module)
     def add_javadoc(self):
-        from javadoc import JavaDoc
+        from .javadoc import JavaDoc
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             pom.set_site_version()
@@ -895,11 +895,11 @@ class Repo(object):
             pom.save()
 
     def javadoc_command(self, dump_path=None):
-        from javadoc import JavaDoc
+        from .javadoc import JavaDoc
         import json
         jsons = JavaDoc.get_dir_javadoc(self._repo_dir)
         if dump_path:
-            with open(dump_path, "wb") as f:
+            with open(dump_path, "w") as f:
                 json.dump(jsons, f)
         return jsons
 
@@ -914,9 +914,9 @@ if __name__ == "__main__":
     # repo.install(debug=False)
     # repo.install(debug=False, module=r"c:\temp\tika\tika-parsers")
     repo.observe_tests()
-    print repo.build_report
-    print repo.traces
-    print repo.test_results.values()
+    print(repo.build_report)
+    print(repo.traces)
+    print(repo.test_results.values())
     exit()
     # repo = Repo(r"C:\amirelm\projects_minors\JEXL\version_to_test_trace\repo")
     # obs = repo.observe_tests()
@@ -934,7 +934,7 @@ if __name__ == "__main__":
     #     return path
     #
     # def dump(obj, file_name):
-    #     with open(file_name+".json", "wb") as f:
+    #     with open(file_name+".json", "w") as f:
     #         json.dump(obj, f)
     #
     # base_path = mkdir(r"C:\amirelm\component_importnace\data\rotem_lang\clones")

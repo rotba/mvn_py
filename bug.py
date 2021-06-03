@@ -6,7 +6,7 @@ import re
 import shutil
 import traceback
 from pathlib import Path
-
+from functools import reduce
 from enum import Enum
 import csv
 import traceback
@@ -121,7 +121,7 @@ class Bug_data_handler(object):
         if not os.path.exists(path_to_bug_testclass):
             os.makedirs(path_to_bug_testclass)
         bug_path = self.get_bug_path(bug)
-        with open(bug_path, 'wb') as bug_file:
+        with open(bug_path, 'w') as bug_file:
             pickle.dump(bug, bug_file, protocol=2)
         if len(bug.traces) > 0 and len(bug.bugged_components) > 0:
             try:
@@ -317,7 +317,7 @@ class Bug_data_handler(object):
         commit_path = self.get_commit_path(issue_key=bug.issue, commit_hexsha=bug.commit)
         return reduce(
             lambda acc, curr: acc + [os.path.join(commit_path, get_pom_patch_path(curr))],
-            filter(lambda x: is_pom_path(x), os.listdir(commit_path)),
+            list(filter(lambda x: is_pom_path(x), os.listdir(commit_path))),
             []
         )
 

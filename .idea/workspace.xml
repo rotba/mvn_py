@@ -44,7 +44,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="obse&#9;null&#9;null&#10;pomva&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../BugMiner" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -227,69 +227,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="274" y="37" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590016394332">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="274" y="37" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1590016394332" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583857337217" />
-    <state x="707" y="190" width="645" height="595" key="#xdebugger.evaluate" timestamp="1591822055885">
+    <state x="24" y="85" width="1896" height="947" key="MergeDialog" timestamp="1620039579273">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="503" y="133" width="645" height="595" key="#xdebugger.evaluate/0.0.1366.728@0.0.1366.728" timestamp="1590617035732" />
-    <state x="707" y="190" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1591822055885" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1583851056888">
+    <state x="24" y="85" width="1896" height="947" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1620039579273" />
+    <state x="672" y="235" key="MultipleFileMergeDialog" timestamp="1620039579319">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583851056888" />
-    <state width="1899" height="389" key="GridCell.Tab.0.bottom" timestamp="1592471116718">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="201" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1591788543888" />
-    <state width="1899" height="389" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116718" />
-    <state width="1899" height="389" key="GridCell.Tab.0.center" timestamp="1592471116718">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="201" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1591788543888" />
-    <state width="1899" height="389" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116718" />
-    <state width="1899" height="389" key="GridCell.Tab.0.left" timestamp="1592471116718">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="201" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1591788543888" />
-    <state width="1899" height="389" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116718" />
-    <state width="1899" height="389" key="GridCell.Tab.0.right" timestamp="1592471116718">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="201" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1591788543888" />
-    <state width="1899" height="389" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116718" />
-    <state width="1899" height="389" key="GridCell.Tab.1.bottom" timestamp="1592471116719">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="251" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1590617128295" />
-    <state width="1899" height="389" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116719" />
-    <state width="1899" height="389" key="GridCell.Tab.1.center" timestamp="1592471116719">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="251" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1590617128295" />
-    <state width="1899" height="389" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116719" />
-    <state width="1899" height="389" key="GridCell.Tab.1.left" timestamp="1592471116718">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="251" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1590617128295" />
-    <state width="1899" height="389" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116718" />
-    <state width="1899" height="389" key="GridCell.Tab.1.right" timestamp="1592471116719">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1345" height="251" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1590617128295" />
-    <state width="1899" height="389" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592471116719" />
-    <state x="534" y="144" width="852" height="752" key="find.popup" timestamp="1591828206669">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="380" y="101" width="606" height="526" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1591784025570" />
-    <state x="534" y="144" width="852" height="752" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1591828206669" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1591865090803">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1591865090803" />
+    <state x="672" y="235" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1620039579319" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

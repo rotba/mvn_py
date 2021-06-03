@@ -1,12 +1,13 @@
 import xml.etree.cElementTree as et
+from functools import reduce
 et.register_namespace('', "http://maven.apache.org/POM/4.0.0")
 et.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
 
 def is_plugin(artifact):
     def check(plugin):
-        return filter(lambda x: x.text == artifact,
-                      Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME))
+        return list(filter(lambda x: x.text == artifact,
+                      Pom.get_children_by_name(plugin, PomPlugin.ARTIFACT_ID_NAME)))
     return check
 
 
@@ -43,12 +44,12 @@ class PomPlugin(object):
     @staticmethod
     def get_report_plugin_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        return filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_report_plugin(pom))
+        return list(filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_report_plugin(pom)))
 
     @staticmethod
     def get_plugin_management_by_name(pom, plugin_name):
         assert plugin_name in PomPlugin.PLUGINS
-        return filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_plugin_management(pom))
+        return list(filter(is_plugin(PomPlugin.PLUGINS[plugin_name]), PomPlugin.get_plugin_management(pom)))
 
 
 class PomValue(object):
@@ -74,7 +75,7 @@ class Pom(object):
 
     @staticmethod
     def get_children_by_name(element, name):
-        return filter(lambda e: e.tag.endswith(name), element.getchildren())
+        return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
     @staticmethod
     def get_or_create_child(element, name):
@@ -97,7 +98,7 @@ class Pom(object):
     def get_elements_by_path(self, path):
         elements = [self.element_tree.getroot()]
         for name in path:
-            elements = reduce(list.__add__, map(lambda elem: Pom.get_children_by_name(elem, name), elements), [])
+            elements = reduce(list.__add__, list(map(lambda elem: Pom.get_children_by_name(elem, name), elements)), [])
         return elements
 
     def create_plugin_artifact(self, path, pom_value):
@@ -120,7 +121,7 @@ class Pom(object):
             else:
                 management_path = management_path[0]
             versions = Pom.get_children_by_name(management_path, "version")
-            map(lambda version: setattr(version, "text", pom_value.plugin_version), versions)
+            list(map(lambda version: setattr(version, "text", pom_value.plugin_version), versions))
 
         additions = [(PomPlugin.get_plugin_by_name(self, pom_value.plugin_name), PomPlugin.PLUGINS_PATH)]
         if pom_value.reporting:
@@ -138,14 +139,14 @@ class Pom(object):
         self.save()
 
     def set_junit_version(self, version='4.11'):
-        junit_dependencies = filter(is_plugin(PomPlugin.JUNIT_ARTIFACT_ID), self.get_elements_by_path(['dependencies', 'dependency']) + self.get_elements_by_path(['dependencyManagement', 'dependencies', 'dependency']))
+        junit_dependencies = list(filter(is_plugin(PomPlugin.JUNIT_ARTIFACT_ID), self.get_elements_by_path(['dependencies', 'dependency']) + self.get_elements_by_path(['dependencyManagement', 'dependencies', 'dependency'])))
         for dependency in junit_dependencies:
             created_element = Pom.get_or_create_by_path(dependency, ['version'])
             created_element.text = version
         self.save()
 
     def set_site_version(self, version='3.3'):
-        dependencies = filter(is_plugin(PomPlugin.SITE_ARTIFACT_ID), self.get_elements_by_path(['build', 'pluginManagement', 'plugins', 'plugin']))
+        dependencies = list(filter(is_plugin(PomPlugin.SITE_ARTIFACT_ID), self.get_elements_by_path(['build', 'pluginManagement', 'plugins', 'plugin'])))
         for dependency in dependencies:
             created_element = Pom.get_or_create_by_path(dependency, ['version'])
             created_element.text = version

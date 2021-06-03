@@ -1,5 +1,5 @@
 import os
-
+from functools import reduce
 from enum import Enum
 
 from mvnpy import mvn

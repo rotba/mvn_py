@@ -9,7 +9,7 @@ import shutil
 import xml.etree.ElementTree
 import tempfile
 from contextlib import contextmanager
-
+from functools import reduce
 SURFIRE_DIR_NAME = 'surefire-reports'
 OBSERVE_PATH = r"c:\temp\observe"
 
@@ -43,7 +43,7 @@ class Test(object):
 class Trace(object):
     def __init__(self, test_name, trace):
         self.test_name = test_name
-        self.trace = map(lambda t: t.lower(), trace)
+        self.trace = list(map(lambda t: t.lower(), trace))
 
     def files_trace(self):
         return list(set(map(lambda x: x.split("@")[0].lower(), self.trace)))
@@ -86,15 +86,15 @@ class AmirTracer(Tracer):
     def enable_tracer(self):
         poms = []
         for root, _, files in os.walk(self.git_path):
-            poms.extend(map(lambda name: os.path.join(root, name), filter(lambda name: name == "pom.xml", files)))
-        map(self.fix_pom_file, poms)
+            poms.extend(list(map(lambda name: os.path.join(root, name), filter(lambda name: name == "pom.xml", files))))
+        list(map(self.fix_pom_file, poms))
 
     def fix_pom_file(self, pom_path):
         xml.etree.ElementTree.register_namespace('', "http://maven.apache.org/POM/4.0.0")
         xml.etree.ElementTree.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
 
         def get_children_by_name(element, name):
-            return filter(lambda e: e.tag.endswith(name), element.getchildren())
+            return list(filter(lambda e: e.tag.endswith(name), element.getchildren()))
 
         def get_or_create_child(element, name):
             child = get_children_by_name(element, name)
@@ -104,9 +104,9 @@ class AmirTracer(Tracer):
                 return child[0]
 
         et = xml.etree.ElementTree.parse(pom_path)
-        surfire_plugins = filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
+        surfire_plugins = list(filter(lambda plugin: filter(lambda x: x.text == "maven-surefire-plugin",
                                                        get_children_by_name(plugin, "artifactId")),
-                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter()))
+                                 filter(lambda e: e.tag.endswith('plugin'), et.getroot().iter())))
         trace_text = self.get_tracer_arg_line()
         for plugin in surfire_plugins:
             configuration = get_or_create_child(plugin, 'configuration')
@@ -116,21 +116,21 @@ class AmirTracer(Tracer):
 
     def get_tracer_arg_line(self):
         paths = [os.path.expandvars(r'%USERPROFILE%\.m2\repository'), self.git_path]
-        with open(self.paths_file, 'wb') as paths_file:
+        with open(self.paths_file, 'w') as paths_file:
             paths_file.write("\n".join(paths))
         return ' -Xms8g -Xmx20048m  -javaagent:{0}={1} '.format(self.tracer_path, self.paths_file)
 
     def collect_traces(self):
         traces_files = []
         for root, dirs, _ in os.walk(os.path.abspath(os.path.join(self.git_path, "..\.."))):
-            traces_files.extend(map(lambda name: glob.glob(os.path.join(root, name, "TRACE_*.txt")), filter(lambda name: name == "DebuggerTests", dirs)))
+            traces_files.extend(list(map(lambda name: glob.glob(os.path.join(root, name, "TRACE_*.txt")), filter(lambda name: name == "DebuggerTests", dirs))))
         for trace_file in reduce(list.__add__, traces_files, []):
             dst = os.path.join(self.copy_traces_to, os.path.basename(trace_file))
             if not os.path.exists(dst):
                 shutil.copyfile(trace_file, dst)
             test_name = trace_file.split('\\Trace_')[1].split('_')[0].lower()
             with open(trace_file) as f:
-                self.traces[test_name] = Trace(test_name, map(lambda line: line.strip().split()[2].strip(), f.readlines()))
+                self.traces[test_name] = Trace(test_name, list(map(lambda line: line.strip().split()[2].strip(), f.readlines())))
 
 
 class TestRunner(object):
@@ -197,17 +197,17 @@ if __name__ == "__main__":
     predictions = {}
     with open(prediction_path) as f:
         lines = list(csv.reader(f))[1:]
-        predictions = dict(map(lambda line: (line[0].replace(".java", "").replace(os.path.sep, ".").lower(), line[1]), lines))
+        predictions = dict(list(map(lambda line: (line[0].replace(".java", "").replace(os.path.sep, ".").lower(), line[1]), lines)))
     tr = TestRunner(repo, AmirTracer(repo, tracer_path))
     tr.run()
     from sfl_diagnoser.Diagnoser.diagnoserUtils import write_planning_file
     tests = set(tr.tracer.traces.keys()) & set(tr.observations.keys())
     components_priors = {}
-    for component in set(reduce(list.__add__, map(lambda test_name: tr.tracer.traces[test_name].files_trace(), tests), [])):
+    for component in set(reduce(list.__add__, list(map(lambda test_name: tr.tracer.traces[test_name].files_trace(), tests), []))):
         for prediction in predictions:
             if component in prediction:
                 components_priors[component] = predictions[prediction]
     components = set(components_priors.keys())
-    tests_details = map(lambda test_name: (test_name, list(set(tr.tracer.traces[test_name].files_trace()) & components), tr.observations[test_name].get_observation()),
-                        tests)
-    write_planning_file(matrix_path, [], filter(lambda test: len(test[1]) > 0, tests_details), priors=components_priors)
+    tests_details = list(map(lambda test_name: (test_name, list(set(tr.tracer.traces[test_name].files_trace()) & components), tr.observations[test_name].get_observation()),
+                        tests))
+    write_planning_file(matrix_path, [], list(filter(lambda test: len(test[1]) > 0, tests_details)), priors=components_priors)

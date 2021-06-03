@@ -88,7 +88,7 @@ class Test_mvnpy(unittest.TestCase):
                 lambda acc, curr: os.path.join(acc, curr),
                 [repo_path, 'src', 'test', 'java', 'org', 'apache', 'commons', 'lang3', 'SystemUtils_ESTest.java']
             ),
-            errors_paths=map(lambda x: x.path, errors)
+            errors_paths=list(map(lambda x: x.path, errors))
         )
 
     def test_get_path(self):

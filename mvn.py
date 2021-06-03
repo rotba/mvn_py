@@ -2,18 +2,17 @@ import os
 import subprocess
 import sys
 import traceback
-from cStringIO import StringIO
 from threading import Timer
 import json
-import CompilationErrorObject
-from cStringIO import StringIO
+import mvnpy.CompilationErrorObject as CompilationErrorObject
+import io
 #from bug  import BugError
-import TestObjects
+import mvnpy.TestObjects as TestObjects
 
-CONFIG_FILE =reduce( lambda acc,curr: os.path.join(acc,curr), [os.path.dirname(os.path.realpath(__file__)), 'config', 'config.json'])
-if os.path.exists(CONFIG_FILE):
-    with open(CONFIG_FILE) as file:
-        CONFIG_DICT = json.load(file)
+# CONFIG_FILE =reduce( lambda acc,curr: os.path.join(acc,curr), [os.path.dirname(os.path.realpath(__file__)), 'config', 'config.json'])
+# if os.path.exists(CONFIG_FILE):
+#     with open(CONFIG_FILE) as file:
+#         CONFIG_DICT = json.load(file)
 DEBUG = False
 CMD_MAX_LENGTH =2074
 tracer_dir = path = os.path.join(os.path.dirname(__file__), r'tracer\java_tracer\tracer')
@@ -326,8 +325,8 @@ def wrap_mvn_cmd_3(cmd, time_limit=MVN_MAX_PROCCESS_TIME_IN_SEC):
     sys.stdout.flush()
     olderr, oldout = sys.stderr, sys.stdout
     try:
-        sys.stderr = StringIO()
-        sys.stdout = StringIO()
+        sys.stderr = io.StringIO()
+        sys.stdout = io.StringIO()
         try:
             proc = subprocess.Popen(cmd, shell=True)
             t = Timer(time_limit, kill, args=[proc])
