@@ -21,9 +21,9 @@ class TestClass(object):
         self._testcases = []
         self._report = None
         self._id = '#'.join([os.path.basename(self.module), self.mvn_name])
-        with open(self._path, 'r') as src_file:
+        with open(self._path, 'rb') as src_file:
             try:
-                contents = src_file.read()
+                contents = src_file.read().decode("UTF-8")
                 source_file = SourceFile(contents, self._path, analyze_source_lines=False)
                 for method in source_file.methods.values():
                     if self.is_valid_testcase(method):
