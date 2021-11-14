@@ -21,7 +21,7 @@ class PomPlugin(object):
     JAVADOC_ARTIFACT_ID = "maven-javadoc-plugin"
     SITE_ARTIFACT_ID = "maven-site-plugin"
     ARTIFACT_ID_NAME = "artifactId"
-    PLUGINS = {"maven-surefire-plugin": is_plugin, "maven-javadoc-plugin": is_plugin, "maven-site-plugin": is_plugin, "maven-failsafe-plugin": is_plugin}
+    PLUGINS = {"maven-surefire-plugin": is_plugin, "maven-javadoc-plugin": is_plugin, "maven-site-plugin": is_plugin, "maven-failsafe-plugin": is_plugin, "maven-compiler-plugin": is_plugin}
 
     @staticmethod
     def get_plugins(pom):
@@ -145,6 +145,14 @@ class Pom(object):
             created_element.text = version
         self.save()
 
+    def set_compiler_version(self, version='1.8'):
+        for p in ['maven.compile.source', 'maven.compile.target']:
+            for e in pom_file.get_elements_by_path(['properties', p]):
+                e.text = version
+        for e in ['source', 'target']:
+            self.add_pom_value(PomValue("maven-compiler-plugin", ["configuration", e], '1.8'))
+        self.save()
+
     def set_site_version(self, version='3.3'):
         dependencies = list(filter(is_plugin(PomPlugin.SITE_ARTIFACT_ID), self.get_elements_by_path(['build', 'pluginManagement', 'plugins', 'plugin'])))
         for dependency in dependencies:
@@ -160,3 +168,10 @@ class Pom(object):
 
     def add_surefire(self):
         return len(PomPlugin.get_plugin_by_name(self, PomPlugin.SUREFIRE_ARTIFACT_ID)) + len(PomPlugin.get_plugin_by_name(self, PomPlugin.FAILSAFE_ARTIFACT_ID)) > 0
+
+
+if __name__ == '__main__':
+    pom_file = Pom(r"C:\Users\User\Downloads\commons-compress-40e010931f91f4f2989fc5f892f990a8890808e1\commons-compress-40e010931f91f4f2989fc5f892f990a8890808e1\pom.xml")
+    pom_file.set_compiler_version()
+
+    pass
