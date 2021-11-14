@@ -34,9 +34,7 @@ class JcovParser(object):
     def _parse_jcov_file(self, jcov_file, test_name):
         gc.collect()
         trace = self._get_trace_for_file(jcov_file)
-        method_name_by_extra_slot = dict(list(map(lambda e: (e.extra_slot, self.method_name_by_id[e.id]),filter(lambda e: hasattr(e,'extra_slot'),trace.values()))))
-        method_name_by_extra_slot[-1] = 'None'
-        list(map(lambda element: element.set_previous_method(method_name_by_extra_slot), trace.values()))
+        list(map(lambda element: element.set_previous_method(self.method_name_by_id), trace.values()))
         return Trace(test_name, trace)
 
     def _get_trace_for_file(self, jcov_file):
@@ -90,9 +88,8 @@ class JcovParser(object):
             id = 0
             extra_slot = 0
             if self.instrument_only_methods:
-                id = method.attrib['id']
-                extra_slot = method.attrib['extra_slots']
-                method_ids[int(id)] = method_name
+                method_ids[int(method.attrib['id'])] = method_name
+                method_ids[int(method.attrib['extra_slots'])] = method_name
             else:
                 # id = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['id']
                 # extra_slot = JcovParser.get_elements_by_path(method, ['bl', 'methenter'])[0][1].attrib['extra_slots']
