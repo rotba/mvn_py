@@ -1,7 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.BigFractionTest@testReciprocal
-[inst2] + org.apache.commons.math3.util.MathUtils@checkNotNull
-[inst2] + org.apache.commons.math3.fraction.BigFraction@reciprocal
-[inst2] + org.apache.commons.math3.fraction.BigFraction@getNumeratorAsInt
-[inst2] + org.apache.commons.math3.fraction.BigFraction@getDenominatorAsInt
-[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
-[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

@@ -1,6 +1,0 @@
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtilsTest@testShift
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialsUtils@shift
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@binomialCoefficient
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@checkBinomial
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@toString

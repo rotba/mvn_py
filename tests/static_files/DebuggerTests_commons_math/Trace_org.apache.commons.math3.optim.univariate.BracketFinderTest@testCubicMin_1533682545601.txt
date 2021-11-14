@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinderTest@testCubicMin
-[inst2] + org.apache.commons.math3.util.Incrementor@setMaximalCount
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinder@search
-[inst2] + org.apache.commons.math3.util.Incrementor@resetCount
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinder@eval
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinderTest$1@value
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinder@getLo
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinder@getMid
-[inst2] + org.apache.commons.math3.optim.univariate.BracketFinder@getHi

@@ -1,5 +1,0 @@
-[inst2] + org.apache.commons.math3.analysis.function.LogisticTest@testParametricUsage2
-[inst2] + org.apache.commons.math3.analysis.function.Logistic$Parametric@value
-[inst2] + org.apache.commons.math3.analysis.function.Logistic$Parametric@validateParameters
-[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
-[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

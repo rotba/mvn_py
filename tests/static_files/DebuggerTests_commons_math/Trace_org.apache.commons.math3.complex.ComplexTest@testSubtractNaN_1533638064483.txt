@@ -1,2 +1,0 @@
-[inst2] + org.apache.commons.math3.complex.ComplexTest@testSubtractNaN
-[inst2] + org.apache.commons.math3.complex.Complex@subtract

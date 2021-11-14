@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@testZeroVectors
-[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getDimension
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue

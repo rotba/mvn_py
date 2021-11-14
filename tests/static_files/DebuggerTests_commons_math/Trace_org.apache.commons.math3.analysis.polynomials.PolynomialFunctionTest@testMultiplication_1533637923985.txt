@@ -1,6 +1,0 @@
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@testMultiplication
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@multiply
-[inst2] + org.apache.commons.math3.util.FastMath@max
-[inst2] + org.apache.commons.math3.util.FastMath@min
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@checkPolynomial
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@toString

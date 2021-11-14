@@ -1,4 +1,0 @@
-[inst2] + org.apache.commons.math3.complex.ComplexUtilsTest@testConvertToComplex
-[inst2] + org.apache.commons.math3.complex.ComplexUtils@convertToComplex
-[inst2] + org.apache.commons.math3.complex.Complex@getReal
-[inst2] + org.apache.commons.math3.complex.FrenchComplexFormatTest@getLocale

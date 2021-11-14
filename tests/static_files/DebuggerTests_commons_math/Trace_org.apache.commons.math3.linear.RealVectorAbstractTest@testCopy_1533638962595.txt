@@ -1,7 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testCopy
-[inst2] + org.apache.commons.math3.linear.RealVectorTest@create
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest$RealVectorTestImpl@copy
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest$RealVectorTestImpl@getDimension
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest$RealVectorTestImpl@getEntry
-[inst2] + org.apache.commons.math3.linear.RealVector@checkIndex
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue

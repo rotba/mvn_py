@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.RotationOrderTest@testName
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.RotationOrderTest@getFieldName
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.RotationOrder@toString

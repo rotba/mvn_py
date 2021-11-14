@@ -1,6 +1,0 @@
-Tika Change Log
-
-Unreleased changes (0.1-dev)
-
-1. TIKA-5 - Port Metadata Framework from Nutch (mattmann)
-

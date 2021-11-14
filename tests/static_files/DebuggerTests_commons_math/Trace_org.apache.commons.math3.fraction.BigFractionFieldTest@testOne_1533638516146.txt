@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.BigFractionFieldTest@testOne
-[inst2] + org.apache.commons.math3.fraction.BigFractionField@getInstance
-[inst2] + org.apache.commons.math3.fraction.BigFractionField$LazyHolder@access$000
-[inst2] + org.apache.commons.math3.fraction.BigFractionField@getOne
-[inst2] + org.apache.commons.math3.fraction.BigFraction@equals
-[inst2] + org.apache.commons.math3.fraction.BigFractionFormatTest@setUp
-[inst2] + org.apache.commons.math3.fraction.BigFractionFormatTest@getLocale
-[inst2] + org.apache.commons.math3.fraction.ProperBigFractionFormat@setWholeFormat

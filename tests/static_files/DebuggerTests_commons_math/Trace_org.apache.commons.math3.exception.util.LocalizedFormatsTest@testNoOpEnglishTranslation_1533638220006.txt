@@ -1,4 +1,0 @@
-[inst2] + org.apache.commons.math3.exception.util.LocalizedFormatsTest@testNoOpEnglishTranslation
-[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@values
-[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@getLocalizedString
-[inst2] + org.apache.commons.math3.exception.util.LocalizedFormats@getSourceString

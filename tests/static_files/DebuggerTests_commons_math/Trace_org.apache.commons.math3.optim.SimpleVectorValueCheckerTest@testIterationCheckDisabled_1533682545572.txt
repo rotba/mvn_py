@@ -1,6 +1,0 @@
-[inst2] + org.apache.commons.math3.optim.SimpleVectorValueCheckerTest@testIterationCheckDisabled
-[inst2] + org.apache.commons.math3.optim.SimpleVectorValueChecker@converged
-[inst2] + org.apache.commons.math3.optim.PointVectorValuePair@getValueRef
-[inst2] + org.apache.commons.math3.util.Pair@getValue
-[inst2] + org.apache.commons.math3.optim.AbstractConvergenceChecker@getRelativeThreshold
-[inst2] + org.apache.commons.math3.optim.AbstractConvergenceChecker@getAbsoluteThreshold

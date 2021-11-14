@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormatAbstractTest@testParseManyComponents
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormat@parse
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseAndIgnoreWhitespace
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseNextCharacter
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseFixedstring
-[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@copyIn
-[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@setSubMatrix
-[inst2] + org.apache.commons.math3.linear.Array2DRowRealMatrix@getColumnDimension
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormatTest@getLocale

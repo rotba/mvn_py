@@ -1,2 +1,0 @@
-C:\Users\rotem\.m2\repository
-C:\Code\Libraries\python\mvnpy\mvnpy\tests\static_files\MavenProj

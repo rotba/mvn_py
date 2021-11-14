@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.FractionFieldTest@testOne
-[inst2] + org.apache.commons.math3.fraction.FractionField@getInstance
-[inst2] + org.apache.commons.math3.fraction.FractionField$LazyHolder@access$000
-[inst2] + org.apache.commons.math3.fraction.FractionField@getOne
-[inst2] + org.apache.commons.math3.fraction.Fraction@equals
-[inst2] + org.apache.commons.math3.fraction.FractionFormatTest@setUp
-[inst2] + org.apache.commons.math3.fraction.FractionFormatTest@getLocale
-[inst2] + org.apache.commons.math3.fraction.ProperFractionFormat@setWholeFormat

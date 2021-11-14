@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3DTest@testScalarProduct
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3DTest@createVector
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3DTest@checkVector
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3D@getX
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getReal
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3D@getY
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.FieldVector3D@getZ

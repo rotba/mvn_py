@@ -1,4 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@testGetL1Norm
-[inst2] + org.apache.commons.math3.linear.RealVectorAbstractTest@getPreferredEntryValue
-[inst2] + org.apache.commons.math3.linear.ArrayRealVectorTest@create
-[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getL1Norm

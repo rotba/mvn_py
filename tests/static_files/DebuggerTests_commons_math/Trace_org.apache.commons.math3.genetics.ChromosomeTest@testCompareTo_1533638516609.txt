@@ -1,6 +1,0 @@
-[inst2] + org.apache.commons.math3.genetics.ChromosomeTest@testCompareTo
-[inst2] + org.apache.commons.math3.genetics.Chromosome@compareTo
-[inst2] + org.apache.commons.math3.genetics.Chromosome@getFitness
-[inst2] + org.apache.commons.math3.genetics.ChromosomeTest$1@fitness
-[inst2] + org.apache.commons.math3.genetics.ChromosomeTest$2@fitness
-[inst2] + org.apache.commons.math3.genetics.ChromosomeTest$3@fitness

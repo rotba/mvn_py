@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.RealVectorFormatAbstractTest@testParseNan
-[inst2] + org.apache.commons.math3.linear.RealVectorFormat@parse
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseAndIgnoreWhitespace
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseNextCharacter
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseFixedstring
-[inst2] + org.apache.commons.math3.util.CompositeFormat@parseNumber
-[inst2] + org.apache.commons.math3.linear.ArrayRealVector@equals
-[inst2] + org.apache.commons.math3.linear.ArrayRealVector@getDimension
-[inst2] + org.apache.commons.math3.linear.ArrayRealVector@isNaN

@@ -1,5 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.BigFractionFieldTest@testZero
-[inst2] + org.apache.commons.math3.fraction.BigFractionField@getInstance
-[inst2] + org.apache.commons.math3.fraction.BigFractionField$LazyHolder@access$000
-[inst2] + org.apache.commons.math3.fraction.BigFractionField@getZero
-[inst2] + org.apache.commons.math3.fraction.BigFraction@equals

@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.FractionFieldTest@testZero
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcd
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcdPositive
-[inst2] + org.apache.commons.math3.util.FastMath@abs
-[inst2] + org.apache.commons.math3.fraction.FractionField@getInstance
-[inst2] + org.apache.commons.math3.fraction.FractionField$LazyHolder@access$000
-[inst2] + org.apache.commons.math3.fraction.FractionField@getZero
-[inst2] + org.apache.commons.math3.fraction.Fraction@equals

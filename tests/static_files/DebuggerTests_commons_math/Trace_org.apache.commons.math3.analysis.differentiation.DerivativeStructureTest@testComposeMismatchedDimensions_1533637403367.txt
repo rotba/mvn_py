@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@testComposeMismatchedDimensions
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@compose
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getOrder
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getOrder
-[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
-[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten

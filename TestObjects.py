@@ -7,14 +7,14 @@ import xml.etree.ElementTree as ET
 
 from javalang.parser import JavaSyntaxError
 from pathlib import Path
-try:
-    from javadiff.SourceFile import SourceFile
-except:
-    from javadiff.javadiff.SourceFile import SourceFile
 
 
 class TestClass(object):
     def __init__(self, file_path, repo_path):
+        try:
+            from javadiff.SourceFile import SourceFile
+        except:
+            from javadiff.javadiff.SourceFile import SourceFile
         self._path = os.path.realpath(file_path)
         self._module = self.find_module(self._path, repo_path)
         self._mvn_name = self.generate_mvn_name()

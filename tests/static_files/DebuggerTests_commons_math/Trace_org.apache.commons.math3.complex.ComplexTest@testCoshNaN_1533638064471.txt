@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.complex.ComplexTest@testCoshNaN
-[inst2] + org.apache.commons.math3.complex.Complex@cosh
-[inst2] + org.apache.commons.math3.complex.Complex@isNaN

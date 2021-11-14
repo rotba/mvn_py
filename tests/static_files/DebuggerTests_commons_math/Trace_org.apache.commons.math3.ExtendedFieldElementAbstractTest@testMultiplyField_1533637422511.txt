@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@testMultiplyField
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest@build
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getCompiler
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@getSize
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@checkCompatibility
-[inst2] + org.apache.commons.math3.analysis.differentiation.DSCompiler@multiply
-[inst2] + org.apache.commons.math3.ExtendedFieldElementAbstractTest@checkRelative
-[inst2] + org.apache.commons.math3.analysis.differentiation.DerivativeStructure@getReal

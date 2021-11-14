@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.exception.NonMonotonicSequenceExceptionTest@testAccessors
-[inst2] + org.apache.commons.math3.exception.util.ExceptionContext@addMessage
-[inst2] + org.apache.commons.math3.exception.util.ArgUtils@flatten
-[inst2] + org.apache.commons.math3.exception.MathIllegalNumberException@getArgument
-[inst2] + org.apache.commons.math3.exception.NonMonotonicSequenceException@getPrevious
-[inst2] + org.apache.commons.math3.exception.NonMonotonicSequenceException@getIndex
-[inst2] + org.apache.commons.math3.exception.NonMonotonicSequenceException@getDirection
-[inst2] + org.apache.commons.math3.exception.NonMonotonicSequenceException@getStrict

@@ -1,5 +1,0 @@
-[inst2] + org.apache.commons.math3.optimization.univariate.SimpleUnivariateValueCheckerTest@testIterationCheckDisabled
-[inst2] + org.apache.commons.math3.optimization.univariate.SimpleUnivariateValueChecker@converged
-[inst2] + org.apache.commons.math3.optimization.univariate.UnivariatePointValuePair@getValue
-[inst2] + org.apache.commons.math3.optimization.AbstractConvergenceChecker@getRelativeThreshold
-[inst2] + org.apache.commons.math3.optimization.AbstractConvergenceChecker@getAbsoluteThreshold

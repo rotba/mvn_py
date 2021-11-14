@@ -1,6 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.FractionTest@testEqualsAndHashCode
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcd
-[inst2] + org.apache.commons.math3.util.FastMath@abs
-[inst2] + org.apache.commons.math3.fraction.Fraction@equals
-[inst2] + org.apache.commons.math3.fraction.Fraction@hashCode
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcdPositive

@@ -1,4 +1,0 @@
-[inst2] + org.apache.commons.math3.fraction.FractionTest@testDoubleValue
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcd
-[inst2] + org.apache.commons.math3.util.ArithmeticUtils@gcdPositive
-[inst2] + org.apache.commons.math3.fraction.Fraction@doubleValue

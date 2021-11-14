@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.distribution.AbstractIntegerDistributionTest@testCumulativeProbabilitiesRangeArguments
-[inst2] + org.apache.commons.math3.distribution.AbstractIntegerDistribution@cumulativeProbability
-[inst2] + org.apache.commons.math3.distribution.AbstractIntegerDistributionTest$DiceDistribution@cumulativeProbability

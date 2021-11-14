@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormatAbstractTest@testConstructorSingleFormat
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormat@getFormat
-[inst2] + org.apache.commons.math3.linear.RealMatrixFormatTest@getLocale

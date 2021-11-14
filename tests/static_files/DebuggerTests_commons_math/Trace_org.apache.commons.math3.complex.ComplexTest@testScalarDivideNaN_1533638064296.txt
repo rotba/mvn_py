@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.complex.ComplexTest@testScalarDivideNaN
-[inst2] + org.apache.commons.math3.complex.Complex@divide
-[inst2] + org.apache.commons.math3.complex.Complex@equals

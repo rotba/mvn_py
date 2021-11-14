@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@testSubtraction
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@subtract
-[inst2] + org.apache.commons.math3.util.FastMath@min
-[inst2] + org.apache.commons.math3.util.FastMath@max
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@checkNullPolynomial
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@getCoefficients
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunctionTest@checkPolynomial
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@toString
-[inst2] + org.apache.commons.math3.analysis.polynomials.PolynomialFunction@degree

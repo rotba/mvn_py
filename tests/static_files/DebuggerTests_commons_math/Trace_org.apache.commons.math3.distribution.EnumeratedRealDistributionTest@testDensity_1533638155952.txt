@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.distribution.EnumeratedRealDistributionTest@testDensity
-[inst2] + org.apache.commons.math3.distribution.EnumeratedRealDistribution@density
-[inst2] + org.apache.commons.math3.distribution.EnumeratedRealDistribution@probability
-[inst2] + org.apache.commons.math3.distribution.EnumeratedDistribution@probability
-[inst2] + org.apache.commons.math3.random.BitsStreamGenerator@clear
-[inst2] + org.apache.commons.math3.util.Pair@getKey
-[inst2] + org.apache.commons.math3.util.Pair@getValue
-[inst2] + org.apache.commons.math3.util.MathArrays@normalizeArray

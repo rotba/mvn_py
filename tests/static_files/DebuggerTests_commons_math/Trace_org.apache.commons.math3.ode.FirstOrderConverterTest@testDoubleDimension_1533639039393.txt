@@ -1,3 +1,0 @@
-[inst2] + org.apache.commons.math3.ode.FirstOrderConverterTest@testDoubleDimension
-[inst2] + org.apache.commons.math3.ode.FirstOrderConverterTest$Equations@getDimension
-[inst2] + org.apache.commons.math3.ode.FirstOrderConverter@getDimension

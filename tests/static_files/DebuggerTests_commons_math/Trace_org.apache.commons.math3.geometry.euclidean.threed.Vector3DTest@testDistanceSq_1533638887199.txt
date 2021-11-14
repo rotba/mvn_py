@@ -1,4 +1,0 @@
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3DTest@testDistanceSq
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@distanceSq
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@distance
-[inst2] + org.apache.commons.math3.util.FastMath@sqrt

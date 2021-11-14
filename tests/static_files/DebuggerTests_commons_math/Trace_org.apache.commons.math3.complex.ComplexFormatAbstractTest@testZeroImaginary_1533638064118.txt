@@ -1,8 +1,0 @@
-[inst2] + org.apache.commons.math3.complex.ComplexFormatAbstractTest@testZeroImaginary
-[inst2] + org.apache.commons.math3.complex.ComplexFormatTest@getDecimalCharacter
-[inst2] + org.apache.commons.math3.complex.ComplexFormat@format
-[inst2] + org.apache.commons.math3.complex.Complex@getReal
-[inst2] + org.apache.commons.math3.complex.ComplexFormat@getRealFormat
-[inst2] + org.apache.commons.math3.util.CompositeFormat@formatDouble
-[inst2] + org.apache.commons.math3.complex.Complex@getImaginary
-[inst2] + org.apache.commons.math3.complex.ComplexFormatTest@getLocale

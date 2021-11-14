@@ -1,9 +1,0 @@
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.LineTest@testLineDistance
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Line@reset
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@subtract
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getNormSq
-[inst2] + org.apache.commons.math3.util.FastMath@sqrt
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@dotProduct
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@crossProduct
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Vector3D@getNorm
-[inst2] + org.apache.commons.math3.geometry.euclidean.threed.Line@distance
