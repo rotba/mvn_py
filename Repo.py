@@ -8,12 +8,12 @@ from xml.dom.minidom import parseString
 from junitparser.junitparser import Error, Failure, Skipped
 from junitparser import JUnitXml
 import time
-import mvnpy.TestObjects as TestObjects
-import mvnpy.mvn as mvn
-from .jcov_parser import JcovParser
-from .jcov_tracer import JcovTracer
+import TestObjects as TestObjects
+import mvn as mvn
+from jcov_parser import JcovParser
+from jcov_tracer import JcovTracer
 # from plugins.evosuite.evosuite import EvosuiteFactory, TestGenerationStrategy, EVOSUITE_SUREFIRE_VERSION
-from .pom_file import Pom
+from pom_file import Pom
 import json
 import shutil
 from collections import Counter
@@ -324,6 +324,11 @@ class Repo(object):
             for value in jcov.get_values_to_add():
                 pom.add_pom_value(value)
         return jcov
+
+    def set_compiler_version(self, version='1.8'):
+        for pom_file in self.get_all_pom_paths(self._repo_dir):
+            pom = Pom(pom_file)
+            pom.set_compiler_version(version=version)
 
     def has_surefire(self):
         for pom_file in self.get_all_pom_paths(self._repo_dir):

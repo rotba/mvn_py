@@ -4,10 +4,10 @@ import sys
 import traceback
 from threading import Timer
 import json
-import mvnpy.CompilationErrorObject as CompilationErrorObject
+import CompilationErrorObject as CompilationErrorObject
 import io
 #from bug  import BugError
-import mvnpy.TestObjects as TestObjects
+import TestObjects as TestObjects
 
 # CONFIG_FILE =reduce( lambda acc,curr: os.path.join(acc,curr), [os.path.dirname(os.path.realpath(__file__)), 'config', 'config.json'])
 # if os.path.exists(CONFIG_FILE):
