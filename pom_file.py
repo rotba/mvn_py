@@ -101,6 +101,15 @@ class Pom(object):
             elements = reduce(list.__add__, list(map(lambda elem: Pom.get_children_by_name(elem, name), elements)), [])
         return elements
 
+    def remove_elements_by_path(self, path):
+        elements = [self.element_tree.getroot()]
+        for name in path[:-1]:
+            elements = reduce(list.__add__, list(map(lambda elem: Pom.get_children_by_name(elem, name), elements)), [])
+        for element in elements:
+            for child in element.getchildren():
+                if child.tag.endswith(path[-1]):
+                    element.remove(child)
+
     def create_plugin_artifact(self, path, pom_value):
         element = Pom.get_or_create_by_path(self.element_tree.getroot(), path)
         new_plugin = Pom.create_element(element, 'plugin')
@@ -147,10 +156,9 @@ class Pom(object):
 
     def set_compiler_version(self, version='1.8'):
         for p in ['maven.compile.source', 'maven.compile.target']:
-            for e in self.get_elements_by_path(['properties', p]):
-                e.text = version
+            self.remove_elements_by_path(['properties', p])
         for e in ['source', 'target']:
-            self.add_pom_value(PomValue("maven-compiler-plugin", ["configuration", e], '1.8'))
+            self.remove_elements_by_path(PomPlugin.PLUGINS_PATH + ["maven-compiler-plugin", "configuration", e])
         self.save()
 
     def set_site_version(self, version='3.3'):
