@@ -325,7 +325,7 @@ class Repo(object):
                 pom.add_pom_value(value)
         return jcov
 
-    def set_compiler_version(self, version='1.8'):
+    def set_compiler_version(self, version='1.7'):
         for pom_file in self.get_all_pom_paths(self._repo_dir):
             pom = Pom(pom_file)
             pom.set_compiler_version(version=version)
